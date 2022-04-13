@@ -2,4 +2,10 @@
 .primary-button{
     background-color: $button-primary;
     color: $button-secondary;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size:0.9rem;
+    padding: 0.6rem 1.2rem;
+    width: 17rem;
 }
