@@ -6,8 +6,14 @@
     justify-content: space-between;
 
     .app-name{
+        display:flex;
         margin-left:7rem;
         color: $main-brand-color;
+        .logo{
+            height: 4rem;
+            width: 3rem;
+            margin-right: 1rem;
+        }
     }
 
     .user-name{

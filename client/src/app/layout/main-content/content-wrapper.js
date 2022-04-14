@@ -1,5 +1,5 @@
 import Header from "../header/header";
-import Card from "../shared-components/card";
+import Card from "../../shared-components/card";
 import "./content-wrapper-style.scss";
 
 const Wrapper = ({menuCards}) =>{
