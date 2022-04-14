@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
-import Header from './app/layout/header/header-component';
-import Wrapper from './app/layout/main-content/content-wrapper-component';
+import Home from './app/home/home';
 import Login from './pre-login/login/login';
 
 const AppRoutes = () => {
@@ -11,7 +10,7 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/" element={<App />} />
                 <Route path="/login" exact element={<Login />} />
-                <Route path="/home" exact element={<Wrapper />} />
+                <Route path="/home" exact element={<Home />} />
             </Routes>
         </BrowserRouter>
     );

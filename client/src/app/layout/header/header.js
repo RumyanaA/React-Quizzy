@@ -9,7 +9,7 @@ const Header = () =>{
 
     return (<header className="header-container">
         <h1 className="app-name">The Taste Council</h1>
-        <h2 className="user-name">{username}</h2>
+        <h3 className="user-name">{username}</h3>
     </header>
     )
     }

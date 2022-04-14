@@ -1,0 +1,17 @@
+@import '../../../shared/styles/colors';
+
+.card {
+  box-sizing: border-box;
+  width: 16.5rem;
+  height: 17.5rem;
+  padding: 1rem 3rem;
+  margin: 1rem 1.2rem;
+  display: block;
+  border-radius: 4%;
+  cursor: pointer;
+  background-color: darkseagreen;
+
+  &:hover {
+    background-color: $secondary-color;
+  }
+}

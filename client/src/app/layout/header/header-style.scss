@@ -1,3 +1,4 @@
+@import '../../../shared/styles/colors';
 .header-container{
     margin-top: 1rem;
     display: flex;
@@ -6,9 +7,11 @@
 
     .app-name{
         margin-left:7rem;
+        color: $main-brand-color;
     }
 
     .user-name{
-        margin-right:7rem;
+        margin-top:2rem;
+        margin-right:11rem;
     }
 }

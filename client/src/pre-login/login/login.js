@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import InputField from "../../shared/input/input-component";
 import Button from "../../shared/button/button-component";
 import "./login-styles.scss";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
