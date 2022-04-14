@@ -1,0 +1,14 @@
+.header-container{
+    margin-top: 1rem;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    .app-name{
+        margin-left:7rem;
+    }
+
+    .user-name{
+        margin-right:7rem;
+    }
+}

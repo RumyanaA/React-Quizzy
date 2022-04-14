@@ -2,20 +2,23 @@ import React, { useState } from "react";
 import InputField from "../../shared/input/input-component";
 import Button from "../../shared/button/button-component";
 import "./login-styles.scss";
+import { Navigate, useNavigate } from "react-router-dom";
+
+
 const Login = () => {
   const [formValues, setFormValues] = useState({
-    email: "",
+    username: "",
     password: "",
   });
-
-  const { email, password } = formValues;
+  const { username, password } = formValues;
   const handleChange = (name) => (event) => {
     setFormValues({ ...formValues, [name]: event.target.value });
   };
-
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formValues)
+    localStorage.setItem("user", JSON.stringify(formValues));
+    navigate('/home');
   };
 
   const loginForm = () => (
@@ -23,11 +26,11 @@ const Login = () => {
       <div className="loginForm-container">
           <div>
         <InputField
-          onChange={handleChange("email")}
-          type={"email"}
-          name={"email"}
-          value={email}
-          label={"Email"}
+          onChange={handleChange("username")}
+          type={"username"}
+          name={"username"}
+          value={username}
+          label={"username"}
         ></InputField>
         </div>
         <div>
@@ -45,7 +48,7 @@ const Login = () => {
   );
   return (
     <div>
-      <div className="wrapper">
+      <div className="login-wrapper">
         <h1>Sign in</h1>
         {loginForm()}
       </div>
