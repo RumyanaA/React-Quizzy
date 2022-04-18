@@ -1,4 +1,4 @@
-@import '../../shared/styles/colors';
+@import '../../../shared/styles/colors';
 
 .card {
   box-sizing: border-box;
@@ -8,8 +8,8 @@
   margin: 1rem 1.2rem;
   display: block;
   border-radius: 4%;
+  border:4px outset $main-brand-color;
   cursor: pointer;
-  background-color: darkseagreen;
 
   &:hover {
     background-color: $secondary-color;
