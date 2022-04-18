@@ -1,5 +1,5 @@
 # Recipe Finder
-Web application for searching recipes by keyword, ingredients, nutritions. Creating custom recipes and planning menues.
+Web application for searching recipes by keyword, ingredients, nutritions. Creating custom recipes and planning menus.
 
 ## Installation:
 * Download /clone repository from git

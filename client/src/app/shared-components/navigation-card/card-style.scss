@@ -8,7 +8,8 @@
   margin: 1rem 1.2rem;
   display: block;
   border-radius: 4%;
-  border:4px outset $main-brand-color;
+  background-color: peachpuff;
+  border:2px outset $main-brand-color;
   cursor: pointer;
 
   &:hover {
