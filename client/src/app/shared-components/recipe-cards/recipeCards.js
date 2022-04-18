@@ -9,6 +9,12 @@ const RecipeCard = ({ props }) => {
   const handleShow = () => setShow(true);
   useEffect(()=>{
     console.log(props)
+    //api array has repeated ingridients
+    const ingridients=props.extendedIngredients;
+    const uniqueIngridients= [
+      ...new Map(ingridients.map((item) => [item["id"], item])).values(),
+  ];
+  props.extendedIngredients = uniqueIngridients;
   })
   const altText = "recipe";
   return (
