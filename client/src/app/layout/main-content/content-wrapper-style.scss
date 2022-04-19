@@ -13,12 +13,33 @@
     background-color: $content-wrapper-color;
 
     .search-container{
-      display:flex;
+      display: flex;
+      height: 10rem;
+      flex-direction: column;
+      align-items: center;
+      .filters-container{
+        background-color: $secondary-color;
+        border-radius: 8px;
+        width:27rem;
+        height:2rem;
+        transition: width 2s, height 2s;
+        margin-top:1rem;
+        &:hover {
+          width:27rem;
+          height:6rem;
+        }
+        .arrow-down{
+          width:100%;
+          cursor: pointer;
+        }
+      }
+      
 
       .filter-button{
         border-radius: 8px;
         border:none;
         width: 3rem;
+        height:3rem;
         color:$secondary-color;
         background-color: $main-brand-color;
         border-bottom: 2px solid grey;

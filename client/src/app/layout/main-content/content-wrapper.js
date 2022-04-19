@@ -3,8 +3,7 @@ import Card from "../../shared-components/navigation-card/card";
 import "./content-wrapper-style.scss";
 import RecipeCard from "../../shared-components/recipe-cards/recipeCards";
 import InputField from "../../../shared/input/input-component";
-import Button from "../../../shared/button/button-component";
-import { useState } from "react";
+import {FaArrowDown} from 'react-icons/fa';
 import SearchedRecipeCard from "../../shared-components/searchedRecipeCard/searched-recipe-card";
 
 const Wrapper = ({
@@ -14,8 +13,6 @@ const Wrapper = ({
   handleChange,
   placeholder,
 }) => {
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(!show);
   return (
     <div>
       <Header />
@@ -26,12 +23,7 @@ const Wrapper = ({
               placeholder={placeholder}
               onChange={(e) => handleChange(e.target.value)}
             />
-            <Button
-              onClick={handleShow}
-              className="filter-button"
-              label={"="}
-            ></Button>
-            {show ? <div></div> : null}
+             <div className="filters-container"><FaArrowDown className="arrow-down" /></div>
           </div>
         ) : null}
         {menuCards ? (
