@@ -8,7 +8,6 @@ const RecipeCard = ({ props }) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   useEffect(()=>{
-    console.log(props)
     //api array has repeated ingridients
     const ingridients=props.extendedIngredients;
     const uniqueIngridients= [
@@ -20,6 +19,7 @@ const RecipeCard = ({ props }) => {
   return (
     <>
       <div onClick={handleShow} className="recipe-wrapper">
+       
         <img
           className="recipe-img"
           alt={altText.toString()}
@@ -31,6 +31,7 @@ const RecipeCard = ({ props }) => {
           {props.readyInMinutes} min
         </p>
       </div>
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{props.title}</Modal.Title>

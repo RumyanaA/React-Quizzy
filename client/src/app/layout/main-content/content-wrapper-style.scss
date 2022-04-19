@@ -5,13 +5,25 @@
     flex-direction: column;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    padding:8rem 3rem;
+    padding:3rem 3rem;
     margin: 1.2rem 4.5rem;
     box-shadow: 1px 1px 9px 12px rgba(0, 0, 0, 0.15);
     border-radius: 15px;
     height: fit-content;
     background-color: $content-wrapper-color;
 
+    .search-container{
+      display:flex;
+
+      .filter-button{
+        border-radius: 8px;
+        border:none;
+        width: 3rem;
+        color:$secondary-color;
+        background-color: $main-brand-color;
+        border-bottom: 2px solid grey;
+      }
+    }
     .nav-cards{
       display: flex;
       flex-wrap: wrap;
@@ -28,7 +40,9 @@
     }
 
     .recipe-cards-container{
+      width:77rem;
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-around;
       margin-top:2rem;
     }
