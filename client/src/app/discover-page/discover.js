@@ -30,7 +30,7 @@ const Discover = () => {
   };
   const fetchRandomRecipes = async () => {
     await fetch(
-      `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=12`
+      `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=10`
     )
       .then((response) => response.json())
       .then((data) => {
