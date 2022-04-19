@@ -22,7 +22,9 @@ const Discover = () => {
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        setSearchedRecipes(data.results);
+        if(data.results.length>0){
+          setSearchedRecipes(data.results);
+        }
         if(searchedRecipes){
           setRandomRecipes([])
         }
