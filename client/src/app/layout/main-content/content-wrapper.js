@@ -49,14 +49,14 @@ const Wrapper = ({
             <h5 className="daily-recipes">Daily Recipes</h5>
           </div>
         ) : null}
-        {recipes.length ? (
+        {recipes ? (
           <div className="recipe-cards-container">
             {recipes?.map((recipe, index) => {
               return <RecipeCard key={index} props={recipe} />;
             })}
           </div>
         ) : null}
-        {searchedRecipes.length ? (
+        {searchedRecipes ? (
           <div className="recipe-cards-container">
             {searchedRecipes?.map((recipe, index) => {
               return <SearchedRecipeCard key={index} props={recipe} />;
