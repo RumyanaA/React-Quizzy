@@ -1,7 +1,12 @@
 import { useState } from "react";
-import Wrapper from "../layout/main-content/content-wrapper";
+import Wrapper from "../layout/main-content/content-wrapper-depricated";
 import "./discover-style.scss";
 import { apiKey } from "../../config/cooking-apiKey";
+import Header from "../layout/header/header";
+import InputField from "../../shared/input/input-component";
+import { FaArrowDown } from "react-icons/fa";
+import RecipeCard from "../shared-components/recipe-cards/recipeCards";
+import SearchedRecipeCard from "../shared-components/searchedRecipeCard/searched-recipe-card";
 
 const Discover = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -11,9 +16,9 @@ const Discover = () => {
   let url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${searchValue}`;
   const handleChange = (value) => {
     setSearchValue(value);
-    if(!value){
+    if (!value) {
       fetchRandomRecipes();
-    }else{
+    } else {
       url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${value}`;
       fetchRecipes();
     }
@@ -22,11 +27,11 @@ const Discover = () => {
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        if(data.results.length>0){
+        if (data.results.length > 0) {
           setSearchedRecipes(data.results);
         }
-        if(searchedRecipes){
-          setRandomRecipes([])
+        if (searchedRecipes) {
+          setRandomRecipes([]);
         }
       });
   };
@@ -37,19 +42,35 @@ const Discover = () => {
       .then((response) => response.json())
       .then((data) => {
         setRandomRecipes(data.recipes);
-        if(randomRecipes){
-          setSearchedRecipes([])
+        if (randomRecipes) {
+          setSearchedRecipes([]);
         }
       });
   };
   return (
     <div>
-      <Wrapper
-        searchedRecipes={searchedRecipes}
-        recipes={randomRecipes}
-        handleChange={handleChange}
-        placeholder={inputPlaceholder}
-      />
+      <Header />
+      <div className="wrapper">
+        <div className="search-container">
+          <InputField
+            placeholder={inputPlaceholder}
+            onChange={(e) => handleChange(e.target.value)}
+          />
+          <div className="filters-container">
+            <FaArrowDown className="arrow-down" />
+          </div>
+        </div>
+        <div className="recipe-cards-container">
+            {randomRecipes?.map((recipe, index) => {
+              return <RecipeCard key={index} props={recipe} />;
+            })}
+          </div>
+          <div className="recipe-cards-container">
+            {searchedRecipes?.map((recipe, index) => {
+              return <SearchedRecipeCard key={index} props={recipe} />;
+            })}
+          </div>
+      </div>
       <button onClick={fetchRandomRecipes}>show recipes</button>
     </div>
   );

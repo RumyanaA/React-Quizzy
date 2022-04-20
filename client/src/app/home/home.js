@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import Wrapper from "../layout/main-content/content-wrapper";
+import Wrapper from "../layout/main-content/content-wrapper-depricated";
 import { apiKey } from "../../config/cooking-apiKey";
+import Header from "../layout/header/header";
+import RecipeCard from "../shared-components/recipe-cards/recipeCards";
+import Card from "../shared-components/navigation-card/card";
 const Home = () => {
     const [randomRecipes, setRandomRecipes]=useState([]);
 //   useEffect(() => {
@@ -44,8 +47,31 @@ const Home = () => {
   ];
   return (
     <div>
-      <Wrapper menuCards={menuCards} recipes={randomRecipes} />
-      <button onClick={fetchRandomRecipes}>show recipes</button>
+      < Header />
+      <div className="wrapper">
+      <div className="nav-cards">
+            {menuCards?.map((card, index) => {
+              return (
+                <Card
+                  key={index}
+                  title={card.title}
+                  description={card.description}
+                  routerLink={card.routerLink}
+                />
+              );
+            })}
+            
+            <h5 className="daily-recipes">Daily Recipes</h5>
+            <button onClick={fetchRandomRecipes}>show recipes</button>
+          </div>
+      <div className="recipe-cards-container">
+            {randomRecipes?.map((recipe, index) => {
+              return <RecipeCard key={index} props={recipe} />;
+            })}
+          </div>
+      </div>
+      {/* <Wrapper menuCards={menuCards} recipes={randomRecipes} /> */}
+      
     </div>
   );
 };
