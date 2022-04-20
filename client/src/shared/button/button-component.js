@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 import "./button-style.scss";
-const Button = ({ type, onClick, className, children, label, ...props }) => {
+const Button = ({ type, onClick,id, className, children, label, ...props }) => {
   return (
     <React.Fragment>
-      <button type={type} onClick={onClick} className={className}>
+      <button id={id} type={type} onClick={onClick} className={className}>
         {label}
       </button>
     </React.Fragment>

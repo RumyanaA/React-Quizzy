@@ -27,7 +27,7 @@ const Login = () => {
           <div>
         <InputField
           onChange={handleChange("username")}
-          type={"username"}
+          type={"text"}
           name={"username"}
           value={username}
           label={"username"}

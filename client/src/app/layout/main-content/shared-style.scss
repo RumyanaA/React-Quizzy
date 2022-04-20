@@ -20,14 +20,9 @@
       .filters-container{
         background-color: $secondary-color;
         border-radius: 8px;
-        width:14.5rem;
-        height:2rem;
-        transition: width 2s, height 2s;
+        width:27rem;
+        height:8rem;
         margin-top:1rem;
-        &:hover {
-          width:27rem;
-          height:6rem;
-        }
         .arrow-down{
           width:100%;
           cursor: pointer;

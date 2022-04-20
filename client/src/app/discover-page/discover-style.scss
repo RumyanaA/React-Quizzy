@@ -1,0 +1,38 @@
+.nav-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+
+    .nav-button {
+        background-color: inherit;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        cursor: pointer;
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+        width: 27rem;
+    }
+    .nav-button-red {
+        background-color: inherit;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 2px solid red;
+        cursor: pointer;
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+        width: 27rem;
+    }
+}
+
+.radio-inputs-container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+
+    .radio-input-and-label {
+        display: flex;
+        align-items: center;
+    }
+}

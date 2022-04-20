@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Wrapper from "../layout/main-content/content-wrapper-depricated";
+import '../layout/main-content/shared-style.scss';
 import { apiKey } from "../../config/cooking-apiKey";
 import Header from "../layout/header/header";
 import RecipeCard from "../shared-components/recipe-cards/recipeCards";
@@ -70,7 +70,6 @@ const Home = () => {
             })}
           </div>
       </div>
-      {/* <Wrapper menuCards={menuCards} recipes={randomRecipes} /> */}
       
     </div>
   );
