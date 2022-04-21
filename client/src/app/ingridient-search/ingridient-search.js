@@ -6,6 +6,8 @@ import "../layout/main-content/shared-style.scss";
 import Button from "../../shared/button/button-component";
 import SearchedRecipeCard from "../shared-components/searchedRecipeCard/searched-recipe-card";
 import IngridientCard from "../shared-components/ingridient-card/ingridient-card";
+import ingridientsImg from '../../shared/ingridients.jpg';
+import fridgeIngridientsImg from '../../shared/fridge.jpg'
 const IngridientSearch = () => {
   const [ingridients, setIngridients] = useState([]);
   const [selectedIngridients, setSelectedIngridients] = useState([]);
@@ -57,6 +59,7 @@ const IngridientSearch = () => {
         <div className="all-ingridients-right-line"></div>
       </div>
       <div className="ingridients-container">
+          {ingridients.length===0?<div className="ingridients-img-container"><img className="ingridients-img" alt='ingridients' src={ingridientsImg}></img></div>:null}
         {ingridients?.map((item,index) => {
             return (
                 <IngridientCard key={index} props={item} addIngridient={addIngridient} selectedIngridient={false}/>
@@ -68,6 +71,8 @@ const IngridientSearch = () => {
         <div className="all-ingridients-right-line"></div>
       </div>
       <div className="selected-ingridients-container">
+      {selectedIngridients.length===0?<div className="ingridients-img-container"><img className="ingridients-img" alt='ingridients' src={fridgeIngridientsImg}></img></div>:null}
+        
         {selectedIngridients?.map((item,index) => {
           return (
          <IngridientCard key={index} props={item} removeIngridient={removeIngridient} selectedIngridient={true}/>
