@@ -49,6 +49,10 @@ const KeywordSearch = () => {
         onChange={(e) => handleChange(e.target.value)}
       />
     </div>
+    <div className="all-ingridients-title">
+        <div className="all-ingridients-left-line"></div>Found Recipes{" "}
+        <div className="all-ingridients-right-line"></div>
+      </div>
     <div className="recipe-cards-container">
     {randomRecipes?.map((recipe, index) => {
       return <RecipeCard key={index} props={recipe} />;
