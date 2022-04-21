@@ -7,7 +7,8 @@ import Button from "../../shared/button/button-component";
 import SearchedRecipeCard from "../shared-components/searchedRecipeCard/searched-recipe-card";
 import IngridientCard from "../shared-components/ingridient-card/ingridient-card";
 import ingridientsImg from '../../shared/ingridients.jpg';
-import fridgeIngridientsImg from '../../shared/fridge.jpg'
+import fridgeIngridientsImg from '../../shared/fridge.jpg';
+import recipesImg from '../../shared/recipes.jpg';
 import TitleComponents from "../shared-components/titles-component/titles-component";
 const IngridientSearch = () => {
   const [ingridients, setIngridients] = useState([]);
@@ -76,6 +77,7 @@ const IngridientSearch = () => {
       </div>
       <TitleComponents title='Found Recipes'/>
       <div className="recipe-cards-container">
+      {selectedIngridients.length===0?<div className="ingridients-img-container"><img className="ingridients-img" alt='recipes' src={recipesImg}></img></div>:null}
         {recipes?.map((recipe, index) => {
           return <SearchedRecipeCard key={index} props={recipe} />;
         })}
