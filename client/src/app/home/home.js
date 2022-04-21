@@ -6,6 +6,7 @@ import RecipeCard from "../shared-components/recipe-cards/recipeCards";
 import Card from "../shared-components/navigation-card/card";
 import Button from "../../shared/button/button-component";
 import parse from 'html-react-parser';
+import TitleComponents from "../shared-components/titles-component/titles-component";
 const Home = () => {
   const [randomRecipes, setRandomRecipes] = useState([]);
   const [foodJoke, setFoodJoke] = useState('')
@@ -77,10 +78,7 @@ const Home = () => {
             <h6>Random food joke: </h6>
           {parse(foodJoke)}
           </div>
-        <div className="all-ingridients-title">
-            <div className="all-ingridients-left-line"></div>Daily-Recipes
-            <div className="all-ingridients-right-line"></div>
-          </div>
+          <TitleComponents title='Daily Recipes'/>
           <div className="button-container"> <Button onClick={fetchRandomRecipes} label='show recipes'></Button> </div>
           
         <div className="recipe-cards-container">

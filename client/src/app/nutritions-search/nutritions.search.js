@@ -3,6 +3,7 @@ import Button from "../../shared/button/button-component";
 import SearchedRecipeCard from "../shared-components/searchedRecipeCard/searched-recipe-card";
 import "./nutritions-search-style.scss";
 import { apiKey } from "../../config/cooking-apiKey";
+import TitleComponents from "../shared-components/titles-component/titles-component";
 
 const NutritionsSearch = () => {
   const [nutritions, setNutritions] = useState({
@@ -97,10 +98,7 @@ const NutritionsSearch = () => {
         </div>
       </div>
       <div className="button-container"> <Button onClick={searchRecipe} label='Search Recipes'></Button></div>
-      <div className="all-ingridients-title">
-        <div className="all-ingridients-left-line"></div>Found Recipes
-        <div className="all-ingridients-right-line"></div>
-      </div>
+      <TitleComponents title='Found Recipes'/>
       <div className="recipe-cards-container">
         {recipes?.map((recipe, index) => {
           return <SearchedRecipeCard key={index} props={recipe} />;

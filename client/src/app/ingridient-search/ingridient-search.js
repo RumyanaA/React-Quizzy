@@ -8,6 +8,7 @@ import SearchedRecipeCard from "../shared-components/searchedRecipeCard/searched
 import IngridientCard from "../shared-components/ingridient-card/ingridient-card";
 import ingridientsImg from '../../shared/ingridients.jpg';
 import fridgeIngridientsImg from '../../shared/fridge.jpg'
+import TitleComponents from "../shared-components/titles-component/titles-component";
 const IngridientSearch = () => {
   const [ingridients, setIngridients] = useState([]);
   const [selectedIngridients, setSelectedIngridients] = useState([]);
@@ -54,10 +55,7 @@ const IngridientSearch = () => {
         />
         <Button onClick={searchRecipe} label="Search recipe" />
       </div>
-      <div className="all-ingridients-title">
-        <div className="all-ingridients-left-line"></div>All Ingridients{" "}
-        <div className="all-ingridients-right-line"></div>
-      </div>
+      <TitleComponents title='All Ingridients'/>
       <div className="ingridients-container">
           {ingridients.length===0?<div className="ingridients-img-container"><img className="ingridients-img" alt='ingridients' src={ingridientsImg}></img></div>:null}
         {ingridients?.map((item,index) => {
@@ -66,10 +64,7 @@ const IngridientSearch = () => {
                  );
         })}
       </div>
-      <div className="all-ingridients-title">
-        <div className="all-ingridients-left-line"></div>My Ingridients
-        <div className="all-ingridients-right-line"></div>
-      </div>
+      <TitleComponents title='My Ingridients'/>
       <div className="selected-ingridients-container">
       {selectedIngridients.length===0?<div className="ingridients-img-container"><img className="ingridients-img" alt='ingridients' src={fridgeIngridientsImg}></img></div>:null}
         
@@ -79,10 +74,7 @@ const IngridientSearch = () => {
           );
         })}
       </div>
-      <div className="all-ingridients-title">
-        <div className="all-ingridients-left-line"></div>Found Recipes
-        <div className="all-ingridients-right-line"></div>
-      </div>
+      <TitleComponents title='Found Recipes'/>
       <div className="recipe-cards-container">
         {recipes?.map((recipe, index) => {
           return <SearchedRecipeCard key={index} props={recipe} />;

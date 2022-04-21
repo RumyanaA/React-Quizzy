@@ -3,6 +3,7 @@ import InputField from "../../shared/input/input-component";
 import { apiKey } from "../../config/cooking-apiKey";
 import SearchedRecipeCard from "../shared-components/searchedRecipeCard/searched-recipe-card";
 import RecipeCard from "../shared-components/recipe-cards/recipeCards";
+import TitleComponents from "../shared-components/titles-component/titles-component";
 const KeywordSearch = () => {
   const [searchValue, setSearchValue] = useState("");
   const [randomRecipes, setRandomRecipes] = useState([]);
@@ -49,10 +50,7 @@ const KeywordSearch = () => {
         onChange={(e) => handleChange(e.target.value)}
       />
     </div>
-    <div className="all-ingridients-title">
-        <div className="all-ingridients-left-line"></div>Found Recipes{" "}
-        <div className="all-ingridients-right-line"></div>
-      </div>
+    <TitleComponents title='Found Recipes'/>
     <div className="recipe-cards-container">
     {randomRecipes?.map((recipe, index) => {
       return <RecipeCard key={index} props={recipe} />;
