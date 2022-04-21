@@ -1,15 +1,15 @@
 import { useState } from "react";
-import InputField from "../../shared/input/input-component";
-import { apiKey } from "../../config/cooking-apiKey";
+import { apiKey } from "../../../config/cooking-apiKey";
 import "./ingridient-search-style.scss";
-import "../layout/main-content/shared-style.scss";
-import Button from "../../shared/button/button-component";
-import SearchedRecipeCard from "../shared-components/searchedRecipeCard/searched-recipe-card";
-import IngridientCard from "../shared-components/ingridient-card/ingridient-card";
-import ingridientsImg from '../../shared/ingridients.jpg';
-import fridgeIngridientsImg from '../../shared/fridge.jpg';
-import recipesImg from '../../shared/recipes.jpg';
-import TitleComponents from "../shared-components/titles-component/titles-component";
+import "../../layout/main-content/shared-style.scss";
+import Button from "../../../shared/button/button-component";
+import SearchedRecipeCard from "../../shared-components/searchedRecipeCard/searched-recipe-card";
+import IngridientCard from "../../shared-components/ingridient-card/ingridient-card";
+import ingridientsImg from '../../../shared/ingridients.jpg';
+import fridgeIngridientsImg from '../../../shared/fridge.jpg';
+import recipesImg from '../../../shared/recipes.jpg';
+import TitleComponents from "../../shared-components/titles-component/titles-component";
+import InputField from "../../../shared/input/input-component";
 const IngridientSearch = () => {
   const [ingridients, setIngridients] = useState([]);
   const [selectedIngridients, setSelectedIngridients] = useState([]);

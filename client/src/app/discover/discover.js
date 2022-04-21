@@ -2,10 +2,10 @@ import { useState } from "react";
 import '../layout/main-content/shared-style.scss';
 import "./discover-style.scss";
 import Header from "../layout/header/header";
-import IngridientSearch from "../ingridient-search/ingridient-search";
+import IngridientSearch from "./ingridient-search/ingridient-search";
 import Button from "../../shared/button/button-component";
-import KeywordSearch from "../keyword-search/keyword-search";
-import NutritionsSearch from "../nutritions-search/nutritions.search";
+import KeywordSearch from "./keyword-search/keyword-search";
+import NutritionsSearch from "./nutritions-search/nutritions.search";
 
 const Discover = () => {
   const [selectedSearch, setSelectedSearch] = useState('keyword')

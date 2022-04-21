@@ -1,9 +1,9 @@
 import { useState } from "react";
-import InputField from "../../shared/input/input-component";
-import { apiKey } from "../../config/cooking-apiKey";
-import SearchedRecipeCard from "../shared-components/searchedRecipeCard/searched-recipe-card";
-import RecipeCard from "../shared-components/recipe-cards/recipeCards";
-import TitleComponents from "../shared-components/titles-component/titles-component";
+import InputField from "../../../shared/input/input-component";
+import { apiKey } from "../../../config/cooking-apiKey";
+import SearchedRecipeCard from "../../shared-components/searchedRecipeCard/searched-recipe-card";
+import RecipeCard from "../../shared-components/recipe-cards/recipeCards";
+import TitleComponents from "../../shared-components/titles-component/titles-component";
 const KeywordSearch = () => {
   const [searchValue, setSearchValue] = useState("");
   const [randomRecipes, setRandomRecipes] = useState([]);
