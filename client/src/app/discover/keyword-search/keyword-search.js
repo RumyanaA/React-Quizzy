@@ -9,7 +9,17 @@ const KeywordSearch = () => {
   const [randomRecipes, setRandomRecipes] = useState([]);
   const [searchedRecipes, setSearchedRecipes] = useState([]);
   let url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${searchValue}`;
-  const handleChange = (value) => {
+  function debounce(fn, delay) {
+    let timer;
+    return function () {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(context, args), delay);
+    };
+  }
+
+  const handleChange = debounce((value) => {
     setSearchValue(value);
     if (!value) {
       fetchRandomRecipes();
@@ -17,7 +27,7 @@ const KeywordSearch = () => {
       url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${value}`;
       fetchRecipes();
     }
-  };
+  },1000);
   const fetchRecipes = async () => {
     await fetch(url)
       .then((response) => response.json())
