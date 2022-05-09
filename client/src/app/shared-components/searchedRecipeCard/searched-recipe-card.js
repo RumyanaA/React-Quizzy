@@ -23,13 +23,18 @@ const SearchedRecipeCard = ({ props }) => {
         setCurrentRecipe(data);
       });
   };
+  const enter = () => {
+    handleShow();
+  }
+
   return (
     <>
-      <div onClick={handleClick} className="recipe-wrapper">
+      <div onClick={handleClick} className="recipe-wrapper" onMouseEnter={enter}>
         <img className="recipe-img" alt={"recipe"} src={props.image}></img>
         <h5 className="recipe-title">{props.title}</h5>
+        {show && <div className="recipe-tooltip">{props.title}</div>}
       </div>
-      {show?<Modal show={show} onHide={handleClose}>
+      {show ? <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{currentRecipe?.title}</Modal.Title>
           <img className="recipe-img-modal" alt={"recipe"} src={currentRecipe?.image} />
@@ -56,7 +61,7 @@ const SearchedRecipeCard = ({ props }) => {
             Close
           </Button>
         </Modal.Footer>
-      </Modal>:null}
+      </Modal> : null}
     </>
   );
 };
