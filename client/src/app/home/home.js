@@ -7,6 +7,7 @@ import Card from "../shared-components/navigation-card/card";
 import Button from "../../shared/button/button-component";
 import parse from 'html-react-parser';
 import TitleComponents from "../shared-components/titles-component/titles-component";
+import RecipeSearchAndSelect from "../shared-components/recipe-search-and-select/recipe-search-and-select";
 const Home = () => {
   const [randomRecipes, setRandomRecipes] = useState([]);
   const [foodJoke, setFoodJoke] = useState('')
@@ -62,6 +63,7 @@ const Home = () => {
     <div>
       <Header />
       <div className="wrapper">
+        <RecipeSearchAndSelect />
         <div className="nav-cards">
           {menuCards?.map((card, index) => {
             return (
