@@ -27,9 +27,11 @@ const SearchedRecipeCard = ({ props }) => {
     <>
       <div onClick={handleClick} className="recipe-wrapper">
         <img className="recipe-img" alt={"recipe"} src={props.image}></img>
-        <h5 className="recipe-title">{props.title}</h5>
+        <div className="recipe-title"> {props.title}
+          <span className="recipe-tooltip">{props.title}</span>
+        </div>
       </div>
-      {show?<Modal show={show} onHide={handleClose}>
+      {show ? <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{currentRecipe?.title}</Modal.Title>
           <img className="recipe-img-modal" alt={"recipe"} src={currentRecipe?.image} />
@@ -56,7 +58,7 @@ const SearchedRecipeCard = ({ props }) => {
             Close
           </Button>
         </Modal.Footer>
-      </Modal>:null}
+      </Modal> : null}
     </>
   );
 };
