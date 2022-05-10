@@ -42,13 +42,12 @@
     line-height: normal;
     white-space: normal;
   }
-
   .recipe-title:hover .recipe-tooltip {
     visibility: visible;
     opacity: 1;
   }
+  
 }
-
 .modal-dialog {
   max-width: 60rem;
   .modal-content {

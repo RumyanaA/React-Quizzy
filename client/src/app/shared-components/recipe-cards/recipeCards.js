@@ -25,7 +25,9 @@ const RecipeCard = ({ props }) => {
           alt={altText.toString()}
           src={props.image}
         />
-        <p className="recipe-title">{props.title}</p>
+       <div className="recipe-title"> {props.title}
+          <span className="recipe-tooltip">{props.title}</span>
+        </div>
         <p>
           {props.extendedIngredients.length} Ingredients |{" "}
           {props.readyInMinutes} min
