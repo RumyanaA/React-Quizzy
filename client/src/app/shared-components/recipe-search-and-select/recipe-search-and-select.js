@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import InputField from "../../../shared/input/input-component";
 import { apiKey } from "../../../config/cooking-apiKey";
 import Spinner from "react-bootstrap/esm/Spinner";
+import "./recipe-search-and-select-style.scss";
 
 const RecipeSearchAndSelect = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -49,16 +50,20 @@ const RecipeSearchAndSelect = () => {
         placeholder="Search recipes by keyword..."
         onChange={(e) => handleChange(e.target.value)}
         value={searchValue}
+        autoComplete="off"
       />
       <div>
         {toggleDropDown ? (
-          <div>
+          <div className="dropdown-content">
             {loadingRecipes ? (
-              <Spinner animation="grow" variant="primary" />
+              <div className="spinner">
+                <Spinner animation="grow" variant="primary" />
+              </div>
             ) : (
               <div>
                 {recipeOptions.map((recipeOption) => (
                   <option
+                    className="dropdown-option"
                     onClick={() => handleSelectOption(recipeOption)}
                     key={recipeOption.id}
                     value={recipeOption.title}
