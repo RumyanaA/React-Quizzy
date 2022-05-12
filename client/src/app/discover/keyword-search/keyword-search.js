@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import InputField from "../../../shared/input/input-component";
 import { apiKey } from "../../../config/cooking-apiKey";
 import SearchedRecipeCard from "../../shared-components/searchedRecipeCard/searched-recipe-card";
@@ -11,32 +11,26 @@ const KeywordSearch = () => {
   const [randomRecipes, setRandomRecipes] = useState([]);
   const [searchedRecipes, setSearchedRecipes] = useState([]);
   const [loadingRecipes, setLoadingRecipes] = useState(false);
+  const timeout = useRef();
   let url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${searchValue}`;
-  function debounce(fn, delay) {
-    let timer;
-    return function () {
-      const context = this;
-      const args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(() => fn.apply(context, args), delay);
-      setLoadingRecipes(true);
-    };
-  }
 
-  const handleChange = debounce((value) => {
+  const handleChange = (value) => {
     setSearchValue(value);
-
+    if(!loadingRecipes){
+      setLoadingRecipes(true);
+    }
     if (!value) {
       fetchRandomRecipes();
     } else {
       url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${value}`;
       fetchRecipes();
     }
-  }, 1000);
+  }
   const fetchRecipes = async () => {
-    await fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
+    clearTimeout(timeout.current);
+    timeout.current = setTimeout(async () => {
+    const response = await fetch(url)
+    const data = await response.json()
         if (data.results.length > 0) {
           setSearchedRecipes(data.results);
         }
@@ -44,19 +38,21 @@ const KeywordSearch = () => {
           setRandomRecipes([]);
         }
         setLoadingRecipes(false);
-      });
+    },1000);
   };
   const fetchRandomRecipes = async () => {
-    await fetch(
+    clearTimeout(timeout.current);
+    timeout.current = setTimeout(async () => {
+    const response = await fetch(
       `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=10`
     )
-      .then((response) => response.json())
-      .then((data) => {
+      const data = await response.json()
         setRandomRecipes(data.recipes);
         if (randomRecipes) {
           setSearchedRecipes([]);
         }
-      });
+        setLoadingRecipes(false);
+    },1000)
   };
   return (
     <>
