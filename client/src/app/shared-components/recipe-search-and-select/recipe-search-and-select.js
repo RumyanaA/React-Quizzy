@@ -11,21 +11,23 @@ const RecipeSearchAndSelect = () => {
   const [recipeOptions, setRecipeOptions] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState({});
   const timeout = useRef();
-  let url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${searchValue}`;
   const handleChange = (value) => {
-    setToggleDropdown(true);
-    setLoadingRecipes(true);
     setSearchValue(value);
     if (!value) {
-      setRecipeOptions([]);
-      setLoadingRecipes(false);
-      setToggleDropdown(false);
-      return;
-    }
-    url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${value}`;
-    fetchRecipes();
+        setRecipeOptions([]);
+        setLoadingRecipes(false);
+        setToggleDropdown(false);
+        return;
+      }
+      if(!toggleDropDown){
+        setToggleDropdown(true);
+      } if(!loadingRecipes){
+        setLoadingRecipes(true);
+      }
+    const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${value}`;
+    fetchRecipes(url);
   };
-  const fetchRecipes = () => {
+  const fetchRecipes = (url) => {
     clearTimeout(timeout.current);
     timeout.current = setTimeout(async () => {
       await fetch(url)
@@ -53,7 +55,7 @@ const RecipeSearchAndSelect = () => {
         autoComplete="off"
       />
       <div>
-        {toggleDropDown ? (
+        {toggleDropDown && (
           <div className="dropdown-content">
             {loadingRecipes ? (
               <div className="spinner">
@@ -74,7 +76,7 @@ const RecipeSearchAndSelect = () => {
               </div>
             )}
           </div>
-        ) : null}
+        )}
       </div>
     </>
   );
