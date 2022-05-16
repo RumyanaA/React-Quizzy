@@ -8,16 +8,20 @@ import './menu-planner-style.scss';
 import React, { useState } from "react";
 import PlannerModal from "./planner-modal/planner-modal";
 const MenuPlanner = () => {
-  const [modal, setModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [date, setDate] = useState(new Date());
   const editEvent = () => { };
   const handleDateClick = (info) => {
-    console.log('modal')
-    setModal(!modal);
+
+    setIsOpen(true);
+    const selectedDate = info.date.toString().slice(4,15);
+    setDate(selectedDate);
+
     // alert('Clicked on: ' + info.dateStr);
     // // change the day's background color just for fun
     // info.dayEl.style.backgroundColor = 'red';
   };
-  
+
   return (
     <>
       <Header />
@@ -42,8 +46,6 @@ const MenuPlanner = () => {
             events={[
               { // this object will be "parsed" into an Event Object
                 title: 'The Title', // a property!
-                date: '2022-05-10', // a property!
-                end: '2022-05-13', // a property! ** see important note below about 'end' **
                 url: 'google.com'
               },
               { title: 'event 2', date: '2022-05-02' }
@@ -60,8 +62,7 @@ const MenuPlanner = () => {
           />
         </div>
       </div>
-      {modal && <PlannerModal/>}
-
+      {isOpen ? <PlannerModal onClose={() => setIsOpen(false)} date={date} /> : null}
     </>
   );
 };
