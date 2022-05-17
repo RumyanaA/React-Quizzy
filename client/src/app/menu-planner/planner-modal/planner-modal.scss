@@ -93,7 +93,7 @@
   font-size: 25px;
   font-weight: bold;
   padding-bottom: 3rem;
-  text-shadow:5px 5px 10px #aca3a3;
+  text-shadow: 5px 5px 10px #aca3a3;
 }
 
 .item {
@@ -119,6 +119,16 @@
       .arrow-icon {
         padding-right: 0.5rem;
       }
+    
+    }
+    .title {
+      white-space: nowrap;
+      width: 50px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+      width: 47rem;
+      color: rgb(90, 86, 86);
     }
   }
   .recipe {
