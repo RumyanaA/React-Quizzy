@@ -6,85 +6,47 @@ import RecipeCard from "../../shared-components/recipe-cards/recipeCards";
 import TitleComponents from "../../shared-components/titles-component/titles-component";
 import Spinner from "react-bootstrap/Spinner";
 import './keyword-search-style.scss';
+import useApi from "../../shared-components/apiCalls/useApi";
+
 const KeywordSearch = () => {
-  const [searchValue, setSearchValue] = useState("");
-  const [randomRecipes, setRandomRecipes] = useState([]);
-  const [searchedRecipes, setSearchedRecipes] = useState([]);
-  const [loadingRecipes, setLoadingRecipes] = useState(false);
-  let url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${searchValue}`;
-  function debounce(fn, delay) {
-    let timer;
-    return function () {
-      const context = this;
-      const args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(() => fn.apply(context, args), delay);
-      setLoadingRecipes(true);
-    };
-  }
+  const [url, setUrl] = useState();
+  const {
+    recipes,
+    randomRecipes,
+    loading
+  } = useApi({url});
 
-  const handleChange = debounce((value) => {
-    setSearchValue(value);
-
-    if (!value) {
-      fetchRandomRecipes();
-    } else {
-      url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${value}`;
-      fetchRecipes();
-    }
-  }, 1000);
-  const fetchRecipes = async () => {
-    await fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.results.length > 0) {
-          setSearchedRecipes(data.results);
-        }
-        if (searchedRecipes) {
-          setRandomRecipes([]);
-        }
-        setLoadingRecipes(false);
-      });
-  };
-  const fetchRandomRecipes = async () => {
-    await fetch(
-      `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=10`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setRandomRecipes(data.recipes);
-        if (randomRecipes) {
-          setSearchedRecipes([]);
-        }
-      });
-  };
   return (
     <>
       <div className="search-container">
         <InputField
           placeholder="Search recipes by keyword..."
-          onChange={(e) => handleChange(e.target.value)}
+          onChange={({ target: { value } }) => setUrl(
+            value
+              ? `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${value}`
+              : `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=10`
+          )}
         />
       </div>
       <TitleComponents title="Found Recipes" />
       <div className="spinner-div">
-        {loadingRecipes ? <Spinner animation="grow" variant="primary" /> : null}
+        {loading && <Spinner animation="grow" variant="primary" />}
       </div>
-      {randomRecipes.length?<div className="recipe-cards-container">
+      {randomRecipes.length?
+      <div className="recipe-cards-container">
         {randomRecipes?.map((recipe, index) => {
           return <RecipeCard key={index} props={recipe} />;
         })}
       </div>
-      :
+       :
       <div className="recipe-cards-container">
-        {searchedRecipes?.map((recipe, index) => {
+        {recipes?.map((recipe, index) => {
           return <SearchedRecipeCard key={index} props={recipe} />;
         })}
-      </div>}
-      
-      
-      <button onClick={fetchRandomRecipes}>show recipes</button>
+      </div>
+      }
     </>
   );
 };
+
 export default KeywordSearch;
