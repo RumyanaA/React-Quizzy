@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import dayGridPlugin, { DayGridView } from "@fullcalendar/daygrid"; // a plugin!
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -5,34 +6,36 @@ import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 import Header from "../layout/header/header";
 import './menu-planner-style.scss';
-import React, { useState } from "react";
 import PlannerModal from "./planner-modal/planner-modal";
+
 const MenuPlanner = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dateToShow, setDateToShow] = useState(new Date());
   const [date, setDate] = useState(new Date());
-  const [menus, setMenus] = useState([{
-    date: '2022-05-07',
-    breakfast: { title: 'Bacon Caramels', details: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec con' },
-    lunch: {},
-    dinner: {}
-  },
-  {
-    date: '2022-05-02',
-    breakfast: {},
-    lunch: { title: 'Butternut Squash & Pear Soup: Real Convenience food', details: 'Recipe...' },
-    dinner: {}
-  }, {
-    date: '2022-06-01',
-    breakfast: {}
-    , lunch: {},
-    dinner: { title: 'Coconut Almond Cheesecake', details: 'Coconut almond cheesecake recipe' }
-  }]);
+  const [menus, setMenus] = useState([
+    {
+      date: '2022-05-07',
+      breakfast: { title: 'Bacon Caramels', details: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec con' },
+      lunch: {},
+      dinner: {}
+    },
+    {
+      date: '2022-05-02',
+      breakfast: {},
+      lunch: { title: 'Butternut Squash & Pear Soup: Real Convenience food', details: 'Recipe...' },
+      dinner: {}
+    }, {
+      date: '2022-06-01',
+      breakfast: {},
+      lunch: {},
+      dinner: { title: 'Coconut Almond Cheesecake', details: 'Coconut almond cheesecake recipe' }
+    }
+  ]);
   const [currMenu, setCurrMenu] = useState({});
 
   const [events, setEvents] = useState([
     {
-      
+
       title: 'breakfast: Bacon Caramels',
       date: '2022-05-07'
     },
@@ -44,16 +47,16 @@ const MenuPlanner = () => {
       title: 'dinner: Coconut Almond Cheesecake',
       date: '2022-06-01'
     }]);
-  const editEvent = () => { };
-  const handleDateClick = (info) => {
 
+  const editEvent = () => { };
+
+  const handleDateClick = info => {
     setIsOpen(true);
     const selectedDateString = info.date.toString().slice(4, 15);
     setDateToShow(selectedDateString);
 
     const parsedDate = parseDate(selectedDateString);
     setDate(parsedDate);
-
 
     let m = menus.find(m => m.date === parsedDate);
     if (!m) {
@@ -64,10 +67,9 @@ const MenuPlanner = () => {
         dinner: {}
       }
     }
-
     setCurrMenu(m);
-
   };
+
   const parseDate = (dateString) => {
     const monthString = dateString.slice(0, 3).trim();
     const day = dateString.slice(4, 6).trim();
@@ -101,7 +103,6 @@ const MenuPlanner = () => {
     }
 
     return `${year}-${month}-${day}`;
-
   }
 
   return (
@@ -138,11 +139,17 @@ const MenuPlanner = () => {
           />
         </div>
       </div>
-      {isOpen ? <PlannerModal onClose={() => setIsOpen(false)} 
-      dateToShow={dateToShow} menu={currMenu} events={events} 
-      setEvents={setEvents}
-      date={date}/> : null}
+      {isOpen
+        ?
+        <PlannerModal
+          onClose={() => setIsOpen(false)}
+          dateToShow={dateToShow} menu={currMenu} events={events}
+          setEvents={setEvents}
+          date={date}
+        />
+        : null}
     </>
   );
 };
+
 export default MenuPlanner;
