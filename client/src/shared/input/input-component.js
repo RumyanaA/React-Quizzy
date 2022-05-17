@@ -11,6 +11,7 @@ const InputField = ({
   error,
   children,
   label,
+  autoComplete,
   ...props
 }) => {
   
@@ -27,6 +28,7 @@ const InputField = ({
         onChange={onChange}
         value={value}
         className={className}
+        autoComplete={autoComplete}
         style={error && {border: 'solid 1px red'}}
       />
       { error && <p>{ error }</p>}
@@ -37,7 +39,8 @@ const InputField = ({
 InputField.defaultProps = {
   type: "text",
   name: "input-name",
-  className: "default-input"
+  className: "default-input",
+  autoComplete:"on"
 }
 
 InputField.propTypes = {
