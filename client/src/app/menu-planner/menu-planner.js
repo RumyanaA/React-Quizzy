@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import FullCalendar from "@fullcalendar/react"; // must go before plugins
-import dayGridPlugin, { DayGridView } from "@fullcalendar/daygrid"; // a plugin!
-import timeGridPlugin from "@fullcalendar/timegrid";
-import listPlugin from "@fullcalendar/list";
-import interactionPlugin from "@fullcalendar/interaction";
-import Header from "../layout/header/header";
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
+import FullCalendar from '@fullcalendar/react'; // must go before plugins
+import dayGridPlugin, { DayGridView } from '@fullcalendar/daygrid'; // a plugin!
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
+import Header from '../layout/header/header';
 import './menu-planner-style.scss';
-import PlannerModal from "./planner-modal/planner-modal";
+import PlannerModal from './planner-modal/planner-modal';
 
-const MenuPlanner = () => {
+function MenuPlanner() {
   const [isOpen, setIsOpen] = useState(false);
   const [dateToShow, setDateToShow] = useState(new Date());
   const [date, setDate] = useState(new Date());
@@ -17,19 +18,19 @@ const MenuPlanner = () => {
       date: '2022-05-07',
       breakfast: { title: 'Bacon Caramels', details: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec con' },
       lunch: {},
-      dinner: {}
+      dinner: {},
     },
     {
       date: '2022-05-02',
       breakfast: {},
       lunch: { title: 'Butternut Squash & Pear Soup: Real Convenience food', details: 'Recipe...' },
-      dinner: {}
+      dinner: {},
     }, {
       date: '2022-06-01',
       breakfast: {},
       lunch: {},
-      dinner: { title: 'Coconut Almond Cheesecake', details: 'Coconut almond cheesecake recipe' }
-    }
+      dinner: { title: 'Coconut Almond Cheesecake', details: 'Coconut almond cheesecake recipe' },
+    },
   ]);
   const [currMenu, setCurrMenu] = useState({});
 
@@ -37,38 +38,18 @@ const MenuPlanner = () => {
     {
 
       title: 'breakfast: Bacon Caramels',
-      date: '2022-05-07'
+      date: '2022-05-07',
     },
     {
       title: 'lunch: Butternut Squash & Pear Soup: Real Convenience food',
-      date: '2022-05-02'
+      date: '2022-05-02',
     },
     {
       title: 'dinner: Coconut Almond Cheesecake',
-      date: '2022-06-01'
+      date: '2022-06-01',
     }]);
 
   const editEvent = () => { };
-
-  const handleDateClick = info => {
-    setIsOpen(true);
-    const selectedDateString = info.date.toString().slice(4, 15);
-    setDateToShow(selectedDateString);
-
-    const parsedDate = parseDate(selectedDateString);
-    setDate(parsedDate);
-
-    let m = menus.find(m => m.date === parsedDate);
-    if (!m) {
-      m = {
-        date: '',
-        breakfast: {},
-        lunch: {},
-        dinner: {}
-      }
-    }
-    setCurrMenu(m);
-  };
 
   const parseDate = (dateString) => {
     const monthString = dateString.slice(0, 3).trim();
@@ -103,7 +84,26 @@ const MenuPlanner = () => {
     }
 
     return `${year}-${month}-${day}`;
-  }
+  };
+  const handleDateClick = (info) => {
+    setIsOpen(true);
+    const selectedDateString = info.date.toString().slice(4, 15);
+    setDateToShow(selectedDateString);
+
+    const parsedDate = parseDate(selectedDateString);
+    setDate(parsedDate);
+
+    let m = menus.find((meal) => meal.date === parsedDate);
+    if (!m) {
+      m = {
+        date: '',
+        breakfast: {},
+        lunch: {},
+        dinner: {},
+      };
+    }
+    setCurrMenu(m);
+  };
 
   return (
     <>
@@ -121,35 +121,37 @@ const MenuPlanner = () => {
             dateClick={handleDateClick}
             eventColor="purple"
             eventTimeFormat={{
-              hour: "numeric",
-              minute: "2-digit",
-              meridiem: "short",
+              hour: 'numeric',
+              minute: '2-digit',
+              meridiem: 'short',
             }}
-
             events={events}
             eventClick={editEvent}
             headerToolbar={{
-              left: "prev,next today",
-              center: "title",
-              right: "dayGridMonth,timeGridWeek,dayGridDay,listWeek",
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,dayGridDay,listWeek',
             }}
             aspectRatio={1}
             height={600}
-            dayMaxEvents={true}
+            dayMaxEvents
           />
         </div>
       </div>
       {isOpen
-        ?
-        <PlannerModal
-          onClose={() => setIsOpen(false)}
-          dateToShow={dateToShow} menu={currMenu} events={events}
-          setEvents={setEvents}
-          date={date}
-        />
+        ? (
+          <PlannerModal
+            onClose={() => setIsOpen(false)}
+            dateToShow={dateToShow}
+            menu={currMenu}
+            events={events}
+            setEvents={setEvents}
+            date={date}
+          />
+        )
         : null}
     </>
   );
-};
+}
 
 export default MenuPlanner;

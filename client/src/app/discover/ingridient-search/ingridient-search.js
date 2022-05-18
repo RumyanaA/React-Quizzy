@@ -1,24 +1,21 @@
-import { useState } from "react";
-import { apiKey } from "../../../config/cooking-apiKey";
-import "./ingridient-search-style.scss";
-import "../../layout/main-content/shared-style.scss";
-import Button from "../../../shared/button/button-component";
-import SearchedRecipeCard from "../../shared-components/searchedRecipeCard/searched-recipe-card";
-import IngridientCard from "../../shared-components/ingridient-card/ingridient-card";
+import { React, useState } from 'react';
+import { apiKey } from '../../../config/cooking-apiKey';
+import './ingridient-search-style.scss';
+import '../../layout/main-content/shared-style.scss';
+import Button from '../../../shared/button/button-component';
+import SearchedRecipeCard from '../../shared-components/searchedRecipeCard/searched-recipe-card';
+import IngridientCard from '../../shared-components/ingridient-card/ingridient-card';
 import ingridientsImg from '../../../shared/ingridients.jpg';
 import fridgeIngridientsImg from '../../../shared/fridge.jpg';
 import recipesImg from '../../../shared/recipes.jpg';
-import TitleComponents from "../../shared-components/titles-component/titles-component";
-import InputField from "../../../shared/input/input-component";
-const IngridientSearch = () => {
+import TitleComponents from '../../shared-components/titles-component/titles-component';
+import InputField from '../../../shared/input/input-component';
+
+function IngridientSearch() {
   const [ingridients, setIngridients] = useState([]);
   const [selectedIngridients, setSelectedIngridients] = useState([]);
   const [recipes, setRecipes] = useState([]);
-  let url = "https://api.spoonacular.com/food/ingredients/search?query=";
-  const handleChange = (value) => {
-    url = `https://api.spoonacular.com/food/ingredients/search?query=${value}&apiKey=${apiKey}`;
-    fetchIngridients();
-  };
+  let url = 'https://api.spoonacular.com/food/ingredients/search?query=';
   const fetchIngridients = async () => {
     await fetch(url)
       .then((response) => response.json())
@@ -26,19 +23,21 @@ const IngridientSearch = () => {
         setIngridients(data.results);
       });
   };
+  const handleChange = (value) => {
+    url = `https://api.spoonacular.com/food/ingredients/search?query=${value}&apiKey=${apiKey}`;
+    fetchIngridients();
+  };
+
   const addIngridient = (item) => {
     setSelectedIngridients([...selectedIngridients, item]);
   };
-  const removeIngridient = (item) =>{
-    const currentSelectedIngridients = selectedIngridients;
-    const indexToRemove = currentSelectedIngridients.findIndex(ingridient=>ingridient.id === item.id);
-    currentSelectedIngridients.splice(indexToRemove,1);
-    setSelectedIngridients([...currentSelectedIngridients]);
-  }
-  const searchRecipe = async () => {
-    const ingridientNames = selectedIngridients.map((item) => item.name);
-    const ingridientUrl = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingridientNames}&apiKey=${apiKey}`;
-    await fetchRecipes(ingridientUrl);
+  const removeIngridient = (item) => {
+    const currentIngridients = selectedIngridients;
+    const indexToRemove = currentIngridients.findIndex(
+      (ingridient) => ingridient.id === item.id,
+    );
+    currentIngridients.splice(indexToRemove, 1);
+    setSelectedIngridients([...currentIngridients]);
   };
   const fetchRecipes = async (ingridientUrl) => {
     await fetch(ingridientUrl)
@@ -46,6 +45,11 @@ const IngridientSearch = () => {
       .then((data) => {
         setRecipes(data);
       });
+  };
+  const searchRecipe = async () => {
+    const ingridientNames = selectedIngridients.map((item) => item.name);
+    const ingridientUrl = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingridientNames}&apiKey=${apiKey}`;
+    await fetchRecipes(ingridientUrl);
   };
   return (
     <>
@@ -56,34 +60,60 @@ const IngridientSearch = () => {
         />
         <Button onClick={searchRecipe} label="Search recipe" />
       </div>
-      <TitleComponents title='All Ingridients'/>
+      <TitleComponents title="All Ingridients" />
       <div className="ingridients-container">
-          {ingridients.length===0?<div className="ingridients-img-container"><img className="ingridients-img" alt='ingridients' src={ingridientsImg}></img></div>:null}
-        {ingridients?.map((item,index) => {
-            return (
-                <IngridientCard key={index} props={item} addIngridient={addIngridient} selectedIngridient={false}/>
-                 );
-        })}
+        {ingridients.length === 0 ? (
+          <div className="ingridients-img-container">
+            <img
+              className="ingridients-img"
+              alt="ingridients"
+              src={ingridientsImg}
+            />
+          </div>
+        ) : null}
+        {ingridients?.map((item, index) => (
+          <IngridientCard
+            key={index}
+            props={item}
+            addIngridient={addIngridient}
+            selectedIngridient={false}
+          />
+        ))}
       </div>
-      <TitleComponents title='My Ingridients'/>
+      <TitleComponents title="My Ingridients" />
       <div className="selected-ingridients-container">
-      {selectedIngridients.length===0?<div className="ingridients-img-container"><img className="ingridients-img" alt='ingridients' src={fridgeIngridientsImg}></img></div>:null}
-        
-        {selectedIngridients?.map((item,index) => {
-          return (
-         <IngridientCard key={index} props={item} removeIngridient={removeIngridient} selectedIngridient={true}/>
-          );
-        })}
+        {selectedIngridients.length === 0 ? (
+          <div className="ingridients-img-container">
+            <img
+              className="ingridients-img"
+              alt="ingridients"
+              src={fridgeIngridientsImg}
+            />
+          </div>
+        ) : null}
+
+        {selectedIngridients?.map((item, index) => (
+          <IngridientCard
+            key={index}
+            props={item}
+            removeIngridient={removeIngridient}
+            selectedIngridient
+          />
+        ))}
       </div>
-      <TitleComponents title='Found Recipes'/>
+      <TitleComponents title="Found Recipes" />
       <div className="recipe-cards-container">
-      {selectedIngridients.length===0?<div className="ingridients-img-container"><img className="ingridients-img" alt='recipes' src={recipesImg}></img></div>:null}
-        {recipes?.map((recipe, index) => {
-          return <SearchedRecipeCard key={index} props={recipe} />;
-        })}
+        {selectedIngridients.length === 0 ? (
+          <div className="ingridients-img-container">
+            <img className="ingridients-img" alt="recipes" src={recipesImg} />
+          </div>
+        ) : null}
+        {recipes?.map((recipe, index) => (
+          <SearchedRecipeCard key={index} props={recipe} />
+        ))}
       </div>
     </>
   );
-};
+}
 
 export default IngridientSearch;
