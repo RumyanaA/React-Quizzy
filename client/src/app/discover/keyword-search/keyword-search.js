@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import InputField from '../../../shared/input/input-component';
@@ -7,12 +8,14 @@ import RecipeCard from '../../shared-components/recipe-cards/recipeCards';
 import TitleComponents from '../../shared-components/titles-component/titles-component';
 import './keyword-search-style.scss';
 import useApi from '../../shared-components/apiCalls/useApi';
+import NoDataFoundMsg from '../../shared-components/no-data-found-message/no-data-found-message';
 
 function KeywordSearch() {
   const [url, setUrl] = useState();
   const {
     recipes,
     randomRecipes,
+    hasResult,
     loading,
   } = useApi({ url });
 
@@ -38,11 +41,11 @@ function KeywordSearch() {
             {randomRecipes?.map((recipe, index) => <RecipeCard key={index} props={recipe} />)}
           </div>
         )
-        : (
+        : hasResult ? (
           <div className="recipe-cards-container">
             {recipes?.map((recipe, index) => <SearchedRecipeCard key={index} props={recipe} />)}
           </div>
-        )}
+        ) : <NoDataFoundMsg message="Recipes" />}
     </>
   );
 }
