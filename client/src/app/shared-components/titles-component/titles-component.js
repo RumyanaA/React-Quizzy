@@ -1,13 +1,14 @@
+import React from 'react';
 import './titles-component-style.scss';
 
-const TitleComponents =({title})=>{
-    return(
-        <>
-        <div className="all-ingridients-title">
-        <div className="all-ingridients-left-line"></div>{title}{" "}
-        <div className="all-ingridients-right-line"></div>
-      </div>
-        </>
-    )
+function TitleComponents({ title }) {
+  return (
+    <div className="all-ingridients-title">
+      <div className="all-ingridients-left-line" />
+      {title}
+      {' '}
+      <div className="all-ingridients-right-line" />
+    </div>
+  );
 }
 export default TitleComponents;

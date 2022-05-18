@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import React from "react";
+import React from 'react';
 import './input-style.scss';
-const InputField = ({
+
+function InputField({
   name,
   type,
   placeholder,
@@ -9,18 +10,14 @@ const InputField = ({
   className,
   value,
   error,
-  children,
   label,
   autoComplete,
-  ...props
-}) => {
-  
+}) {
   return (
-    <React.Fragment>
-      <label className='floating-label' htmlFor={name}>{label}</label>
+    <>
+      <label className="floating-label" htmlFor={name}>{label}</label>
       <input
-      required
-      
+        required
         id={name}
         name={name}
         type={type}
@@ -29,19 +26,18 @@ const InputField = ({
         value={value}
         className={className}
         autoComplete={autoComplete}
-        style={error && {border: 'solid 1px red'}}
+        style={error && { border: 'solid 1px red' }}
       />
       { error && <p>{ error }</p>}
-    </React.Fragment>
-  )
+    </>
+  );
 }
 
 InputField.defaultProps = {
-  type: "text",
-  name: "input-name",
-  className: "default-input",
-  autoComplete:"on"
-}
+  type: 'text',
+  name: 'input-name',
+  className: 'default-input',
+};
 
 InputField.propTypes = {
   name: PropTypes.string,
@@ -49,6 +45,6 @@ InputField.propTypes = {
   placeholder: PropTypes.string,
   className: PropTypes.string,
   value: PropTypes.any,
-  onChange: PropTypes.func
-}
+  onChange: PropTypes.func,
+};
 export default InputField;
