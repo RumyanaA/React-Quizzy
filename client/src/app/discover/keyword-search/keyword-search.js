@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import InputField from '../../../shared/input/input-component';
@@ -41,11 +40,13 @@ function KeywordSearch() {
             {randomRecipes?.map((recipe, index) => <RecipeCard key={index} props={recipe} />)}
           </div>
         )
-        : hasResult ? (
+        : (
           <div className="recipe-cards-container">
-            {recipes?.map((recipe, index) => <SearchedRecipeCard key={index} props={recipe} />)}
+            {hasResult
+              ? recipes?.map((recipe, index) => <SearchedRecipeCard key={index} props={recipe} />)
+              : <NoDataFoundMsg message="No Recipes Found" />}
           </div>
-        ) : <NoDataFoundMsg message="Recipes" />}
+        ) }
     </>
   );
 }
