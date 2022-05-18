@@ -21,15 +21,7 @@ function PlannerModal({
     { id: 2, text: 'lunch', isShow: false },
     { id: 3, text: 'dinner', isShow: false },
   ]);
-  function debounce(fn, delay) {
-    let timer;
-    return function (...args) {
-      const context = this;
-      // const args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(() => fn.apply(context, args), delay);
-    };
-  }
+
   const toggle = (index) => {
     meal[index].isShow = !meal[index].isShow;
     setMeal([...meal]);
@@ -42,17 +34,17 @@ function PlannerModal({
       setIndexInput(ind);
     }
   };
-  const onChange = debounce((value, mealItem) => {
+  const onChange = (value, text) => {
     // get recipe from api
-    const selectedMeal = menu[mealItem.text];
+    const selectedMeal = menu[text];
     selectedMeal.title = value;
     selectedMeal.details = 'New details';
     setDailyMenu(selectedMeal);
 
     let selectedDayEvents = events.find(
-      (e) => e.date === date && e.title.startsWith(mealItem.text),
+      (e) => e.date === date && e.title.startsWith(text),
     );
-    const newTitle = `${mealItem.text}: ${value}`;
+    const newTitle = `${text}: ${value}`;
 
     if (!selectedDayEvents) {
       selectedDayEvents = {
@@ -63,10 +55,10 @@ function PlannerModal({
     }
     selectedDayEvents.title = newTitle;
     setEvents((prevEvents) => [...prevEvents, selectedDayEvents]);
-  }, 1000);
+  };
 
-  const onDelete = (mealItem) => {
-    const selectedMeal = menu[mealItem.text];
+  const onDelete = (text) => {
+    const selectedMeal = menu[text];
     selectedMeal.title = '';
     selectedMeal.details = '';
     setDailyMenu(selectedMeal);
@@ -82,14 +74,14 @@ function PlannerModal({
         <div className="modal-body">
           <h2 className="date">{dateToShow}</h2>
           <div>
-            {meal.map((mealItem, index) => (
+            {meal.map(({ text, isShow }, index) => (
               <div key={index} className="item">
                 <div
                   className="arrow-buttons-container"
                   onClick={() => toggle(index)}
                 >
                   <button className="arrow-buttons">
-                    {mealItem.isShow ? (
+                    {isShow ? (
                       <FontAwesomeIcon
                         className="arrow-icon"
                         icon={faCaretUp}
@@ -100,22 +92,22 @@ function PlannerModal({
                         icon={faCaretDown}
                       />
                     )}
-                    {mealItem.text.charAt(0).toUpperCase()
-                      + mealItem.text.slice(1)}
+                    {text.charAt(0).toUpperCase()
+                      + text.slice(1)}
                   </button>
-                  {menu[mealItem.text].title && (
+                  {menu[text].title && (
                     <h2 className="title" key={index}>
-                      {menu[mealItem.text].title}
+                      {menu[text].title}
                     </h2>
                   )}
                 </div>
 
-                {mealItem.isShow && (
+                {isShow && (
                   <div className="recipe">
                     <div className="input-buttons-container">
                       {isShowInput && indexInput === index ? (
                         <input
-                          onChange={(e) => onChange(e.target.value, mealItem)}
+                          onChange={(e) => onChange(e.target.value, text)}
                           id={index}
                         />
                       ) : null}
@@ -130,15 +122,15 @@ function PlannerModal({
                         </button>
                         <button
                           className="btn"
-                          onClick={() => onDelete(mealItem)}
+                          onClick={() => onDelete(text)}
                         >
                           <FontAwesomeIcon icon={faTrash} />
                         </button>
                       </span>
                     </div>
-                    {menu[mealItem.text].title && (
+                    {menu[text].title && (
                       <p className="recipe-details">
-                        {menu[mealItem.text].details}
+                        {menu[text].details}
                       </p>
                     )}
                   </div>
