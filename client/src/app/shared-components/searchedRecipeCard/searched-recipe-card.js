@@ -34,7 +34,7 @@ function SearchedRecipeCard({ props }) {
           <span className="recipe-tooltip">{props.title}</span>
         </div>
       </div>
-      {show ? (
+      {show && (
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>{currentRecipe?.title}</Modal.Title>
@@ -65,7 +65,7 @@ function SearchedRecipeCard({ props }) {
             </Button>
           </Modal.Footer>
         </Modal>
-      ) : null}
+      )}
     </>
   );
 }

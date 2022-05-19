@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react'; // must go before plugins
@@ -35,17 +36,9 @@ function MenuPlanner() {
   ]);
   const [events, setEvents] = useState([
     {
-
+      id: 1,
       title: 'breakfast: Bacon Caramels',
       date: '2022-05-07',
-    },
-    {
-      title: 'lunch: Butternut Squash & Pear Soup: Real Convenience food',
-      date: '2022-05-02',
-    },
-    {
-      title: 'dinner: Coconut Almond Cheesecake',
-      date: '2022-06-01',
     }]);
 
   const editEvent = () => { };
@@ -92,16 +85,52 @@ function MenuPlanner() {
     const parsedDate = parseDate(selectedDateString);
     setDate(parsedDate);
 
-    let m = menus.find((meal) => meal.date === parsedDate);
-    if (!m) {
-      m = {
+    let menu = menus.find((meal) => meal.date === parsedDate);
+    if (!menu) {
+      menu = {
         date: parsedDate,
-        breakfast: { title: '', details: '' },
-        lunch: { title: '', details: '' },
-        dinner: { title: '', details: '' },
+        breakfast: {},
+        lunch: {},
+        dinner: {},
       };
     }
-    setCurrMenu(m);
+    setCurrMenu(menu);
+  };
+  const modifyEvents = (meals, deletedIds) => {
+    const currentEvents = events;
+    deletedIds.forEach((id) => {
+      const eventIndex = events.findIndex((ev) => ev.id === id);
+    });
+    for (const [key, value] of Object.entries(meals)) {
+      if (key !== 'date') {
+        if (Object.keys(value).length === 1) {
+          const eventIndex = events.findIndex((ev) => ev.id === value.id);
+          if (eventIndex !== -1) {
+            currentEvents.splice(eventIndex, 1);
+          }
+        } else {
+          const eventToPush = {
+            id: value.id,
+            title: `${key} : ${value.title}`,
+            date: meals.date,
+          };
+          currentEvents.push(eventToPush);
+        }
+      }
+    }
+    setEvents([...currentEvents]);
+  };
+  const onClose = (meals, deletedMealsIds) => {
+    setIsOpen(false);
+    const currentMenus = menus;
+    const menuItemIndex = menus.findIndex((meal) => meal.date === meals.date);
+    if (menuItemIndex === -1) {
+      currentMenus.push(meals);
+    } else {
+      currentMenus[menuItemIndex] = meals;
+    }
+    setMenus([...currentMenus]);
+    modifyEvents(meals, deletedMealsIds);
   };
 
   return (
@@ -140,7 +169,7 @@ function MenuPlanner() {
       {isOpen
         ? (
           <PlannerModal
-            onClose={() => setIsOpen(false)}
+            onClose={onClose}
             dateToShow={dateToShow}
             menu={currMenu}
             events={events}

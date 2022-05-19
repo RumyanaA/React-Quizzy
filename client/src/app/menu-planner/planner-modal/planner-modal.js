@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPen,
@@ -10,25 +10,30 @@ import './planner-modal.scss';
 import RecipeSearchAndSelect from '../../shared-components/recipe-search-and-select/recipe-search-and-select';
 
 function PlannerModal({
-  // eslint-disable-next-line no-unused-vars
-  dateToShow, onClose, menu, events, setEvents,
+  dateToShow, onClose, menu,
 }) {
   const [show, setShow] = useState(false);
   const [indexInput, setIndexInput] = useState(0);
-  // eslint-disable-next-line no-unused-vars
   const [singleMeal, setSingleMeal] = useState();
+  const [selectedRecipe, setSelectedRecipe] = useState({});
   const [dailyMenu, setDailyMenu] = useState(menu);
-  const [selectedRecipes, setSelectedRecipes] = useState([]);
   const [meals, setMeals] = useState([
     { id: 1, text: 'breakfast', isShow: false },
     { id: 2, text: 'lunch', isShow: false },
     { id: 3, text: 'dinner', isShow: false },
   ]);
+  const [deletedIds, setDeletedId] = useState([]);
 
-  // useEffect(() => {
-  // }, dailyMenu);
+  useEffect(() => {
+    if (!singleMeal) {
+      return;
+    }
+    const currentDailyMenu = dailyMenu;
+    currentDailyMenu[singleMeal] = selectedRecipe;
+    setDailyMenu({ ...currentDailyMenu });
+  }, [selectedRecipe]);
   const sendData = (data) => {
-    setSelectedRecipes([...data]);
+    setSelectedRecipe(data);
   };
 
   const toggle = (index) => {
@@ -45,16 +50,18 @@ function PlannerModal({
     }
   };
   const onDelete = (text) => {
-    const selectedMeal = menu[text];
-    selectedMeal.title = '';
-    selectedMeal.details = '';
-    setDailyMenu(selectedMeal);
+    const selectedMeal = dailyMenu;
+    const { id } = selectedMeal[text];
+    deletedIds.push(id);
+    setDeletedId([...deletedIds]);
+    selectedMeal[text] = {};
+    setDailyMenu({ ...selectedMeal });
   };
   return (
     <div className="planner-modal">
       <div className="modal-content">
         <div className="modal-header">
-          <span className="close" onClick={onClose}>
+          <span className="close" onClick={() => onClose(dailyMenu, deletedIds)}>
             &times;
           </span>
         </div>
@@ -82,9 +89,9 @@ function PlannerModal({
                     {text.charAt(0).toUpperCase()
                       + text.slice(1)}
                   </button>
-                  {menu[text].title && (
+                  {dailyMenu[text].title && (
                     <h2 className="title" key={index}>
-                      {menu[text].title}
+                      {dailyMenu[text].title}
                     </h2>
                   )}
                 </div>
@@ -94,10 +101,6 @@ function PlannerModal({
                     <div className="input-buttons-container">
                       {show && indexInput === index ? (
                         <RecipeSearchAndSelect
-                          selectedRecipes={selectedRecipes}
-                          events={events}
-                          currMenu={dailyMenu}
-                          meal={text}
                           sendData={sendData}
                         />
                       ) : null}
@@ -113,9 +116,9 @@ function PlannerModal({
                         </button>
                       </span>
                     </div>
-                    {menu[text].title && (
+                    {dailyMenu[text].title && (
                       <p className="recipe-details">
-                        {menu[text].details}
+                        {dailyMenu[text].id}
                       </p>
                     )}
                   </div>

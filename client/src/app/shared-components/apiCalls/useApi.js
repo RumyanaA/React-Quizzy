@@ -21,7 +21,6 @@ const useApi = ({ url }) => {
             setRandomRecipes(resBody.recipes);
           }
         } catch (err) {
-          console.log(err.message);
           setError(err.message || 'Unexpected Error');
         } finally {
           setLoading(false);
