@@ -10,53 +10,40 @@ import './planner-modal.scss';
 import RecipeSearchAndSelect from '../../shared-components/recipe-search-and-select/recipe-search-and-select';
 
 function PlannerModal({
-  dateToShow, onClose, menu, events, setEvents, date,
+  // eslint-disable-next-line no-unused-vars
+  dateToShow, onClose, menu, events, setEvents,
 }) {
   const [show, setShow] = useState(false);
   const [indexInput, setIndexInput] = useState(0);
   // eslint-disable-next-line no-unused-vars
+  const [singleMeal, setSingleMeal] = useState();
   const [dailyMenu, setDailyMenu] = useState(menu);
-  const [meal, setMeal] = useState([
+  const [selectedRecipes, setSelectedRecipes] = useState([]);
+  const [meals, setMeals] = useState([
     { id: 1, text: 'breakfast', isShow: false },
     { id: 2, text: 'lunch', isShow: false },
     { id: 3, text: 'dinner', isShow: false },
   ]);
 
-  const toggle = (index) => {
-    meal[index].isShow = !meal[index].isShow;
-    setMeal([...meal]);
+  // useEffect(() => {
+  // }, dailyMenu);
+  const sendData = (data) => {
+    setSelectedRecipes([...data]);
   };
 
-  const onEdit = (ind) => {
+  const toggle = (index) => {
+    meals[index].isShow = !meals[index].isShow;
+    setMeals([...meals]);
+  };
+
+  const onEdit = (ind, meal) => {
+    setSingleMeal(meal);
     if (indexInput === ind) {
       setShow(!show);
     } else {
       setIndexInput(ind);
     }
   };
-  const onChange = (value, text) => {
-    // get recipe from api
-    const selectedMeal = menu[text];
-    selectedMeal.title = value;
-    selectedMeal.details = 'New details';
-    setDailyMenu(selectedMeal);
-
-    let selectedDayEvents = events.find(
-      (e) => e.date === date && e.title.startsWith(text),
-    );
-    const newTitle = `${text}: ${value}`;
-
-    if (!selectedDayEvents) {
-      selectedDayEvents = {
-        title: '',
-        date: '',
-      };
-      selectedDayEvents.date = date;
-    }
-    selectedDayEvents.title = newTitle;
-    setEvents((prevEvents) => [...prevEvents, selectedDayEvents]);
-  };
-
   const onDelete = (text) => {
     const selectedMeal = menu[text];
     selectedMeal.title = '';
@@ -74,7 +61,7 @@ function PlannerModal({
         <div className="modal-body">
           <h2 className="date">{dateToShow}</h2>
           <div>
-            {meal.map(({ text, isShow }, index) => (
+            {meals.map(({ text, isShow }, index) => (
               <div key={index} className="item">
                 <div
                   className="arrow-buttons-container"
@@ -107,12 +94,15 @@ function PlannerModal({
                     <div className="input-buttons-container">
                       {show && indexInput === index ? (
                         <RecipeSearchAndSelect
-                          id={index}
-                          onChange={(e) => onChange(e.target.value, text)}
+                          selectedRecipes={selectedRecipes}
+                          events={events}
+                          currMenu={dailyMenu}
+                          meal={text}
+                          sendData={sendData}
                         />
                       ) : null}
                       <span className="buttons-container">
-                        <button className="btn" onClick={() => onEdit(index)}>
+                        <button className="btn" onClick={() => onEdit(index, text)}>
                           <FontAwesomeIcon icon={faPen} />
                         </button>
                         <button

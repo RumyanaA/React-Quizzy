@@ -4,12 +4,16 @@ import InputField from '../../../shared/input/input-component';
 import { apiKey } from '../../../config/cooking-apiKey';
 import './recipe-search-and-select-style.scss';
 
-function RecipeSearchAndSelect() {
+function RecipeSearchAndSelect({
+  // eslint-disable-next-line no-unused-vars
+  currMenu, meal, events, sendData, selectedRecipes
+}) {
   const [searchValue, setSearchValue] = useState('');
   const [loadingRecipes, setLoadingRecipes] = useState(false);
   const [toggleDropDown, setToggleDropdown] = useState(false);
   const [recipeOptions, setRecipeOptions] = useState([]);
-  // const [selectedRecipe, setSelectedRecipe] = useState({});
+  // eslint-disable-next-line no-unused-vars
+  const [selectedRecipe, setSelectedRecipe] = useState({});
   const timeout = useRef();
   const fetchRecipes = (url) => {
     clearTimeout(timeout.current);
@@ -40,11 +44,12 @@ function RecipeSearchAndSelect() {
     const url = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${value}`;
     fetchRecipes(url);
   };
-  const handleSelectOption = (/* value */) => {
+  const handleSelectOption = (value) => {
+    setSelectedRecipe(value);
     setSearchValue('');
-    // setSelectedRecipe(value);
     setRecipeOptions([]);
     setToggleDropdown(false);
+    sendData(value);
   };
   return (
     <>

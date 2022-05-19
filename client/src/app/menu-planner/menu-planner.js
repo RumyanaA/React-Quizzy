@@ -95,10 +95,10 @@ function MenuPlanner() {
     let m = menus.find((meal) => meal.date === parsedDate);
     if (!m) {
       m = {
-        date: '',
-        breakfast: {},
-        lunch: {},
-        dinner: {},
+        date: parsedDate,
+        breakfast: { title: '', details: '' },
+        lunch: { title: '', details: '' },
+        dinner: { title: '', details: '' },
       };
     }
     setCurrMenu(m);
