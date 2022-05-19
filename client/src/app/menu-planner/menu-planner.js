@@ -13,6 +13,7 @@ function MenuPlanner() {
   const [isOpen, setIsOpen] = useState(false);
   const [dateToShow, setDateToShow] = useState(new Date());
   const [date, setDate] = useState(new Date());
+  const [currMenu, setCurrMenu] = useState({});
   const [menus, setMenus] = useState([
     {
       date: '2022-05-07',
@@ -32,8 +33,6 @@ function MenuPlanner() {
       dinner: { title: 'Coconut Almond Cheesecake', details: 'Coconut almond cheesecake recipe' },
     },
   ]);
-  const [currMenu, setCurrMenu] = useState({});
-
   const [events, setEvents] = useState([
     {
 

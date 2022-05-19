@@ -5,14 +5,14 @@ import {
   faTrash,
   faCaretDown,
   faCaretUp,
-  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import './planner-modal.scss';
+import RecipeSearchAndSelect from '../../shared-components/recipe-search-and-select/recipe-search-and-select';
 
 function PlannerModal({
   dateToShow, onClose, menu, events, setEvents, date,
 }) {
-  const [isShowInput, setIsShowInput] = useState(false);
+  const [show, setShow] = useState(false);
   const [indexInput, setIndexInput] = useState(0);
   // eslint-disable-next-line no-unused-vars
   const [dailyMenu, setDailyMenu] = useState(menu);
@@ -29,7 +29,7 @@ function PlannerModal({
 
   const onEdit = (ind) => {
     if (indexInput === ind) {
-      setIsShowInput(!isShowInput);
+      setShow(!show);
     } else {
       setIndexInput(ind);
     }
@@ -105,20 +105,15 @@ function PlannerModal({
                 {isShow && (
                   <div className="recipe">
                     <div className="input-buttons-container">
-                      {isShowInput && indexInput === index ? (
-                        <input
-                          onChange={(e) => onChange(e.target.value, text)}
+                      {show && indexInput === index ? (
+                        <RecipeSearchAndSelect
                           id={index}
+                          onChange={(e) => onChange(e.target.value, text)}
                         />
                       ) : null}
                       <span className="buttons-container">
                         <button className="btn" onClick={() => onEdit(index)}>
-                          {isShowInput && indexInput === index ? (
-                            <FontAwesomeIcon icon={faPlus} />
-                          ) : (
-                            <FontAwesomeIcon icon={faPen} />
-                          )}
-                          {' '}
+                          <FontAwesomeIcon icon={faPen} />
                         </button>
                         <button
                           className="btn"
