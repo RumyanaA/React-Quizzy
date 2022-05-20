@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-restricted-syntax */
 import React, { useState } from 'react';
@@ -30,7 +31,10 @@ function MenuPlanner() {
       date: '2022-05-07',
     }]);
 
-  const editEvent = () => { };
+  const editEvent = (/* info */) => {
+    // const clickedEvent = info.event;
+    // console.log(clickedEvent['_def']);
+  };
 
   const parseDate = (dateString) => {
     const monthString = dateString.slice(0, 3).trim();
