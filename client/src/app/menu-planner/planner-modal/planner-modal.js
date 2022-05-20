@@ -7,6 +7,7 @@ import {
   faCaretUp,
 } from '@fortawesome/free-solid-svg-icons';
 import './planner-modal.scss';
+import parse from 'html-react-parser';
 import RecipeSearchAndSelect from '../../shared-components/recipe-search-and-select/recipe-search-and-select';
 
 function PlannerModal({
@@ -116,11 +117,19 @@ function PlannerModal({
                         </button>
                       </span>
                     </div>
-                    {dailyMenu[text].title && (
+                      {dailyMenu[text].title && (
                       <p className="recipe-details">
-                        {dailyMenu[text].id}
+                        {dailyMenu[text].image
+                      && (
+                      <img
+                        className="recipe-img"
+                        alt={dailyMenu[text].title}
+                        src={dailyMenu[text].image}
+                      />
+                      )}
+                        {parse(dailyMenu[text].instructions)}
                       </p>
-                    )}
+                      )}
                   </div>
                 )}
               </div>
