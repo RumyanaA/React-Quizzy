@@ -28,9 +28,10 @@ function RecipeSearchAndSelect({
     setUrl(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${value}`);
   };
   const handleSelectOption = (value) => {
+    setUrl(`https://api.spoonacular.com/recipes/${value.id}/information?apiKey=${apiKey}`);
     setSearchValue('');
     setToggleDropdown(false);
-    sendData(value);
+    sendData(recipes);
   };
   return (
     <>
