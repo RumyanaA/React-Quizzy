@@ -1,8 +1,8 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-restricted-syntax */
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react'; // must go before plugins
-import dayGridPlugin, { DayGridView } from '@fullcalendar/daygrid'; // a plugin!
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -85,14 +85,15 @@ function MenuPlanner() {
     }
     setCurrMenu(menu);
   };
-  const modifyEvents = (meals, deletedIds) => {
+  const modifyEvents = (meals) => {
     const currentEvents = events;
-    deletedIds.forEach((id) => {
-      const eventIndex = events.findIndex((ev) => ev.id === id);
-      if (eventIndex !== -1) {
-        currentEvents.splice(eventIndex, 1);
+    for (let i = 0; i < events.length; i++) {
+      const event = events[i];
+      if (event.date === meals.date) {
+        currentEvents.splice(i, 1);
+        i--;
       }
-    });
+    }
     for (const [key, value] of Object.entries(meals)) {
       if (key !== 'date' && Object.keys(value).length !== 0) {
         const eventToPush = {
@@ -147,12 +148,11 @@ function MenuPlanner() {
             }}
             aspectRatio={1}
             height={600}
-            dayMaxEvents
           />
         </div>
       </div>
       {isOpen
-        ? (
+        && (
           <PlannerModal
             onClose={onClose}
             dateToShow={dateToShow}
@@ -161,8 +161,7 @@ function MenuPlanner() {
             setEvents={setEvents}
             date={date}
           />
-        )
-        : null}
+        )}
     </>
   );
 }

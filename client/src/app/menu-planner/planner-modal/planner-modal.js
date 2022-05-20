@@ -23,7 +23,6 @@ function PlannerModal({
     { id: 2, text: 'lunch', isShow: false },
     { id: 3, text: 'dinner', isShow: false },
   ]);
-  const [deletedIds, setDeletedId] = useState([]);
 
   useEffect(() => {
     if (!singleMeal) {
@@ -52,9 +51,6 @@ function PlannerModal({
   };
   const onDelete = (text) => {
     const selectedMeal = dailyMenu;
-    const { id } = selectedMeal[text];
-    deletedIds.push(id);
-    setDeletedId([...deletedIds]);
     selectedMeal[text] = {};
     setDailyMenu({ ...selectedMeal });
   };
@@ -62,7 +58,7 @@ function PlannerModal({
     <div className="planner-modal">
       <div className="modal-content">
         <div className="modal-header">
-          <span className="close" onClick={() => onClose(dailyMenu, deletedIds)}>
+          <span className="close" onClick={() => onClose(dailyMenu)}>
             &times;
           </span>
         </div>
