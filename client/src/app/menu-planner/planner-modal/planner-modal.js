@@ -90,9 +90,9 @@ function PlannerModal({
                       + text.slice(1)}
                   </button>
                   {dailyMenu[text].title && (
-                    <h2 className="title" key={index}>
+                    <h3 className="recipe-title" key={index}>
                       {dailyMenu[text].title}
-                    </h2>
+                    </h3>
                   )}
                 </div>
 

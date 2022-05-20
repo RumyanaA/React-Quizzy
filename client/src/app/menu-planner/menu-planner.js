@@ -22,17 +22,6 @@ function MenuPlanner() {
       lunch: {},
       dinner: {},
     },
-    {
-      date: '2022-05-02',
-      breakfast: {},
-      lunch: { title: 'Butternut Squash & Pear Soup: Real Convenience food', details: 'Recipe...' },
-      dinner: {},
-    }, {
-      date: '2022-06-01',
-      breakfast: {},
-      lunch: {},
-      dinner: { title: 'Coconut Almond Cheesecake', details: 'Coconut almond cheesecake recipe' },
-    },
   ]);
   const [events, setEvents] = useState([
     {
@@ -100,22 +89,18 @@ function MenuPlanner() {
     const currentEvents = events;
     deletedIds.forEach((id) => {
       const eventIndex = events.findIndex((ev) => ev.id === id);
+      if (eventIndex !== -1) {
+        currentEvents.splice(eventIndex, 1);
+      }
     });
     for (const [key, value] of Object.entries(meals)) {
-      if (key !== 'date') {
-        if (Object.keys(value).length === 1) {
-          const eventIndex = events.findIndex((ev) => ev.id === value.id);
-          if (eventIndex !== -1) {
-            currentEvents.splice(eventIndex, 1);
-          }
-        } else {
-          const eventToPush = {
-            id: value.id,
-            title: `${key} : ${value.title}`,
-            date: meals.date,
-          };
-          currentEvents.push(eventToPush);
-        }
+      if (key !== 'date' && Object.keys(value).length !== 0) {
+        const eventToPush = {
+          id: value.id,
+          title: `${key} : ${value.title}`,
+          date: meals.date,
+        };
+        currentEvents.push(eventToPush);
       }
     }
     setEvents([...currentEvents]);
