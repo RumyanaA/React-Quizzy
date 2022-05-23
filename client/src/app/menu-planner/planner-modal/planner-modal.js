@@ -32,6 +32,7 @@ function PlannerModal({
     currentDailyMenu[singleMeal] = selectedRecipe;
     setDailyMenu({ ...currentDailyMenu });
   }, [selectedRecipe]);
+
   const sendData = (data) => {
     setSelectedRecipe(data);
   };
