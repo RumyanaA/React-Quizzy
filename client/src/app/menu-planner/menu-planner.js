@@ -1,4 +1,3 @@
-/* eslint-disable dot-notation */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-restricted-syntax */
 import React, { useState } from 'react';
@@ -11,10 +10,11 @@ import Header from '../layout/header/header';
 import './menu-planner-style.scss';
 import PlannerModal from './planner-modal/planner-modal';
 
+const dayjs = require('dayjs');
+
 function MenuPlanner() {
   const [isOpen, setIsOpen] = useState(false);
   const [dateToShow, setDateToShow] = useState(new Date());
-  const [date, setDate] = useState(new Date());
   const [currMenu, setCurrMenu] = useState({});
   const [menus, setMenus] = useState([
     {
@@ -36,52 +36,17 @@ function MenuPlanner() {
     // console.log(clickedEvent['_def']);
   };
 
-  const parseDate = (dateString) => {
-    const monthString = dateString.slice(0, 3).trim();
-    const day = dateString.slice(4, 6).trim();
-    const year = dateString.slice(7, 11).trim();
-
-    let month = '';
-    if (monthString === 'Jan') {
-      month = '01';
-    } else if (monthString === 'Feb') {
-      month = '02';
-    } else if (monthString === 'Mar') {
-      month = '03';
-    } else if (monthString === 'Apr') {
-      month = '04';
-    } else if (monthString === 'May') {
-      month = '05';
-    } else if (monthString === 'Jun') {
-      month = '06';
-    } else if (monthString === 'Jul') {
-      month = '07';
-    } else if (monthString === 'Aug') {
-      month = '08';
-    } else if (monthString === 'Sep') {
-      month = '09';
-    } else if (monthString === 'Oct') {
-      month = '10';
-    } else if (monthString === 'Nov') {
-      month = '11';
-    } else if (monthString === 'Dec') {
-      month = '12';
-    }
-
-    return `${year}-${month}-${day}`;
-  };
   const handleDateClick = (info) => {
     setIsOpen(true);
-    const selectedDateString = info.date.toString().slice(4, 15);
-    setDateToShow(selectedDateString);
+    const selectedDate = dayjs(info.date).format('YYYY-MM-DD');
+    const dateStringFormat = dayjs(info.date).format('MMMM D, YYYY');
 
-    const parsedDate = parseDate(selectedDateString);
-    setDate(parsedDate);
+    setDateToShow(dateStringFormat);
 
-    let menu = menus.find((meal) => meal.date === parsedDate);
+    let menu = menus.find((meal) => meal.date === selectedDate);
     if (!menu) {
       menu = {
-        date: parsedDate,
+        date: selectedDate,
         breakfast: {},
         lunch: {},
         dinner: {},
@@ -162,8 +127,6 @@ function MenuPlanner() {
             dateToShow={dateToShow}
             menu={currMenu}
             events={events}
-            setEvents={setEvents}
-            date={date}
           />
         )}
     </>
