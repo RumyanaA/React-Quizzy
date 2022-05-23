@@ -1,95 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPen,
   faTrash,
   faCaretDown,
   faCaretUp,
-  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import './planner-modal.scss';
+import parse from 'html-react-parser';
+import RecipeSearchAndSelect from '../../shared-components/recipe-search-and-select/recipe-search-and-select';
 
 function PlannerModal({
-  dateToShow, onClose, menu, events, setEvents, date,
+  dateToShow, onClose, menu,
 }) {
-  const [isShowInput, setIsShowInput] = useState(false);
+  const [show, setShow] = useState(false);
   const [indexInput, setIndexInput] = useState(0);
-  // eslint-disable-next-line no-unused-vars
+  const [singleMeal, setSingleMeal] = useState();
+  const [selectedRecipe, setSelectedRecipe] = useState({});
   const [dailyMenu, setDailyMenu] = useState(menu);
-  const [meal, setMeal] = useState([
+  const [meals, setMeals] = useState([
     { id: 1, text: 'breakfast', isShow: false },
     { id: 2, text: 'lunch', isShow: false },
     { id: 3, text: 'dinner', isShow: false },
   ]);
-  function debounce(fn, delay) {
-    let timer;
-    return function (...args) {
-      const context = this;
-      // const args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(() => fn.apply(context, args), delay);
-    };
-  }
-  const toggle = (index) => {
-    meal[index].isShow = !meal[index].isShow;
-    setMeal([...meal]);
+
+  useEffect(() => {
+    if (!singleMeal) {
+      return;
+    }
+    const currentDailyMenu = dailyMenu;
+    currentDailyMenu[singleMeal] = selectedRecipe;
+    setDailyMenu({ ...currentDailyMenu });
+  }, [selectedRecipe]);
+
+  const sendData = (data) => {
+    setSelectedRecipe(data);
   };
 
-  const onEdit = (ind) => {
+  const toggle = (index) => {
+    meals[index].isShow = !meals[index].isShow;
+    setMeals([...meals]);
+  };
+
+  const onEdit = (ind, meal) => {
+    setSingleMeal(meal);
     if (indexInput === ind) {
-      setIsShowInput(!isShowInput);
+      setShow(!show);
     } else {
       setIndexInput(ind);
     }
   };
-  const onChange = debounce((value, mealItem) => {
-    // get recipe from api
-    const selectedMeal = menu[mealItem.text];
-    selectedMeal.title = value;
-    selectedMeal.details = 'New details';
-    setDailyMenu(selectedMeal);
-
-    let selectedDayEvents = events.find(
-      (e) => e.date === date && e.title.startsWith(mealItem.text),
-    );
-    const newTitle = `${mealItem.text}: ${value}`;
-
-    if (!selectedDayEvents) {
-      selectedDayEvents = {
-        title: '',
-        date: '',
-      };
-      selectedDayEvents.date = date;
-    }
-    selectedDayEvents.title = newTitle;
-    setEvents((prevEvents) => [...prevEvents, selectedDayEvents]);
-  }, 1000);
-
-  const onDelete = (mealItem) => {
-    const selectedMeal = menu[mealItem.text];
-    selectedMeal.title = '';
-    selectedMeal.details = '';
-    setDailyMenu(selectedMeal);
+  const onDelete = (text) => {
+    const selectedMeal = dailyMenu;
+    selectedMeal[text] = {};
+    setDailyMenu({ ...selectedMeal });
   };
   return (
     <div className="planner-modal">
       <div className="modal-content">
         <div className="modal-header">
-          <span className="close" onClick={onClose}>
+          <span className="close" onClick={() => onClose(dailyMenu)}>
             &times;
           </span>
         </div>
         <div className="modal-body">
           <h2 className="date">{dateToShow}</h2>
           <div>
-            {meal.map((mealItem, index) => (
+            {meals.map(({ text, isShow }, index) => (
               <div key={index} className="item">
                 <div
                   className="arrow-buttons-container"
                   onClick={() => toggle(index)}
                 >
                   <button className="arrow-buttons">
-                    {mealItem.isShow ? (
+                    {isShow ? (
                       <FontAwesomeIcon
                         className="arrow-icon"
                         icon={faCaretUp}
@@ -100,47 +84,49 @@ function PlannerModal({
                         icon={faCaretDown}
                       />
                     )}
-                    {mealItem.text.charAt(0).toUpperCase()
-                      + mealItem.text.slice(1)}
+                    {text.charAt(0).toUpperCase()
+                      + text.slice(1)}
                   </button>
-                  {menu[mealItem.text].title && (
-                    <h2 className="title" key={index}>
-                      {menu[mealItem.text].title}
-                    </h2>
+                  {dailyMenu[text].title && (
+                    <h3 className="recipe-title" key={index}>
+                      {dailyMenu[text].title}
+                    </h3>
                   )}
                 </div>
 
-                {mealItem.isShow && (
+                {isShow && (
                   <div className="recipe">
                     <div className="input-buttons-container">
-                      {isShowInput && indexInput === index ? (
-                        <input
-                          onChange={(e) => onChange(e.target.value, mealItem)}
-                          id={index}
+                      {show && indexInput === index ? (
+                        <RecipeSearchAndSelect
+                          sendData={sendData}
                         />
                       ) : null}
                       <span className="buttons-container">
-                        <button className="btn" onClick={() => onEdit(index)}>
-                          {isShowInput && indexInput === index ? (
-                            <FontAwesomeIcon icon={faPlus} />
-                          ) : (
-                            <FontAwesomeIcon icon={faPen} />
-                          )}
-                          {' '}
+                        <button className="btn" onClick={() => onEdit(index, text)}>
+                          <FontAwesomeIcon icon={faPen} />
                         </button>
                         <button
                           className="btn"
-                          onClick={() => onDelete(mealItem)}
+                          onClick={() => onDelete(text)}
                         >
                           <FontAwesomeIcon icon={faTrash} />
                         </button>
                       </span>
                     </div>
-                    {menu[mealItem.text].title && (
+                      {dailyMenu[text].title && (
                       <p className="recipe-details">
-                        {menu[mealItem.text].details}
+                        {dailyMenu[text].image
+                      && (
+                      <img
+                        className="recipe-img"
+                        alt={dailyMenu[text].title}
+                        src={dailyMenu[text].image}
+                      />
+                      )}
+                        {parse(dailyMenu[text].instructions)}
                       </p>
-                    )}
+                      )}
                   </div>
                 )}
               </div>

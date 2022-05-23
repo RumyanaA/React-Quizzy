@@ -1,7 +1,9 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable dot-notation */
+/* eslint-disable no-plusplus */
+/* eslint-disable no-restricted-syntax */
 import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react'; // must go before plugins
-import dayGridPlugin, { DayGridView } from '@fullcalendar/daygrid'; // a plugin!
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -13,6 +15,7 @@ function MenuPlanner() {
   const [isOpen, setIsOpen] = useState(false);
   const [dateToShow, setDateToShow] = useState(new Date());
   const [date, setDate] = useState(new Date());
+  const [currentMenu, setcurrentMenu] = useState({});
   const [menus, setMenus] = useState([
     {
       date: '2022-05-07',
@@ -20,36 +23,18 @@ function MenuPlanner() {
       lunch: {},
       dinner: {},
     },
-    {
-      date: '2022-05-02',
-      breakfast: {},
-      lunch: { title: 'Butternut Squash & Pear Soup: Real Convenience food', details: 'Recipe...' },
-      dinner: {},
-    }, {
-      date: '2022-06-01',
-      breakfast: {},
-      lunch: {},
-      dinner: { title: 'Coconut Almond Cheesecake', details: 'Coconut almond cheesecake recipe' },
-    },
   ]);
-  const [currMenu, setCurrMenu] = useState({});
-
   const [events, setEvents] = useState([
     {
-
+      id: 1,
       title: 'breakfast: Bacon Caramels',
       date: '2022-05-07',
-    },
-    {
-      title: 'lunch: Butternut Squash & Pear Soup: Real Convenience food',
-      date: '2022-05-02',
-    },
-    {
-      title: 'dinner: Coconut Almond Cheesecake',
-      date: '2022-06-01',
     }]);
 
-  const editEvent = () => { };
+  const editEvent = (/* info */) => {
+    // const clickedEvent = info.event;
+    // console.log(clickedEvent['_def']);
+  };
 
   const parseDate = (dateString) => {
     const monthString = dateString.slice(0, 3).trim();
@@ -93,16 +78,49 @@ function MenuPlanner() {
     const parsedDate = parseDate(selectedDateString);
     setDate(parsedDate);
 
-    let m = menus.find((meal) => meal.date === parsedDate);
-    if (!m) {
-      m = {
-        date: '',
+    let menu = menus.find((meal) => meal.date === parsedDate);
+    if (!menu) {
+      menu = {
+        date: parsedDate,
         breakfast: {},
         lunch: {},
         dinner: {},
       };
     }
-    setCurrMenu(m);
+    setcurrentMenu(menu);
+  };
+  const modifyEvents = (meals) => {
+    const currentEvents = events;
+    for (let i = 0; i < events.length; i++) {
+      const event = events[i];
+      if (event.date === meals.date) {
+        currentEvents.splice(i, 1);
+        i--;
+      }
+    }
+    for (const [key, value] of Object.entries(meals)) {
+      if (key !== 'date' && Object.keys(value).length !== 0) {
+        const eventToPush = {
+          id: value.id,
+          title: `${key} : ${value.title}`,
+          date: meals.date,
+        };
+        currentEvents.push(eventToPush);
+      }
+    }
+    setEvents([...currentEvents]);
+  };
+  const onClose = (meals, deletedMealsIds) => {
+    setIsOpen(false);
+    const currentMenus = menus;
+    const menuItemIndex = menus.findIndex((meal) => meal.date === meals.date);
+    if (menuItemIndex === -1) {
+      currentMenus.push(meals);
+    } else {
+      currentMenus[menuItemIndex] = meals;
+    }
+    setMenus([...currentMenus]);
+    modifyEvents(meals, deletedMealsIds);
   };
 
   return (
@@ -134,22 +152,20 @@ function MenuPlanner() {
             }}
             aspectRatio={1}
             height={600}
-            dayMaxEvents
           />
         </div>
       </div>
       {isOpen
-        ? (
+        && (
           <PlannerModal
-            onClose={() => setIsOpen(false)}
+            onClose={onClose}
             dateToShow={dateToShow}
-            menu={currMenu}
+            menu={currentMenu}
             events={events}
             setEvents={setEvents}
             date={date}
           />
-        )
-        : null}
+        )}
     </>
   );
 }

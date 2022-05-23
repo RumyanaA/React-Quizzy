@@ -1,9 +1,7 @@
 import { React, useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import parse from 'html-react-parser';
 // eslint-disable-next-line import/named
 import { apiKey } from '../../../config/cooking-apiKey';
+import CustomRecipeModal from '../CustomModal/customRecipeModal';
 
 function SearchedRecipeCard({ props }) {
   const [currentRecipe, setCurrentRecipe] = useState({});
@@ -34,38 +32,7 @@ function SearchedRecipeCard({ props }) {
           <span className="recipe-tooltip">{props.title}</span>
         </div>
       </div>
-      {show && (
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>{currentRecipe?.title}</Modal.Title>
-            <img className="recipe-img-modal" alt="recipe" src={currentRecipe?.image} />
-          </Modal.Header>
-          <Modal.Body>
-            <div>
-              <p className="modal-paragraph">Ingredients: </p>
-              <div className="ingridients">
-                {currentRecipe?.extendedIngredients?.map((ingridient, index) => (
-                  <div className="ingridient-div" key={index}>
-                    {' '}
-                    &#9670;
-                    {' '}
-                    {ingridient.original}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div>
-              <p className="modal-paragraph">Directions:</p>
-              {parse(currentRecipe?.instructions)}
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      )}
+      {show && <CustomRecipeModal show={show} recipe={currentRecipe} handleClose={handleClose} />}
     </>
   );
 }

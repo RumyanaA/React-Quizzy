@@ -107,6 +107,7 @@
     justify-content: space-between;
     padding: 0.5rem;
     border-radius: 10px;
+    height: 6rem;
     border: 5px $content-wrapper-color solid;
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
 
@@ -116,19 +117,21 @@
       border: none;
       font-size: 22px;
       font-weight: 600;
+      width: 9rem;
+      border-right: 2px solid $main-brand-color;
       .arrow-icon {
         padding-right: 0.5rem;
       }
     
     }
-    .title {
-      white-space: nowrap;
-      width: 50px;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .recipe-title {
+      overflow-x: auto;
       margin: 0;
-      width: 47rem;
+      width: 41rem;
       color: rgb(90, 86, 86);
+      display:flex;
+      justify-content: center;
+      align-items: center;
     }
   }
   .recipe {
@@ -150,12 +153,20 @@
       }
     }
     .recipe-details {
+      display:flex;
+      align-items: center;
       margin-top: 1rem;
       background: $content-wrapper-color;
       box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
       height: 50%;
       padding: 15px;
       border-radius: 10px;
+
+      .recipe-img{
+        width: 15rem;
+        height: 9rem;
+        margin-right: 0.5rem;
+      }
     }
   }
 }

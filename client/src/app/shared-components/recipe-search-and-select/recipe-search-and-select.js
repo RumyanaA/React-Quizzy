@@ -1,16 +1,21 @@
-import { React, useState } from 'react';
+/* eslint-disable no-unused-vars */
+import { React, useEffect, useState } from 'react';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import InputField from '../../../shared/input/input-component';
 import { apiKey } from '../../../config/cooking-apiKey';
 import './recipe-search-and-select-style.scss';
 import useApi from '../apiCalls/useApi';
+import useApiWithoutLoader from '../apiCalls/useApiWithoutLoader';
 import NoDataFoundMsg from '../no-data-found-message/no-data-found-message';
 
-function RecipeSearchAndSelect() {
+function RecipeSearchAndSelect({
+  sendData,
+}) {
   const [searchValue, setSearchValue] = useState('');
   const [toggleDropDown, setToggleDropdown] = useState(false);
-  // const [selectedRecipe, setSelectedRecipe] = useState({});
   const [url, setUrl] = useState();
+  const [secondUrl, setSecondUrl] = useState('');
+  const [recipe] = useApiWithoutLoader(secondUrl);
   const {
     recipes,
     hasResult,
@@ -28,11 +33,16 @@ function RecipeSearchAndSelect() {
     }
     setUrl(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${value}`);
   };
-  const handleSelectOption = (/* value */) => {
+  const handleSelectOption = (value) => {
+    setSecondUrl(`https://api.spoonacular.com/recipes/${value.id}/information?apiKey=${apiKey}`);
     setSearchValue('');
-    // setSelectedRecipe(value);
     setToggleDropdown(false);
   };
+  useEffect(() => {
+    if (Object.keys(recipe).length !== 0) {
+      sendData(recipe);
+    }
+  }, [recipe]);
   return (
     <>
       <InputField
