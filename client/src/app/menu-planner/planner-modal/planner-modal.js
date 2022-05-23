@@ -10,9 +10,7 @@ import './planner-modal.scss';
 import parse from 'html-react-parser';
 import RecipeSearchAndSelect from '../../shared-components/recipe-search-and-select/recipe-search-and-select';
 
-function PlannerModal({
-  dateToShow, onClose, menu,
-}) {
+function PlannerModal({ dateToShow, onClose, menu }) {
   const [show, setShow] = useState(false);
   const [indexInput, setIndexInput] = useState(0);
   const [singleMeal, setSingleMeal] = useState();
@@ -84,8 +82,7 @@ function PlannerModal({
                         icon={faCaretDown}
                       />
                     )}
-                    {text.charAt(0).toUpperCase()
-                      + text.slice(1)}
+                    {text.charAt(0).toUpperCase() + text.slice(1)}
                   </button>
                   {dailyMenu[text].title && (
                     <h3 className="recipe-title" key={index}>
@@ -98,35 +95,36 @@ function PlannerModal({
                   <div className="recipe">
                     <div className="input-buttons-container">
                       {show && indexInput === index ? (
-                        <RecipeSearchAndSelect
-                          sendData={sendData}
-                        />
+                        <RecipeSearchAndSelect sendData={sendData} />
                       ) : null}
                       <span className="buttons-container">
-                        <button className="btn" onClick={() => onEdit(index, text)}>
-                          <FontAwesomeIcon icon={faPen} />
-                        </button>
                         <button
                           className="btn"
-                          onClick={() => onDelete(text)}
+                          onClick={() => onEdit(index, text)}
                         >
+                          <FontAwesomeIcon icon={faPen} />
+                        </button>
+                        <button className="btn" onClick={() => onDelete(text)}>
                           <FontAwesomeIcon icon={faTrash} />
                         </button>
                       </span>
                     </div>
-                      {dailyMenu[text].title && (
+                    {dailyMenu[text].title && (
                       <p className="recipe-details">
-                        {dailyMenu[text].image
-                      && (
-                      <img
-                        className="recipe-img"
-                        alt={dailyMenu[text].title}
-                        src={dailyMenu[text].image}
-                      />
-                      )}
-                        {parse(dailyMenu[text].instructions)}
+                        {dailyMenu[text].image && (
+                          <img
+                            className="recipe-img"
+                            alt={dailyMenu[text].title}
+                            src={dailyMenu[text].image}
+                          />
+                        )}
+                        {dailyMenu[text].instructions ? (
+                          parse(dailyMenu[text].instructions)
+                        ) : (
+                          <p>No available instructions</p>
+                        )}
                       </p>
-                      )}
+                    )}
                   </div>
                 )}
               </div>
