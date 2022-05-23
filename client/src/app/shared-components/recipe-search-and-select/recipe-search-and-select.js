@@ -6,6 +6,7 @@ import { apiKey } from '../../../config/cooking-apiKey';
 import './recipe-search-and-select-style.scss';
 import useApi from '../apiCalls/useApi';
 import useApiWithoutLoader from '../apiCalls/useApiWithoutLoader';
+import NoDataFoundMsg from '../no-data-found-message/no-data-found-message';
 
 function RecipeSearchAndSelect({
   sendData,
@@ -17,6 +18,7 @@ function RecipeSearchAndSelect({
   const [recipe] = useApiWithoutLoader(secondUrl);
   const {
     recipes,
+    hasResult,
     loading,
   } = useApi({ url });
 
@@ -58,16 +60,19 @@ function RecipeSearchAndSelect({
               </div>
             ) : (
               <div>
-                {recipes.map((recipeOption) => (
-                  <option
-                    className="dropdown-option"
-                    onClick={() => handleSelectOption(recipeOption)}
-                    key={recipeOption.id}
-                    value={recipeOption.title}
-                  >
-                    {recipeOption.title}
-                  </option>
-                ))}
+                {hasResult
+                  ? recipes.map((recipeOption) => (
+                    <option
+                      className="dropdown-option"
+                      onClick={() => handleSelectOption(recipeOption)}
+                      key={recipeOption.id}
+                      value={recipeOption.title}
+                    >
+                      {recipeOption.title}
+                    </option>
+                  ))
+                  : <NoDataFoundMsg message="No Recipes Found" />}
+
               </div>
             )}
           </div>
