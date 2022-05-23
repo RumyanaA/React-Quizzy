@@ -5,6 +5,7 @@ const useApi = ({ url }) => {
   const [randomRecipes, setRandomRecipes] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [hasResult, setHasResult] = useState(true);
   const timeout = useRef();
 
   useEffect(() => {
@@ -16,6 +17,9 @@ const useApi = ({ url }) => {
           const result = await fetch(url);
           const resBody = await result.json();
           if (resBody.results) {
+            // eslint-disable-next-line no-unused-expressions
+            resBody.results.length === 0 ? setHasResult(false) : setHasResult(true);
+
             setRecipes(resBody.results);
           } else {
             setRandomRecipes(resBody.recipes);
@@ -32,6 +36,7 @@ const useApi = ({ url }) => {
   return {
     recipes,
     randomRecipes,
+    hasResult,
     error,
     loading,
   };
