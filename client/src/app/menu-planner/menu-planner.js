@@ -15,7 +15,7 @@ function MenuPlanner() {
   const [isOpen, setIsOpen] = useState(false);
   const [dateToShow, setDateToShow] = useState(new Date());
   const [date, setDate] = useState(new Date());
-  const [currMenu, setCurrMenu] = useState({});
+  const [currentMenu, setcurrentMenu] = useState({});
   const [menus, setMenus] = useState([
     {
       date: '2022-05-07',
@@ -87,7 +87,7 @@ function MenuPlanner() {
         dinner: {},
       };
     }
-    setCurrMenu(menu);
+    setcurrentMenu(menu);
   };
   const modifyEvents = (meals) => {
     const currentEvents = events;
@@ -160,7 +160,7 @@ function MenuPlanner() {
           <PlannerModal
             onClose={onClose}
             dateToShow={dateToShow}
-            menu={currMenu}
+            menu={currentMenu}
             events={events}
             setEvents={setEvents}
             date={date}
