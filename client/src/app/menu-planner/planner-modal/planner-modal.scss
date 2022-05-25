@@ -100,8 +100,7 @@
   width: 80%;
   margin-left: 7rem;
   margin-bottom: 3rem;
-  cursor: pointer;
-
+  
   .arrow-buttons-container {
     display: flex;
     justify-content: space-between;
@@ -110,6 +109,7 @@
     height: 6rem;
     border: 5px $content-wrapper-color solid;
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    cursor: pointer;
 
     .arrow-buttons {
       cursor: pointer;
