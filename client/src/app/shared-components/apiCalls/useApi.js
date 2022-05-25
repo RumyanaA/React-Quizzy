@@ -11,6 +11,8 @@ const useApi = ({ url }) => {
   useEffect(() => {
     if (url) {
       setLoading(true);
+      setHasResult(true);
+      setRandomRecipes([]);
       clearTimeout(timeout.current);
       timeout.current = setTimeout(async () => {
         try {
@@ -18,7 +20,11 @@ const useApi = ({ url }) => {
           const resBody = await result.json();
           if (resBody.results) {
             // eslint-disable-next-line no-unused-expressions
-            resBody.results.length === 0 ? setHasResult(false) : setHasResult(true);
+            if (resBody.results.length === 0) {
+              setHasResult(false);
+            } else {
+              setHasResult(true);
+            }
 
             setRecipes(resBody.results);
           } else {
