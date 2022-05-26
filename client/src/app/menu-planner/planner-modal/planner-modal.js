@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPen,
@@ -11,6 +11,7 @@ import parse from 'html-react-parser';
 import RecipeSearchAndSelect from '../../shared-components/recipe-search-and-select/recipe-search-and-select';
 
 function PlannerModal({ dateToShow, onClose, menu }) {
+  const ref = useRef();
   const [show, setShow] = useState(false);
   const [indexInput, setIndexInput] = useState(0);
   const [singleMeal, setSingleMeal] = useState();
@@ -21,6 +22,22 @@ function PlannerModal({ dateToShow, onClose, menu }) {
     { id: 2, text: 'lunch', isShow: false },
     { id: 3, text: 'dinner', isShow: false },
   ]);
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if ((show && ref.current && !ref.current.contains(e.target))
+      || e.target.className === 'input-buttons-container') {
+        setShow(false);
+      }
+    };
+
+    document.addEventListener('mousedown', checkIfClickedOutside);
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener('mousedown', checkIfClickedOutside);
+    };
+  }, [show]);
 
   useEffect(() => {
     if (!singleMeal) {
@@ -93,9 +110,11 @@ function PlannerModal({ dateToShow, onClose, menu }) {
 
                 {isShow && (
                   <div className="recipe">
-                    <div className="input-buttons-container">
+                    <div className="input-buttons-container" ref={ref}>
                       {show && indexInput === index ? (
-                        <RecipeSearchAndSelect sendData={sendData} />
+                        <RecipeSearchAndSelect
+                          sendData={sendData}
+                        />
                       ) : null}
                       <span className="buttons-container">
                         <button

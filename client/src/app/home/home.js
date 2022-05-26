@@ -7,7 +7,6 @@ import RecipeCard from '../shared-components/recipe-cards/recipeCards';
 import Card from '../shared-components/navigation-card/card';
 import Button from '../../shared/button/button-component';
 import TitleComponents from '../shared-components/titles-component/titles-component';
-import RecipeSearchAndSelect from '../shared-components/recipe-search-and-select/recipe-search-and-select';
 
 function Home() {
   const [randomRecipes, setRandomRecipes] = useState([]);
@@ -64,7 +63,6 @@ function Home() {
     <div>
       <Header />
       <div className="wrapper">
-        <RecipeSearchAndSelect />
         <div className="nav-cards">
           {menuCards?.map((card, index) => (
             <Card
