@@ -4,6 +4,7 @@ import './card-style.scss';
 
 function Card({ title, description, routerLink }) {
   const navigate = useNavigate();
+
   const handleClick = () => {
     navigate(routerLink);
   };

@@ -13,13 +13,17 @@ function NutritionsSearch() {
     calories: 400,
     fat: 50,
   });
+
   const {
     carbs, protein, calories, fat,
   } = nutritions;
+
   const [recipes, setRecipes] = useState([]);
+
   const handleChange = (name) => (event) => {
     setNutritions({ ...nutritions, [name]: event.target.value });
   };
+
   const fetchRecipes = async (nutritionsUrl) => {
     await fetch(nutritionsUrl)
       .then((response) => response.json())
@@ -27,6 +31,7 @@ function NutritionsSearch() {
         setRecipes(data);
       });
   };
+
   const searchRecipe = async () => {
     const nutritionsUrl = `https://api.spoonacular.com/recipes/findByNutrients?maxCarbs=${nutritions.carbs}&maxProtein=${nutritions.protein}&maxCalories=${nutritions.calories}&maxFat=${nutritions.fat}&apiKey=${apiKey}`;
     await fetchRecipes(nutritionsUrl);

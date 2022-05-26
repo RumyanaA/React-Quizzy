@@ -1,3 +1,7 @@
+/* eslint padding-line-between-statements: [
+    "error",
+    { blankLine: "always", prev: "function", next: "function" }
+] */
 import { React, useState } from 'react';
 // eslint-disable-next-line import/named
 import { apiKey } from '../../../config/cooking-apiKey';
@@ -22,6 +26,7 @@ function SearchedRecipeCard({ props }) {
     await fetchRecipe();
     handleShow();
   };
+
   return (
     <>
       <div onClick={handleClick} className="recipe-wrapper">

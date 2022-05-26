@@ -2,10 +2,15 @@ import { useRef, useState, useEffect } from 'react';
 
 const useApi = ({ url }) => {
   const [recipes, setRecipes] = useState([]);
+
   const [randomRecipes, setRandomRecipes] = useState([]);
+
   const [error, setError] = useState('');
+
   const [loading, setLoading] = useState(false);
+
   const [hasResult, setHasResult] = useState(true);
+
   const timeout = useRef();
 
   useEffect(() => {
@@ -17,6 +22,7 @@ const useApi = ({ url }) => {
       timeout.current = setTimeout(async () => {
         try {
           const result = await fetch(url);
+
           const resBody = await result.json();
           if (resBody.results) {
             // eslint-disable-next-line no-unused-expressions

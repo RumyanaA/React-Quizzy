@@ -14,8 +14,11 @@ const dayjs = require('dayjs');
 
 function MenuPlanner() {
   const [isOpen, setIsOpen] = useState(false);
+
   const [dateToShow, setDateToShow] = useState(new Date());
+
   const [currentMenu, setcurrentMenu] = useState({});
+
   const [menus, setMenus] = useState([
     {
       date: '2022-05-07',
@@ -24,6 +27,7 @@ function MenuPlanner() {
       dinner: {},
     },
   ]);
+
   const [events, setEvents] = useState([
     {
       id: 1,
@@ -39,6 +43,7 @@ function MenuPlanner() {
   const handleDateClick = (info) => {
     setIsOpen(true);
     const selectedDate = dayjs(info.date).format('YYYY-MM-DD');
+
     const dateStringFormat = dayjs(info.date).format('MMMM D, YYYY');
 
     setDateToShow(dateStringFormat);
@@ -54,6 +59,7 @@ function MenuPlanner() {
     }
     setcurrentMenu(menu);
   };
+
   const modifyEvents = (meals) => {
     const currentEvents = events;
     for (let i = 0; i < events.length; i++) {
@@ -75,9 +81,11 @@ function MenuPlanner() {
     }
     setEvents([...currentEvents]);
   };
+
   const onClose = (meals, deletedMealsIds) => {
     setIsOpen(false);
     const currentMenus = menus;
+
     const menuItemIndex = menus.findIndex((meal) => meal.date === meals.date);
     if (menuItemIndex === -1) {
       currentMenus.push(meals);

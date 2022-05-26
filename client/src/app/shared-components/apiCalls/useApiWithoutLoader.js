@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 const useApiWithoutLoader = (url) => {
   const [recipe, setRecipes] = useState({});
+
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -10,6 +11,7 @@ const useApiWithoutLoader = (url) => {
       (async () => {
         try {
           const result = await fetch(url);
+
           const resBody = await result.json();
           setRecipes(resBody);
         } catch (err) {

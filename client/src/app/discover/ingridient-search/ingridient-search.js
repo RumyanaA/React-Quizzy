@@ -13,7 +13,9 @@ import InputField from '../../../shared/input/input-component';
 
 function IngridientSearch() {
   const [ingridients, setIngridients] = useState([]);
+
   const [selectedIngridients, setSelectedIngridients] = useState([]);
+
   const [recipes, setRecipes] = useState([]);
   let url = 'https://api.spoonacular.com/food/ingredients/search?query=';
   const fetchIngridients = async () => {
@@ -23,22 +25,28 @@ function IngridientSearch() {
         setIngridients(data.results);
       });
   };
+
   const handleChange = (value) => {
     url = `https://api.spoonacular.com/food/ingredients/search?query=${value}&apiKey=${apiKey}`;
+
     fetchIngridients();
   };
 
   const addIngridient = (item) => {
     setSelectedIngridients([...selectedIngridients, item]);
   };
+
   const removeIngridient = (item) => {
     const currentIngridients = selectedIngridients;
+
     const indexToRemove = currentIngridients.findIndex(
       (ingridient) => ingridient.id === item.id,
     );
     currentIngridients.splice(indexToRemove, 1);
+
     setSelectedIngridients([...currentIngridients]);
   };
+
   const fetchRecipes = async (ingridientUrl) => {
     await fetch(ingridientUrl)
       .then((response) => response.json())
@@ -46,8 +54,10 @@ function IngridientSearch() {
         setRecipes(data);
       });
   };
+
   const searchRecipe = async () => {
     const ingridientNames = selectedIngridients.map((item) => item.name);
+
     const ingridientUrl = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingridientNames}&apiKey=${apiKey}`;
     await fetchRecipes(ingridientUrl);
   };
