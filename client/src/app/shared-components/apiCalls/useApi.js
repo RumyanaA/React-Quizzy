@@ -1,10 +1,9 @@
+/* eslint-disable no-console */
+/* eslint-disable no-lonely-if */
 import { useRef, useState, useEffect } from 'react';
+import useDataModifier from '../ModifyDataFormat/useModifier';
 
 const useApi = ({ url }) => {
-  const [recipes, setRecipes] = useState([]);
-
-  const [randomRecipes, setRandomRecipes] = useState([]);
-
   const [error, setError] = useState('');
 
   const [loading, setLoading] = useState(false);
@@ -13,29 +12,19 @@ const useApi = ({ url }) => {
 
   const timeout = useRef();
 
+  const [recipes, handleData] = useDataModifier();
+
   useEffect(() => {
     if (url) {
       setLoading(true);
       setHasResult(true);
-      setRandomRecipes([]);
       clearTimeout(timeout.current);
       timeout.current = setTimeout(async () => {
         try {
           const result = await fetch(url);
 
           const resBody = await result.json();
-          if (resBody.results) {
-            // eslint-disable-next-line no-unused-expressions
-            if (resBody.results.length === 0) {
-              setHasResult(false);
-            } else {
-              setHasResult(true);
-            }
-
-            setRecipes(resBody.results);
-          } else {
-            setRandomRecipes(resBody.recipes);
-          }
+          handleData(resBody);
         } catch (err) {
           setError(err.message || 'Unexpected Error');
         } finally {
@@ -45,9 +34,16 @@ const useApi = ({ url }) => {
     }
   }, [url]);
 
+  useEffect(() => {
+    if (recipes?.length > 0) {
+      setHasResult(true);
+    } else {
+      setHasResult(false);
+    }
+  }, [recipes]);
+
   return {
     recipes,
-    randomRecipes,
     hasResult,
     error,
     loading,
