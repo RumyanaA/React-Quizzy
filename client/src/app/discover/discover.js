@@ -9,6 +9,7 @@ import NutritionsSearch from './nutritions-search/nutritions.search';
 
 function Discover() {
   const [selectedSearch, setSelectedSearch] = useState('keyword');
+
   const openSelectedSearch = (event) => {
     setSelectedSearch(event.target.id);
   };

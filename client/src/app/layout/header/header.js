@@ -5,7 +5,9 @@ import './header-style.scss';
 
 function Header() {
   const navigate = useNavigate();
+
   const [username, setUsername] = useState('user');
+
   const altLogo = 'logo';
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));

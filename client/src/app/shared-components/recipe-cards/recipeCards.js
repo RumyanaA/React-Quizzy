@@ -5,11 +5,14 @@ import CustomRecipeModal from '../CustomModal/customRecipeModal';
 
 function RecipeCard({ props }) {
   const [show, setShow] = useState(false);
+
   const handleClose = () => setShow(false);
+
   const handleShow = () => setShow(true);
   useEffect(() => {
     // api array has repeated ingridients
     const ingridients = props.extendedIngredients;
+
     const uniqueIngridients = [
       ...new Map(ingridients.map((item) => [item.id, item])).values(),
     ];

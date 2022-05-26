@@ -12,10 +12,15 @@ import RecipeSearchAndSelect from '../../shared-components/recipe-search-and-sel
 
 function PlannerModal({ dateToShow, onClose, menu }) {
   const [show, setShow] = useState(false);
+
   const [indexInput, setIndexInput] = useState(0);
+
   const [singleMeal, setSingleMeal] = useState();
+
   const [selectedRecipe, setSelectedRecipe] = useState({});
+
   const [dailyMenu, setDailyMenu] = useState(menu);
+
   const [meals, setMeals] = useState([
     { id: 1, text: 'breakfast', isShow: false },
     { id: 2, text: 'lunch', isShow: false },
@@ -48,6 +53,7 @@ function PlannerModal({ dateToShow, onClose, menu }) {
       setIndexInput(ind);
     }
   };
+
   const onDelete = (text) => {
     const selectedMeal = dailyMenu;
     selectedMeal[text] = {};

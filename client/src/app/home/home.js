@@ -11,7 +11,9 @@ import RecipeSearchAndSelect from '../shared-components/recipe-search-and-select
 
 function Home() {
   const [randomRecipes, setRandomRecipes] = useState([]);
+
   const [foodJoke, setFoodJoke] = useState('');
+
   const fetchRandomRecipes = async () => {
     await fetch(
       `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=4`,
@@ -21,6 +23,7 @@ function Home() {
         setRandomRecipes(data.recipes);
       });
   };
+
   const fetchRandomFoodJoke = async () => {
     await fetch(
       `https://api.spoonacular.com/food/jokes/random?apiKey=${apiKey}`,

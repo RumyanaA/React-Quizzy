@@ -11,6 +11,7 @@ import NoDataFoundMsg from '../../shared-components/no-data-found-message/no-dat
 
 function KeywordSearch() {
   const [url, setUrl] = useState();
+
   const {
     recipes,
     randomRecipes,

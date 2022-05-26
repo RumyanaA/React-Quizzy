@@ -9,11 +9,15 @@ function Login() {
     username: '',
     password: '',
   });
+
   const { username, password } = formValues;
+
   const handleChange = (name) => (event) => {
     setFormValues({ ...formValues, [name]: event.target.value });
   };
+
   const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     localStorage.setItem('user', JSON.stringify(formValues));
