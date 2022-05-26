@@ -12,6 +12,7 @@ import RecipeSearchAndSelect from '../../shared-components/recipe-search-and-sel
 
 function PlannerModal({ dateToShow, onClose, menu }) {
   const ref = useRef();
+
   const [show, setShow] = useState(false);
 
   const [indexInput, setIndexInput] = useState(0);
