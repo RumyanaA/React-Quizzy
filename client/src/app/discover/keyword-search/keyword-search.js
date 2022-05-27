@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import InputField from '../../../shared/input/input-component';
 import { apiKey } from '../../../config/cooking-apiKey';
@@ -9,7 +9,7 @@ import useApi from '../../shared-components/apiCalls/useApi';
 import NoDataFoundMsg from '../../shared-components/no-data-found-message/no-data-found-message';
 
 function KeywordSearch() {
-  const [url, setUrl] = useState();
+  const [url, setUrl] = useState(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=`);
 
   const {
     recipes,
@@ -17,9 +17,6 @@ function KeywordSearch() {
     loading,
   } = useApi({ url });
 
-  useEffect(() => {
-    setUrl(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=`);
-  }, []);
   return (
     <>
       <div className="search-container">
