@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 const useDataModifier = () => {
-  const [modifiedData, setModifiedData] = useState();
+  const [modifiedData, setModifiedData] = useState([]);
 
   function handleData(data) {
     if (data) {
