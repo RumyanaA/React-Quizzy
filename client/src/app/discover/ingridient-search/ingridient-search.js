@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/jsx-closing-tag-location */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-wrap-multilines */
@@ -20,15 +21,13 @@ import useApi from '../../shared-components/apiCalls/useApi';
 import NoDataFoundMsg from '../../shared-components/no-data-found-message/no-data-found-message';
 
 function IngridientSearch() {
-  // const [ingridients, setIngridients] = useState([]);
-
   const [selectedIngridients, setSelectedIngridients] = useState([]);
-
-  // const [recipes, setRecipes] = useState([]);
 
   const [ingridientsUrl, setIngridientsUrl] = useState();
 
   const [url, setUrl] = useState();
+
+  const [hasInputValue, setHasInputValue] = useState(false);
 
   const {
     ingridients,
@@ -38,11 +37,11 @@ function IngridientSearch() {
 
   const {
     recipes,
-    hasResult,
     loading,
   } = useApi({ url });
 
   const handleChange = (value) => {
+    value.length ? setHasInputValue(true) : setHasInputValue(false);
     setIngridientsUrl(`https://api.spoonacular.com/food/ingredients/search?query=${value}&apiKey=${apiKey}`);
   };
 
@@ -77,30 +76,26 @@ function IngridientSearch() {
       </div>
       <TitleComponents title="All Ingridients" />
       <div className="ingridients-container">
-        {ingridients.length === 0 && (
-          <div className="ingridients-img-container">
+        {!hasInputValue
+          ? <div className="ingridients-img-container">
             <img
               className="ingridients-img"
               alt="ingridients"
               src={ingridientsImg}
             />
-          </div>
-        )}
-
-        {ingridientsLoading
-          ? <div className="spinner-div">
-            <Spinner animation="grow" variant="primary" />
-          </div>
-          : hasIngridientsResult
-            ? ingridients?.map((item, index) => (
+          </div> : ingridientsLoading
+            ? <div className="spinner-div">
+              <Spinner animation="grow" variant="primary" />
+            </div> : hasIngridientsResult
+            && ingridients?.map((item, index) => (
               <IngridientCard
                 key={index}
                 props={item}
                 addIngridient={addIngridient}
                 selectedIngridient={false}
               />
-            )) : <NoDataFoundMsg message="No Ingridients Found" />}
-
+            ))}
+        {hasInputValue && !hasIngridientsResult && !ingridientsLoading ? <NoDataFoundMsg message="No Ingridients Found" /> : null}
       </div>
       <TitleComponents title="My Ingridients" />
       <div className="selected-ingridients-container">
