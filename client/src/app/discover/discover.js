@@ -13,14 +13,15 @@ function Discover() {
   const openSelectedSearch = (event) => {
     setSelectedSearch(event.target.id);
   };
+
   return (
     <div>
       <Header />
       <div className="wrapper">
         <div className="nav-container">
-          <Button data-testId="keyword-navigation" className={selectedSearch === 'keyword' ? 'nav-button-red' : 'nav-button'} onClick={openSelectedSearch} id="keyword" label="Search by keyword" />
-          <Button data-testId="ingridients-navigation" className={selectedSearch === 'ingridients' ? 'nav-button-red' : 'nav-button'} onClick={openSelectedSearch} id="ingridients" label="Search by ingridients" />
-          <Button data-testId="nutritions-navigation" className={selectedSearch === 'nutritions' ? 'nav-button-red' : 'nav-button'} onClick={openSelectedSearch} id="nutritions" label="Search by nutritions" />
+          <Button testId="keyword-navigation" className={selectedSearch === 'keyword' ? 'nav-button-red' : 'nav-button'} onClick={openSelectedSearch} id="keyword" label="Search by keyword" />
+          <Button testId="ingridients-navigation" className={selectedSearch === 'ingridients' ? 'nav-button-red' : 'nav-button'} onClick={openSelectedSearch} id="ingridients" label="Search by ingridients" />
+          <Button testId="nutritions-navigation" className={selectedSearch === 'nutritions' ? 'nav-button-red' : 'nav-button'} onClick={openSelectedSearch} id="nutritions" label="Search by nutritions" />
         </div>
         {selectedSearch === 'keyword' ? <KeywordSearch /> : null}
         {selectedSearch === 'ingridients' ? <IngridientSearch /> : null}

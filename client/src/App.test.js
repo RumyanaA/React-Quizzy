@@ -1,18 +1,25 @@
 /* eslint-disable no-undef */
 import React from 'react';
-import { createMemoryHistory } from 'history';
+import { createBrowserHistory } from 'history';
 import {
-  fireEvent, render, screen, waitFor,
+  fireEvent, render, screen,
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import Home from './app/home/home';
 import Discover from './app/discover/discover';
 
-const mockUser = { username: 'Anelia', password: '123' };
-window.localStorage.setItem('user', JSON.stringify(mockUser));
+beforeAll(() => {
+  const mockUser = { username: 'Anelia', password: '123' };
+  window.localStorage.setItem('user', JSON.stringify(mockUser));
+});
+
+let history;
+
+beforeEach(() => {
+  history = createBrowserHistory();
+});
 
 test('renders Random food joke label', () => {
-  const history = createMemoryHistory();
   render(
     <Router location={history.location} navigator={history}>
       <Home />
@@ -26,7 +33,6 @@ test('renders Random food joke label', () => {
 });
 
 test('renders navigation cards', () => {
-  const history = createMemoryHistory();
   render(
     <Router location={history.location} navigator={history}>
       <Home />
@@ -43,8 +49,6 @@ test('renders navigation cards', () => {
 });
 
 test('should redirect to discover', () => {
-  const history = createMemoryHistory();
-
   render(
     <Router location={history.location} navigator={history}>
       <Home />
@@ -58,8 +62,6 @@ test('should redirect to discover', () => {
 });
 
 test('should redirect to menu-planner', () => {
-  const history = createMemoryHistory();
-
   render(
     <Router location={history.location} navigator={history}>
       <Home />
@@ -71,35 +73,19 @@ test('should redirect to menu-planner', () => {
   expect(history.location.pathname).toEqual('/menu-planner');
 });
 
-test('should renders navigation buttons in discover page', () => {
-  const history = createMemoryHistory();
-
+test('should render navigation buttons in discover page', () => {
   render(
     <Router location={history.location} navigator={history}>
       <Discover />
     </Router>,
   );
-  const keywordNavigation = screen.findByTestId('keyword-navigation');
+  const keywordNavigation = screen.getByTestId('keyword-navigation');
 
-  const ingridientsNavigation = screen.findByTestId('ingridients-navigation');
+  const ingridientsNavigation = screen.getByTestId('ingridients-navigation');
 
-  const nutritionsNavigation = screen.findByTestId('nutritions-navigation');
+  const nutritionsNavigation = screen.getByTestId('nutritions-navigation');
 
-  waitFor(() => expect(keywordNavigation).toBeInTheDocument());
-  waitFor(() => expect(ingridientsNavigation).toBeInTheDocument());
-  waitFor(() => expect(nutritionsNavigation).toBeInTheDocument());
+  expect(keywordNavigation).toBeInTheDocument();
+  expect(ingridientsNavigation).toBeInTheDocument();
+  expect(nutritionsNavigation).toBeInTheDocument();
 });
-
-// test('', () => {
-//   const history = createMemoryHistory();
-
-//   render(
-//     <Router location={history.location} navigator={history}>
-//       <Home />
-//     </Router>,
-//   );
-
-//   fireEvent.click(screen.getByTestId('menu-planner'));
-//   const calendar = screen.getByRole('div');
-//   expect(calendar).toBeInTheDocument();
-// });
