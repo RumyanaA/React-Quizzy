@@ -15,7 +15,7 @@ function Header() {
   }, [username]);
   const navigateHome = () => navigate('/home');
   return (
-    <header className="header-container">
+    <header data-testid="header" className="header-container">
       <h1 onClick={navigateHome} className="app-name">
         {' '}
         <img className="logo" alt={altLogo.toString()} src={logo} />

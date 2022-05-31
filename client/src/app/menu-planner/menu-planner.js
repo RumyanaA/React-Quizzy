@@ -100,7 +100,7 @@ function MenuPlanner() {
     <>
       <Header />
       <div className="wrapper">
-        <div>
+        <div data-testid="calendar">
           <FullCalendar
             plugins={[
               dayGridPlugin,
