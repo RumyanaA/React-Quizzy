@@ -1,8 +1,11 @@
+/* eslint-disable no-undef */
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import Home from './app/home/home';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders Random food joke label', () => {
+  render(<Home />);
+  const linkElement = screen.getByTestId('random-food-joke-label');
+  // expect(linkElement).toBeInTheDocument();
+  expect(linkElement).to.equal('Random food joke:');
 });

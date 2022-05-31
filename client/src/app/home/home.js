@@ -77,7 +77,7 @@ function Home() {
           ))}
         </div>
         <div>
-          <h6>Random food joke: </h6>
+          <h6 data-testid="random-food-joke-label">Random food joke: </h6>
           {parse(foodJoke)}
         </div>
         <TitleComponents title="Daily Recipes" />
