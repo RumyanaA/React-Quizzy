@@ -43,23 +43,27 @@ function Home() {
       description:
         'Discover new recipes by selecting ingridients, nutritions or just by typing a keyword!',
       routerLink: '/discover',
+      testId: 'discover',
     },
     {
       title: 'Plan my menu',
       description:
         'Plan your menu for the day, for the week or for the rest of the year!',
       routerLink: '/menu-planner',
+      testId: 'menu-planner',
     },
     {
       title: 'Create custom recipe',
       description: 'Create your own  tasty recipes!',
       routerLink: '/custom-recipe',
+      testId: 'custom-recipe',
     },
     {
       title: 'Favorite recipes',
       description:
         'Check out your favorite recipes so you can cook them again!',
       routerLink: '/favorite-recipes',
+      testId: 'favorite-recipes',
     },
   ];
   return (
@@ -69,6 +73,7 @@ function Home() {
         <div className="nav-cards">
           {menuCards?.map((card, index) => (
             <Card
+              testId={card.testId}
               key={index}
               title={card.title}
               description={card.description}
@@ -77,7 +82,7 @@ function Home() {
           ))}
         </div>
         <div>
-          <h6>Random food joke: </h6>
+          <h6 data-testid="random-food-joke-label">Random food joke: </h6>
           {parse(foodJoke)}
         </div>
         <TitleComponents title="Daily Recipes" />
