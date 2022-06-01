@@ -29,6 +29,7 @@ function Home() {
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setFoodJoke(data.text);
       });
   };
@@ -83,7 +84,7 @@ function Home() {
         </div>
         <div>
           <h6 data-testid="random-food-joke-label">Random food joke: </h6>
-          {parse(foodJoke)}
+          <p data-testid="food-joke">{parse(foodJoke)}</p>
         </div>
         <TitleComponents title="Daily Recipes" />
         <div className="button-container">

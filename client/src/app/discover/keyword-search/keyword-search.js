@@ -31,7 +31,7 @@ function KeywordSearch() {
       </div>
       <div className="recipe-cards-container">
         {hasResult
-          ? recipes?.map((recipe, index) => <SearchedRecipeCard key={index} props={recipe} />)
+          ? recipes?.map((recipe, index) => <SearchedRecipeCard testId={`searched-recipe-card-${index}`} key={index} props={recipe} />)
           : <NoDataFoundMsg message="No Recipes Found" />}
       </div>
     </>

@@ -24,6 +24,8 @@ const useApi = ({ url }) => {
           const result = await fetch(url);
 
           const resBody = await result.json();
+
+          console.log(resBody);
           handleData(resBody);
         } catch (err) {
           setError(err.message || 'Unexpected Error');
