@@ -30,7 +30,8 @@ function CustomRecipeModal({ show, recipe, handleClose }) {
         </div>
         <div>
           <p className="modal-paragraph">Directions:</p>
-          {parse(recipe.instructions)}
+          {recipe.instructions ? parse(recipe.instructions)
+            : <span>No available instructions</span>}
         </div>
       </Modal.Body>
       <Modal.Footer>
