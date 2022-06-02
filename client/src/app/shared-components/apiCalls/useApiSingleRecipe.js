@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import { useState, useEffect } from 'react';
 
-const useApiWithoutLoader = (url) => {
+const useApiSingleRecipe = (url) => {
   const [recipe, setRecipes] = useState({});
 
   const [error, setError] = useState('');
@@ -27,4 +27,4 @@ const useApiWithoutLoader = (url) => {
   ];
 };
 
-export default useApiWithoutLoader;
+export default useApiSingleRecipe;

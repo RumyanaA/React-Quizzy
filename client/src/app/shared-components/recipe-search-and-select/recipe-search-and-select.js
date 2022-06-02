@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
 import { React, useEffect, useState } from 'react';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import InputField from '../../../shared/input/input-component';
 import { apiKey } from '../../../config/cooking-apiKey';
 import './recipe-search-and-select-style.scss';
 import useApi from '../apiCalls/useApi';
-import useApiWithoutLoader from '../apiCalls/useApiWithoutLoader';
+import useApiSingleRecipe from '../apiCalls/useApiSingleRecipe';
 import NoDataFoundMsg from '../no-data-found-message/no-data-found-message';
 
 function RecipeSearchAndSelect({
@@ -19,7 +18,7 @@ function RecipeSearchAndSelect({
 
   const [secondUrl, setSecondUrl] = useState('');
 
-  const [recipe] = useApiWithoutLoader(secondUrl);
+  const [recipe] = useApiSingleRecipe(secondUrl);
 
   const {
     recipes,
