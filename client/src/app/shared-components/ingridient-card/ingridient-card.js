@@ -3,10 +3,11 @@ import './ingridient-card-style.scss';
 
 function IngridientCard({
 
-  props, addIngridient, removeIngridient, selectedIngridient,
+  testId, props, addIngridient, removeIngridient, selectedIngridient,
 }) {
   return (
     <div
+      data-testid={testId}
       className="ingridient-info"
       onClick={!selectedIngridient ? () => addIngridient(props) : null}
     >

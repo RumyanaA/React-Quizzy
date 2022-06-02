@@ -8,11 +8,13 @@ import {
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import KeywordSearch from '../keyword-search';
+import useApi from '../../../../__mocks__/useApi';
 
 let history;
 
 beforeEach(() => {
   history = createBrowserHistory();
+  jest.spyOn(window, 'fetch').mockImplementation(useApi);
 });
 
 function MockKeywordSearch() {
@@ -25,6 +27,10 @@ function MockKeywordSearch() {
 beforeAll(() => {
   const mockUser = { username: 'Anelia', password: '123' };
   window.localStorage.setItem('user', JSON.stringify(mockUser));
+});
+
+afterEach(() => {
+  jest.restoreAllMocks();
 });
 
 test('', () => {});

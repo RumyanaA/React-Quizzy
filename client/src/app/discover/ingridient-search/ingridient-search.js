@@ -83,6 +83,7 @@ function IngridientSearch() {
         ) : null}
         {ingridients?.map((item, index) => (
           <IngridientCard
+            testId={`ingridient-testid-${index}`}
             key={index}
             props={item}
             addIngridient={addIngridient}
