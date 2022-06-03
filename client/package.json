@@ -31,12 +31,13 @@
     "react-scripts": "5.0.1",
     "sass": "^1.50.0",
     "typescript": "^4.6.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "msw": "^0.42.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns node_modules/(?!my-library-dir)/",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js"
   },
@@ -66,5 +67,8 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

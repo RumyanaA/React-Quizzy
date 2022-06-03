@@ -3,12 +3,14 @@
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import {
-  fireEvent, render, screen,
+  fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import Home from '../home';
+import { server } from '../../../mocks/server';
 
 beforeAll(() => {
+  server.listen();
   const mockUser = { username: 'Anelia', password: '123' };
   window.localStorage.setItem('user', JSON.stringify(mockUser));
 });
@@ -16,8 +18,11 @@ beforeAll(() => {
 let history;
 
 beforeEach(() => {
+  server.resetHandlers();
   history = createBrowserHistory();
 });
+
+afterAll(() => server.close());
 
 describe('Home Page', () => {
   test('renders Random food joke label', async () => {
@@ -32,16 +37,16 @@ describe('Home Page', () => {
       'Random food joke:',
     );
   });
-  //   test('renders Random food joke paragraph', async () => {
-  //     render(
-  //       <Router location={history.location} navigator={history}>
-  //         <Home />
-  //       </Router>,
+  test('renders Random food joke paragraph', async () => {
+    render(
+      <Router location={history.location} navigator={history}>
+        <Home />
+      </Router>,
 
-  //     );
-  //     const paragraphElement = await screen.findByTestId('food-joke');
-  //     expect(paragraphElement).toBeInTheDocument();
-  //   });
+    );
+    await waitFor(() => screen.getByText('mocked food joke'));
+    expect(screen.getByText('mocked food joke')).toBeInTheDocument();
+  });
 
   test('should redirect to discover', () => {
     render(
