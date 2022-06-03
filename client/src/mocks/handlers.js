@@ -8,6 +8,7 @@ export const handlers = [
     req.url.searchParams.get('query');
     req.url.searchParams.get('apiKey');
     return res(
+      ctx.delay(100),
       ctx.status(200),
       ctx.json({
         number: 2,

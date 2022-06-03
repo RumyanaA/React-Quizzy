@@ -50,21 +50,31 @@ describe('Ingridients search tests', () => {
     const spinnerElement = screen.getByTestId('spinner');
     expect(spinnerElement).toBeInTheDocument();
   });
+  test('should not show spinner when ingridients are fetched', async () => {
+    render(
+      <MockIngridientSearch />,
+    );
+    const inputEllement = screen.getByPlaceholderText(/Search ingridients.../i);
+    fireEvent.change(inputEllement, { target: { value: 'apple' } });
+    const spinnerElement = screen.getByTestId('spinner');
 
-  // test('should not show spinner when ingridients are fetched', async () => {
-  //   render(
-  //     <MockIngridientSearch />,
-  //   );
-  //   const inputEllement = screen.getByPlaceholderText(/Search ingridients.../i);
-  //   fireEvent.change(inputEllement, { target: { value: 'apple' } });
-  //   // const spinnerElement = screen.getByTestId('spinner');
+    await waitFor(() => {
+      screen.getByTestId('ingridient-testid-0');
+    });
+    expect(spinnerElement).not.toBeInTheDocument();
+  });
 
-  //   await waitFor(() => {
-  //     screen.getByTestId('ingridient-testid-0');
-  //   });
-  //   expect(screen.getByTestId('ingridient-testid-0')).toBeInTheDocument();
-  //   // expect(spinnerElement).not.toBeInTheDocument();
-  // });
+  test('should fetch ingridients when value is typed in the input', async () => {
+    render(
+      <MockIngridientSearch />,
+    );
+    const inputEllement = screen.getByPlaceholderText(/Search ingridients.../i);
+    fireEvent.change(inputEllement, { target: { value: 'apple' } });
+    await waitFor(() => {
+      screen.getByTestId('ingridient-testid-0');
+    });
+    expect(screen.getByTestId('ingridient-testid-0')).toBeInTheDocument();
+  });
   // test('should not show spinner when ingridients are fetched', async () => {
   //   render(
   //     <MockIngridientSearch />,
