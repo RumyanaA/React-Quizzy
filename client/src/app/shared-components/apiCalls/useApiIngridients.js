@@ -30,7 +30,7 @@ const useApiIngridients = ({ ingridientsUrl }) => {
         } finally {
           setIngridientsLoading(false);
         }
-      }, 100);
+      }, 1000);
     }
   }, [ingridientsUrl]);
 
