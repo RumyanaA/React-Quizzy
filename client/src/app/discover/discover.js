@@ -13,7 +13,6 @@ function Discover() {
   const openSelectedSearch = (event) => {
     setSelectedSearch(event.target.id);
   };
-
   return (
     <div>
       <Header />

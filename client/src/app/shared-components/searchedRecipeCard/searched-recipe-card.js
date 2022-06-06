@@ -3,7 +3,7 @@ import { React, useState } from 'react';
 import { apiKey } from '../../../config/cooking-apiKey';
 import CustomRecipeModal from '../CustomModal/customRecipeModal';
 
-function SearchedRecipeCard({ props }) {
+function SearchedRecipeCard({ testId, props }) {
   const [currentRecipe, setCurrentRecipe] = useState({});
 
   const [show, setShow] = useState(false);
@@ -29,7 +29,7 @@ function SearchedRecipeCard({ props }) {
 
   return (
     <>
-      <div onClick={handleClick} className="recipe-wrapper">
+      <div data-testid={testId} onClick={handleClick} className="recipe-wrapper">
         <img className="recipe-img" alt="recipe" src={props.image} />
         <div className="recipe-title">
           {' '}

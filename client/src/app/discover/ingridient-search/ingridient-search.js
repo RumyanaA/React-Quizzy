@@ -85,10 +85,11 @@ function IngridientSearch() {
             />
           </div> : ingridientsLoading
             ? <div className="spinner-div">
-              <Spinner animation="grow" variant="primary" />
+              <Spinner data-testid="spinner" animation="grow" variant="primary" />
             </div> : hasIngridientsResult
             && ingridients?.map((item, index) => (
               <IngridientCard
+                testId={`ingridient-testid-${index}`}
                 key={index}
                 props={item}
                 addIngridient={addIngridient}
