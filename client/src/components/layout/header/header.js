@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../logo.jpg';
 import './header-style.scss';
 
 function Header() {
@@ -18,7 +17,7 @@ function Header() {
     <header data-testid="header" className="header-container">
       <h1 onClick={navigateHome} className="app-name">
         {' '}
-        <img className="logo" alt={altLogo.toString()} src={logo} />
+        <img className="logo" alt={altLogo.toString()} src="img/logo.jpg" />
         The Taste Council
       </h1>
       <h3 className="user-name">{username}</h3>

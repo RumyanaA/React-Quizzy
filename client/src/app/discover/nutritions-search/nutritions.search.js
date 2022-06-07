@@ -4,7 +4,6 @@ import SearchedRecipeCard from '../../../components/searchedRecipeCard/searched-
 import './nutritions-search-style.scss';
 import { apiKey } from '../../../config/cooking-apiKey';
 import TitleComponents from '../../../components/layout/titles-component/titles-component';
-import recipesImg from '../../../components/recipes.jpg';
 
 function NutritionsSearch() {
   const [nutritions, setNutritions] = useState({
@@ -123,7 +122,7 @@ function NutritionsSearch() {
       </div>
       <TitleComponents title="Found Recipes" />
       <div className="recipe-cards-container">
-        {recipes.length === 0 ? <div className="ingridients-img-container"><img className="ingridients-img" alt="recipes" src={recipesImg} /></div> : null}
+        {recipes.length === 0 ? <div className="ingridients-img-container"><img className="ingridients-img" alt="recipes" src="img/recipes.jpg" /></div> : null}
 
         {recipes?.map((recipe, index) => <SearchedRecipeCard testId={`recipe-card-testid-${index}`} key={index} props={recipe} />)}
       </div>

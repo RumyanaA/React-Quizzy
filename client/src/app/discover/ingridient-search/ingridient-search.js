@@ -11,9 +11,6 @@ import '../../../components/layout/main-content/shared-style.scss';
 import Button from '../../../components/button/button-component';
 import SearchedRecipeCard from '../../../components/searchedRecipeCard/searched-recipe-card';
 import IngridientCard from '../../../components/ingridient-card/ingridient-card';
-import ingridientsImg from '../../../components/ingridients.jpg';
-import fridgeIngridientsImg from '../../../components/fridge.jpg';
-import recipesImg from '../../../components/recipes.jpg';
 import TitleComponents from '../../../components/layout/titles-component/titles-component';
 import InputField from '../../../components/input/input-component';
 import useApiIngridients from '../../../hooks/useApiIngridients';
@@ -81,7 +78,7 @@ function IngridientSearch() {
             <img
               className="ingridients-img"
               alt="ingridients"
-              src={ingridientsImg}
+              src="img/ingridients.jpg"
             />
           </div> : ingridientsLoading
             ? <div className="spinner-div">
@@ -105,7 +102,7 @@ function IngridientSearch() {
             <img
               className="ingridients-img"
               alt="ingridients"
-              src={fridgeIngridientsImg}
+              src="img/fridge.jpg"
             />
           </div>
         ) : selectedIngridients?.map((item, index) => (
@@ -126,7 +123,7 @@ function IngridientSearch() {
       <div className="recipe-cards-container">
         {!hasIngridientsResult ? (
           <div className="ingridients-img-container">
-            <img className="ingridients-img" alt="recipes" src={recipesImg} />
+            <img className="ingridients-img" alt="recipes" src="img/recipes.jpg" />
           </div>
         )
           : recipes?.map((recipe, index) => (
