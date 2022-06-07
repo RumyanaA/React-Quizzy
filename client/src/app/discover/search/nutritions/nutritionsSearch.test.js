@@ -7,8 +7,8 @@ import {
   screen,
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import { server } from '../../../mocks/server';
-import NutritionsSearch from './nutritions.search';
+import { server } from '../../../../mocks/server';
+import NutritionsSearch from './NutritionsSearch';
 
 let history;
 beforeAll(() => {

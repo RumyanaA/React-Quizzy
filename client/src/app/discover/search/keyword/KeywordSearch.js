@@ -1,9 +1,9 @@
 import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import { useApi } from '../../../hooks';
-import { InputField, SearchedRecipeCard, Title, NoDataFoundMessage } from '../../../components';
-import { apiKey } from '../../../config';
-import './keyword-search-style.scss';
+import { useApi } from '../../../../hooks';
+import { InputField, SearchedRecipeCard, Title, NoDataFoundMessage } from '../../../../components';
+import { apiKey } from '../../../../config';
+import './keywordSearch.scss';
 
 function KeywordSearch() {
   const [url, setUrl] = useState(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=`);

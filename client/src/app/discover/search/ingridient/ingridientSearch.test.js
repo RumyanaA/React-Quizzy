@@ -6,8 +6,8 @@ import {
   render, screen, waitFor,
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import IngridientSearch from './ingridient-search';
-import { server } from '../../../mocks/server';
+import IngridientSearch from './IngridientSearch';
+import { server } from '../../../../mocks/server';
 
 let history;
 beforeAll(() => {

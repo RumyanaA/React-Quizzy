@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InputField, Button } from '../../components';
-import './login-styles.scss';
+import './login.scss';
 
 function Login() {
   const [formValues, setFormValues] = useState({

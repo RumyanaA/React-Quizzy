@@ -10,9 +10,9 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 
-import PlannerModal from './planner-modal/planner-modal';
+import PlannerModal from './plannerModal/PlannerModal';
 import { Header } from '../../components';
-import './menu-planner-style.scss';
+import './menuPlanner.scss';
 
 const dayjs = require('dayjs');
 

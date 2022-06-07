@@ -4,7 +4,7 @@ import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import Home from './home';
+import Home from './Home';
 import { server } from '../../mocks/server';
 
 beforeAll(() => {
