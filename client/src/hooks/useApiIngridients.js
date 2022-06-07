@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-lonely-if */
 import { useRef, useState, useEffect } from 'react';
-import useDataModifier from '../ModifyDataFormat/useModifier';
+import useDataModifier from './useModifier';
 
 const useApiIngridients = ({ ingridientsUrl }) => {
   const [error, setError] = useState('');

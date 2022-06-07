@@ -3,8 +3,8 @@ import Spinner from 'react-bootstrap/esm/Spinner';
 import InputField from '../../../shared/input/input-component';
 import { apiKey } from '../../../config/cooking-apiKey';
 import './recipe-search-and-select-style.scss';
-import useApi from '../apiCalls/useApi';
-import useApiSingleRecipe from '../apiCalls/useApiSingleRecipe';
+import useApi from '../../../hooks/useApi';
+import useApiSingleRecipe from '../../../hooks/useApiSingleRecipe';
 import NoDataFoundMsg from '../no-data-found-message/no-data-found-message';
 
 function RecipeSearchAndSelect({

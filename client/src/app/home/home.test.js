@@ -4,8 +4,8 @@ import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import Home from '../home';
-import { server } from '../../../mocks/server';
+import Home from './home';
+import { server } from '../../mocks/server';
 
 beforeAll(() => {
   server.listen();

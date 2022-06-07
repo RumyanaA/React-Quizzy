@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Discover from './app/discover/discover';
 import Home from './app/home/home';
 import MenuPlanner from './app/menu-planner/menu-planner';
-import Login from './pre-login/login/login';
+import Login from './app/login/login';
 
 function AppRoutes() {
   return (

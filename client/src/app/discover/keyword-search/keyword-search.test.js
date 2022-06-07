@@ -5,7 +5,7 @@ import {
   render, screen,
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import KeywordSearch from '../keyword-search';
+import KeywordSearch from './keyword-search';
 // import useApi from '../../../../__mocks__/useApi';
 
 let history;

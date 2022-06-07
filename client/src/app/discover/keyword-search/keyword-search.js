@@ -5,7 +5,7 @@ import { apiKey } from '../../../config/cooking-apiKey';
 import SearchedRecipeCard from '../../shared-components/searchedRecipeCard/searched-recipe-card';
 import TitleComponents from '../../shared-components/titles-component/titles-component';
 import './keyword-search-style.scss';
-import useApi from '../../shared-components/apiCalls/useApi';
+import useApi from '../../../hooks/useApi';
 import NoDataFoundMsg from '../../shared-components/no-data-found-message/no-data-found-message';
 
 function KeywordSearch() {

@@ -16,8 +16,8 @@ import fridgeIngridientsImg from '../../../shared/fridge.jpg';
 import recipesImg from '../../../shared/recipes.jpg';
 import TitleComponents from '../../shared-components/titles-component/titles-component';
 import InputField from '../../../shared/input/input-component';
-import useApiIngridients from '../../shared-components/apiCalls/useApiIngridients';
-import useApi from '../../shared-components/apiCalls/useApi';
+import useApiIngridients from '../../../hooks/useApiIngridients';
+import useApi from '../../../hooks/useApi';
 import NoDataFoundMsg from '../../shared-components/no-data-found-message/no-data-found-message';
 
 function IngridientSearch() {
