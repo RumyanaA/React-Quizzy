@@ -6,19 +6,16 @@
 import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import { apiKey } from '../../../config/cooking-apiKey';
-import './ingridient-search-style.scss';
-import '../../../components/layout/main-content/shared-style.scss';
-import Button from '../../../components/button/button-component';
-import SearchedRecipeCard from '../../../components/searchedRecipeCard/searched-recipe-card';
-import IngridientCard from '../../../components/ingridient-card/ingridient-card';
-import ingridientsImg from '../../../components/ingridients.jpg';
-import fridgeIngridientsImg from '../../../components/fridge.jpg';
-import recipesImg from '../../../components/recipes.jpg';
-import TitleComponents from '../../../components/layout/titles-component/titles-component';
-import InputField from '../../../components/input/input-component';
+import Button from '../../../components/Button';
+import SearchedRecipeCard from '../../../components/SearchedRecipeCard';
+import IngridientCard from '../../../components/IngridientCard';
+import Title from '../../../components/Title';
+import InputField from '../../../components/InputField';
 import useApiIngridients from '../../../hooks/useApiIngridients';
 import useApi from '../../../hooks/useApi';
-import NoDataFoundMsg from '../../../components/no-data-found-message/no-data-found-message';
+import NoDataFoundMsg from '../../../components/NoDataFoundMessage';
+import './ingridient-search-style.scss';
+import '../../../sharedStyles.scss';
 
 function IngridientSearch() {
   const [selectedIngridients, setSelectedIngridients] = useState([]);
@@ -72,20 +69,27 @@ function IngridientSearch() {
           placeholder="Search ingridients..."
           onChange={(e) => handleChange(e.target.value)}
         />
-        <Button onClick={searchRecipe} label="Search recipe" />
+        <Button
+          onClick={searchRecipe}
+          label="Search recipe"
+        />
       </div>
-      <TitleComponents title="All Ingridients" />
+      <Title title="All Ingridients" />
       <div className="ingridients-container">
         {!hasInputValue
           ? <div className="ingridients-img-container">
             <img
               className="ingridients-img"
               alt="ingridients"
-              src={ingridientsImg}
+              src="img/ingridients.jpg"
             />
           </div> : ingridientsLoading
             ? <div className="spinner-div">
-              <Spinner data-testid="ingridients-spinner" animation="grow" variant="primary" />
+              <Spinner
+                data-testid="ingridients-spinner"
+                animation="grow"
+                variant="primary"
+              />
             </div> : hasIngridientsResult
             && ingridients?.map((item, index) => (
               <IngridientCard
@@ -96,16 +100,19 @@ function IngridientSearch() {
                 selectedIngridient={false}
               />
             ))}
-        {hasInputValue && !hasIngridientsResult && !ingridientsLoading ? <NoDataFoundMsg testid="no-ingridients-found" message="No Ingridients Found" /> : null}
+        {hasInputValue && !hasIngridientsResult && !ingridientsLoading ? <NoDataFoundMsg
+          testid="no-ingridients-found"
+          message="No Ingridients Found"
+        /> : null}
       </div>
-      <TitleComponents title="My Ingridients" />
+      <Title title="My Ingridients" />
       <div className="selected-ingridients-container">
         {selectedIngridients.length === 0 ? (
           <div className="ingridients-img-container">
             <img
               className="ingridients-img"
               alt="ingridients"
-              src={fridgeIngridientsImg}
+              src="img/fridge.jpg"
             />
           </div>
         ) : selectedIngridients?.map((item, index) => (
@@ -119,18 +126,30 @@ function IngridientSearch() {
           />
         ))}
       </div>
-      <TitleComponents title="Found Recipes" />
+      <Title title="Found Recipes" />
       <div className="spinner-div">
-        {loading && <Spinner data-testid="recipes-spinner" animation="grow" variant="primary" />}
+        {loading && <Spinner
+          data-testid="recipes-spinner"
+          animation="grow"
+          variant="primary"
+        />}
       </div>
       <div className="recipe-cards-container">
         {!hasIngridientsResult ? (
           <div className="ingridients-img-container">
-            <img className="ingridients-img" alt="recipes" src={recipesImg} />
+            <img
+              className="ingridients-img"
+              alt="recipes"
+              src="img/recipes.jpg"
+            />
           </div>
         )
           : recipes?.map((recipe, index) => (
-            <SearchedRecipeCard testId={`recipe-testId-${index}`} key={index} props={recipe} />
+            <SearchedRecipeCard
+              testId={`recipe-testId-${index}`}
+              key={index}
+              props={recipe}
+            />
           ))}
       </div>
     </>

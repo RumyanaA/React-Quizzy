@@ -6,9 +6,9 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
-import Header from '../../components/layout/header/header';
-import './menu-planner-style.scss';
+import Header from '../../components/Header';
 import PlannerModal from './planner-modal/planner-modal';
+import './menu-planner-style.scss';
 
 const dayjs = require('dayjs');
 

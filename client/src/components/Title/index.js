@@ -1,7 +1,7 @@
 import React from 'react';
-import './titles-component-style.scss';
+import './Title.scss';
 
-function TitleComponents({ title }) {
+function Title({ title }) {
   return (
     <div className="all-ingridients-title">
       <div className="all-ingridients-left-line" />
@@ -11,4 +11,5 @@ function TitleComponents({ title }) {
     </div>
   );
 }
-export default TitleComponents;
+
+export default Title;

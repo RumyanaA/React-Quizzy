@@ -1,12 +1,23 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import './button-style.scss';
+import PropTypes from 'prop-types';
+import './Button.scss';
 
 function Button({
-  type, onClick, id, className, label, testId,
+  type,
+  onClick,
+  id,
+  className,
+  label,
+  testId,
 }) {
   return (
-    <button id={id} type={type} onClick={onClick} className={className} data-testid={testId}>
+    <button
+      id={id}
+      type={type}
+      onClick={onClick}
+      className={className}
+      data-testid={testId}
+    >
       {label}
     </button>
   );

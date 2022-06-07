@@ -1,11 +1,11 @@
 import { React, useEffect, useState } from 'react';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import InputField from '../input/input-component';
+import InputField from '../InputField';
 import { apiKey } from '../../config/cooking-apiKey';
-import './recipe-search-and-select-style.scss';
 import useApi from '../../hooks/useApi';
 import useApiSingleRecipe from '../../hooks/useApiSingleRecipe';
-import NoDataFoundMsg from '../no-data-found-message/no-data-found-message';
+import NoDataFoundMsg from '../NoDataFoundMessage';
+import './RecipeSearchAndSelect.scss';
 
 function RecipeSearchAndSelect({
   sendData,

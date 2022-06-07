@@ -1,5 +1,5 @@
 import React from 'react';
-import './ingridient-card-style.scss';
+import './IngridientCard.scss';
 
 function IngridientCard({
   testId,

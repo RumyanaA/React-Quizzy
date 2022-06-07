@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './card-style.scss';
+import './NavigationCard.scss';
 
-function Card({
+function NavigationCard({
   testId, title, description, routerLink,
 }) {
   const navigate = useNavigate();
@@ -18,4 +18,4 @@ function Card({
   );
 }
 
-export default Card;
+export default NavigationCard;

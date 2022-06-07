@@ -1,12 +1,12 @@
 import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import InputField from '../../../components/input/input-component';
+import InputField from '../../../components/InputField';
 import { apiKey } from '../../../config/cooking-apiKey';
-import SearchedRecipeCard from '../../../components/searchedRecipeCard/searched-recipe-card';
-import TitleComponents from '../../../components/layout/titles-component/titles-component';
+import SearchedRecipeCard from '../../../components/SearchedRecipeCard';
+import Title from '../../../components/Title';
 import './keyword-search-style.scss';
 import useApi from '../../../hooks/useApi';
-import NoDataFoundMsg from '../../../components/no-data-found-message/no-data-found-message';
+import NoDataFoundMsg from '../../../components/NoDataFoundMessage';
 
 function KeywordSearch() {
   const [url, setUrl] = useState(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=`);
@@ -25,7 +25,7 @@ function KeywordSearch() {
           onChange={({ target: { value } }) => setUrl(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${value}`)}
         />
       </div>
-      <TitleComponents title="Found Recipes" />
+      <Title title="Found Recipes" />
       <div className="spinner-div">
         {loading && <Spinner animation="grow" variant="primary" />}
       </div>

@@ -1,7 +1,6 @@
 import { React, useState } from 'react';
-// eslint-disable-next-line import/named
+import RecipeModal from '../RecipeModal';
 import { apiKey } from '../../config/cooking-apiKey';
-import CustomRecipeModal from '../CustomModal/customRecipeModal';
 
 function SearchedRecipeCard({ testId, props }) {
   const [currentRecipe, setCurrentRecipe] = useState({});
@@ -37,7 +36,7 @@ function SearchedRecipeCard({ testId, props }) {
           <span className="recipe-tooltip">{props.title}</span>
         </div>
       </div>
-      {show && <CustomRecipeModal show={show} recipe={currentRecipe} handleClose={handleClose} />}
+      {show && <RecipeModal show={show} recipe={currentRecipe} handleClose={handleClose} />}
     </>
   );
 }
