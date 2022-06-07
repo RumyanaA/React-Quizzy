@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable prefer-const */
-/* eslint-disable no-undef */
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import {
