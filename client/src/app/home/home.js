@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import parse from 'html-react-parser';
 import { Header, RecipeCard, NavigationCard, Button, Title } from '../../components';
-import { apiKey } from '../../config/cooking-apiKey';
+import { apiKey } from '../../config';
 import '../../sharedStyles.scss';
 
 function Home() {

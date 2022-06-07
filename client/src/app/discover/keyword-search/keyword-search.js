@@ -1,8 +1,8 @@
 import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import useApi from '../../../hooks/useApi';
+import { useApi } from '../../../hooks';
 import { InputField, SearchedRecipeCard, Title, NoDataFoundMessage } from '../../../components';
-import { apiKey } from '../../../config/cooking-apiKey';
+import { apiKey } from '../../../config';
 import './keyword-search-style.scss';
 
 function KeywordSearch() {
