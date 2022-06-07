@@ -1,9 +1,8 @@
 import { React, useState } from 'react';
-import Header from '../../components/Header';
 import IngridientSearch from './ingridient-search/ingridient-search';
-import Button from '../../components/Button';
 import KeywordSearch from './keyword-search/keyword-search';
 import NutritionsSearch from './nutritions-search/nutritions.search';
+import { Header, Button } from '../../components';
 import '../../sharedStyles.scss';
 import './discover-style.scss';
 
