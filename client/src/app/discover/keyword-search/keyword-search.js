@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import InputField from '../../../shared/input/input-component';
+import InputField from '../../../components/input/input-component';
 import { apiKey } from '../../../config/cooking-apiKey';
 import SearchedRecipeCard from '../../shared-components/searchedRecipeCard/searched-recipe-card';
 import TitleComponents from '../../shared-components/titles-component/titles-component';

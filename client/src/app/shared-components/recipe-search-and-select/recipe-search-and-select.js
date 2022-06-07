@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import InputField from '../../../shared/input/input-component';
+import InputField from '../../../components/input/input-component';
 import { apiKey } from '../../../config/cooking-apiKey';
 import './recipe-search-and-select-style.scss';
 import useApi from '../../../hooks/useApi';

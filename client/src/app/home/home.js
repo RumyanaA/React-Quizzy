@@ -5,7 +5,7 @@ import { apiKey } from '../../config/cooking-apiKey';
 import Header from '../layout/header/header';
 import RecipeCard from '../shared-components/recipe-cards/recipeCards';
 import Card from '../shared-components/navigation-card/card';
-import Button from '../../shared/button/button-component';
+import Button from '../../components/button/button-component';
 import TitleComponents from '../shared-components/titles-component/titles-component';
 
 function Home() {
