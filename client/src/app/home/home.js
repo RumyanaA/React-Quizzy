@@ -1,12 +1,12 @@
 import { React, useEffect, useState } from 'react';
-import '../../components/layout/main-content/shared-style.scss';
 import parse from 'html-react-parser';
 import { apiKey } from '../../config/cooking-apiKey';
-import Header from '../../components/layout/header/header';
+import Header from '../../components/Header';
 import RecipeCard from '../../components/RecipeCard';
 import NavigationCard from '../../components/NavigationCard';
 import Button from '../../components/Button';
-import TitleComponents from '../../components/layout/titles-component/titles-component';
+import Title from '../../components/Title';
+import '../../sharedStyles.scss';
 
 function Home() {
   const [randomRecipes, setRandomRecipes] = useState([]);
@@ -85,7 +85,7 @@ function Home() {
           <h6 data-testid="random-food-joke-label">Random food joke: </h6>
           <p data-testid="food-joke">{parse(foodJoke)}</p>
         </div>
-        <TitleComponents title="Daily Recipes" />
+        <Title title="Daily Recipes" />
         <div className="button-container">
           {' '}
           <Button onClick={fetchRandomRecipes} label="show recipes" />

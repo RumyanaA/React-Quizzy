@@ -3,7 +3,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import InputField from '../../../components/InputField';
 import { apiKey } from '../../../config/cooking-apiKey';
 import SearchedRecipeCard from '../../../components/SearchedRecipeCard';
-import TitleComponents from '../../../components/layout/titles-component/titles-component';
+import Title from '../../../components/Title';
 import './keyword-search-style.scss';
 import useApi from '../../../hooks/useApi';
 import NoDataFoundMsg from '../../../components/NoDataFoundMessage';
@@ -25,7 +25,7 @@ function KeywordSearch() {
           onChange={({ target: { value } }) => setUrl(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${value}`)}
         />
       </div>
-      <TitleComponents title="Found Recipes" />
+      <Title title="Found Recipes" />
       <div className="spinner-div">
         {loading && <Spinner animation="grow" variant="primary" />}
       </div>

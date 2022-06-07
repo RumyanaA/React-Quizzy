@@ -3,7 +3,7 @@ import Button from '../../../components/Button';
 import SearchedRecipeCard from '../../../components/SearchedRecipeCard';
 import './nutritions-search-style.scss';
 import { apiKey } from '../../../config/cooking-apiKey';
-import TitleComponents from '../../../components/layout/titles-component/titles-component';
+import Title from '../../../components/Title';
 
 function NutritionsSearch() {
   const [nutritions, setNutritions] = useState({
@@ -120,7 +120,7 @@ function NutritionsSearch() {
         {' '}
         <Button onClick={searchRecipe} label="Search Recipes" />
       </div>
-      <TitleComponents title="Found Recipes" />
+      <Title title="Found Recipes" />
       <div className="recipe-cards-container">
         {recipes.length === 0 ? <div className="ingridients-img-container"><img className="ingridients-img" alt="recipes" src="img/recipes.jpg" /></div> : null}
 

@@ -6,16 +6,16 @@
 import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import { apiKey } from '../../../config/cooking-apiKey';
-import './ingridient-search-style.scss';
-import '../../../components/layout/main-content/shared-style.scss';
 import Button from '../../../components/Button';
 import SearchedRecipeCard from '../../../components/SearchedRecipeCard';
 import IngridientCard from '../../../components/IngridientCard';
-import TitleComponents from '../../../components/layout/titles-component/titles-component';
+import Title from '../../../components/Title';
 import InputField from '../../../components/InputField';
 import useApiIngridients from '../../../hooks/useApiIngridients';
 import useApi from '../../../hooks/useApi';
 import NoDataFoundMsg from '../../../components/NoDataFoundMessage';
+import './ingridient-search-style.scss';
+import '../../../sharedStyles.scss';
 
 function IngridientSearch() {
   const [selectedIngridients, setSelectedIngridients] = useState([]);
@@ -74,7 +74,7 @@ function IngridientSearch() {
           label="Search recipe"
         />
       </div>
-      <TitleComponents title="All Ingridients" />
+      <Title title="All Ingridients" />
       <div className="ingridients-container">
         {!hasInputValue
           ? <div className="ingridients-img-container">
@@ -105,7 +105,7 @@ function IngridientSearch() {
           message="No Ingridients Found"
         /> : null}
       </div>
-      <TitleComponents title="My Ingridients" />
+      <Title title="My Ingridients" />
       <div className="selected-ingridients-container">
         {selectedIngridients.length === 0 ? (
           <div className="ingridients-img-container">
@@ -126,7 +126,7 @@ function IngridientSearch() {
           />
         ))}
       </div>
-      <TitleComponents title="Found Recipes" />
+      <Title title="Found Recipes" />
       <div className="spinner-div">
         {loading && <Spinner
           data-testid="recipes-spinner"
