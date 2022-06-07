@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './planner-modal.scss';
 import parse from 'html-react-parser';
-import RecipeSearchAndSelect from '../../shared-components/recipe-search-and-select/recipe-search-and-select';
+import RecipeSearchAndSelect from '../../../components/recipe-search-and-select/recipe-search-and-select';
 
 function PlannerModal({ dateToShow, onClose, menu }) {
   const ref = useRef();

@@ -7,18 +7,18 @@ import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import { apiKey } from '../../../config/cooking-apiKey';
 import './ingridient-search-style.scss';
-import '../../layout/main-content/shared-style.scss';
+import '../../../components/layout/main-content/shared-style.scss';
 import Button from '../../../components/button/button-component';
-import SearchedRecipeCard from '../../shared-components/searchedRecipeCard/searched-recipe-card';
-import IngridientCard from '../../shared-components/ingridient-card/ingridient-card';
+import SearchedRecipeCard from '../../../components/searchedRecipeCard/searched-recipe-card';
+import IngridientCard from '../../../components/ingridient-card/ingridient-card';
 import ingridientsImg from '../../../components/ingridients.jpg';
 import fridgeIngridientsImg from '../../../components/fridge.jpg';
 import recipesImg from '../../../components/recipes.jpg';
-import TitleComponents from '../../shared-components/titles-component/titles-component';
+import TitleComponents from '../../../components/titles-component/titles-component';
 import InputField from '../../../components/input/input-component';
 import useApiIngridients from '../../../hooks/useApiIngridients';
 import useApi from '../../../hooks/useApi';
-import NoDataFoundMsg from '../../shared-components/no-data-found-message/no-data-found-message';
+import NoDataFoundMsg from '../../../components/no-data-found-message/no-data-found-message';
 
 function IngridientSearch() {
   const [selectedIngridients, setSelectedIngridients] = useState([]);

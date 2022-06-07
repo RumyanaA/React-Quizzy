@@ -1,12 +1,12 @@
 import { React, useEffect, useState } from 'react';
-import '../layout/main-content/shared-style.scss';
+import '../../components/layout/main-content/shared-style.scss';
 import parse from 'html-react-parser';
 import { apiKey } from '../../config/cooking-apiKey';
-import Header from '../layout/header/header';
-import RecipeCard from '../shared-components/recipe-cards/recipeCards';
-import Card from '../shared-components/navigation-card/card';
+import Header from '../../components/layout/header/header';
+import RecipeCard from '../../components/recipe-cards/recipeCards';
+import Card from '../../components/navigation-card/card';
 import Button from '../../components/button/button-component';
-import TitleComponents from '../shared-components/titles-component/titles-component';
+import TitleComponents from '../../components/titles-component/titles-component';
 
 function Home() {
   const [randomRecipes, setRandomRecipes] = useState([]);

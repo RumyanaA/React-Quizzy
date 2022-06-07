@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 // eslint-disable-next-line import/named
-import { apiKey } from '../../../config/cooking-apiKey';
+import { apiKey } from '../../config/cooking-apiKey';
 import CustomRecipeModal from '../CustomModal/customRecipeModal';
 
 function SearchedRecipeCard({ testId, props }) {
