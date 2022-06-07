@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import './input-style.scss';
+import './InputField.scss';
 
 function InputField({
   name,

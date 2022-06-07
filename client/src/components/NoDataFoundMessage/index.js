@@ -1,11 +1,11 @@
 import React from 'react';
-import './no-data-found-message-style.scss';
+import './NoDataFoundMessage.scss';
 
-function NoDataFoundMsg({ testid, message }) {
+function NoDataFoundMessage({ testid, message }) {
   return (
     <div data-testid={testid} className="message-container">
       {message}
     </div>
   );
 }
-export default NoDataFoundMsg;
+export default NoDataFoundMessage;

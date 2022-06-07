@@ -3,7 +3,7 @@ import '../../components/layout/main-content/shared-style.scss';
 import './discover-style.scss';
 import Header from '../../components/layout/header/header';
 import IngridientSearch from './ingridient-search/ingridient-search';
-import Button from '../../components/button/button-component';
+import Button from '../../components/Button';
 import KeywordSearch from './keyword-search/keyword-search';
 import NutritionsSearch from './nutritions-search/nutritions.search';
 

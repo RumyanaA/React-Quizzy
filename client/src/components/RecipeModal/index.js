@@ -2,9 +2,9 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import parse from 'html-react-parser';
-import './custom-Recipe-Modal-style.scss';
+import './RecipeModal.scss';
 
-function CustomRecipeModal({ show, recipe, handleClose }) {
+function RecipeModal({ show, recipe, handleClose }) {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -42,4 +42,5 @@ function CustomRecipeModal({ show, recipe, handleClose }) {
     </Modal>
   );
 }
-export default CustomRecipeModal;
+
+export default RecipeModal;

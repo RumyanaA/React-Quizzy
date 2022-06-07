@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { React, useEffect, useState } from 'react';
-import './recipe-Cards-style.scss';
-import CustomRecipeModal from '../CustomModal/customRecipeModal';
+import RecipeModal from '../RecipeModal';
+import './RecipeCard.scss';
 
 function RecipeCard({ props }) {
   const [show, setShow] = useState(false);
@@ -43,7 +43,7 @@ function RecipeCard({ props }) {
           min
         </p>
       </div>
-      <CustomRecipeModal show={show} recipe={props} handleClose={handleClose} />
+      <RecipeModal show={show} recipe={props} handleClose={handleClose} />
     </>
   );
 }
