@@ -2,8 +2,12 @@ import React from 'react';
 import './ingridient-card-style.scss';
 
 function IngridientCard({
-
-  testId, props, addIngridient, removeIngridient, selectedIngridient,
+  testId,
+  props,
+  addIngridient,
+  removeIngridient,
+  selectedIngridient,
+  divTestId,
 }) {
   return (
     <div
@@ -11,7 +15,11 @@ function IngridientCard({
       className="ingridient-info"
       onClick={!selectedIngridient ? () => addIngridient(props) : null}
     >
-      {selectedIngridient ? <div onClick={() => removeIngridient(props)}>x</div> : null}
+      {selectedIngridient && (
+        <div data-testid={divTestId} onClick={() => removeIngridient(props)}>
+          x
+        </div>
+      )}
       <img
         className="ingridient-img"
         alt={props.name}
