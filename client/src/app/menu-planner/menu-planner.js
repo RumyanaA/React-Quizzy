@@ -6,7 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
-import Header from '../layout/header/header';
+import Header from '../../components/layout/header/header';
 import './menu-planner-style.scss';
 import PlannerModal from './planner-modal/planner-modal';
 
