@@ -1,14 +1,10 @@
 /* eslint-disable no-unused-expressions */
-/* eslint-disable no-unused-vars */
-/* eslint-disable prefer-const */
-/* eslint-disable no-undef */
 import React from 'react';
 import { createBrowserHistory } from 'history';
 import {
   fireEvent,
   render, screen, waitFor,
 } from '@testing-library/react';
-import { rest } from 'msw';
 import { Router } from 'react-router-dom';
 import IngridientSearch from '../ingridient-search';
 import { server } from '../../../../mocks/server';
