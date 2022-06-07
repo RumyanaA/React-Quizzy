@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import parse from 'html-react-parser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPen,
@@ -6,8 +7,7 @@ import {
   faCaretDown,
   faCaretUp,
 } from '@fortawesome/free-solid-svg-icons';
-import parse from 'html-react-parser';
-import RecipeSearchAndSelect from '../../../components/RecipeSearchAndSelect';
+import { RecipeSearchAndSelect } from '../../../components';
 import './planner-modal.scss';
 
 function PlannerModal({ dateToShow, onClose, menu }) {
