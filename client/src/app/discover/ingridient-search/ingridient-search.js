@@ -85,7 +85,7 @@ function IngridientSearch() {
             />
           </div> : ingridientsLoading
             ? <div className="spinner-div">
-              <Spinner data-testid="spinner" animation="grow" variant="primary" />
+              <Spinner data-testid="ingridients-spinner" animation="grow" variant="primary" />
             </div> : hasIngridientsResult
             && ingridients?.map((item, index) => (
               <IngridientCard
@@ -96,7 +96,7 @@ function IngridientSearch() {
                 selectedIngridient={false}
               />
             ))}
-        {hasInputValue && !hasIngridientsResult && !ingridientsLoading ? <NoDataFoundMsg message="No Ingridients Found" /> : null}
+        {hasInputValue && !hasIngridientsResult && !ingridientsLoading ? <NoDataFoundMsg testid="no-ingridients-found" message="No Ingridients Found" /> : null}
       </div>
       <TitleComponents title="My Ingridients" />
       <div className="selected-ingridients-container">
@@ -110,16 +110,18 @@ function IngridientSearch() {
           </div>
         ) : selectedIngridients?.map((item, index) => (
           <IngridientCard
+            testId={`selectedIngridient-testid-${index}`}
             key={index}
             props={item}
             removeIngridient={removeIngridient}
             selectedIngridient
+            divTestId={`div-X-testid-${index}`}
           />
         ))}
       </div>
       <TitleComponents title="Found Recipes" />
       <div className="spinner-div">
-        {loading && <Spinner animation="grow" variant="primary" />}
+        {loading && <Spinner data-testid="recipes-spinner" animation="grow" variant="primary" />}
       </div>
       <div className="recipe-cards-container">
         {!hasIngridientsResult ? (
@@ -128,7 +130,7 @@ function IngridientSearch() {
           </div>
         )
           : recipes?.map((recipe, index) => (
-            <SearchedRecipeCard key={index} props={recipe} />
+            <SearchedRecipeCard testId={`recipe-testId-${index}`} key={index} props={recipe} />
           ))}
       </div>
     </>
