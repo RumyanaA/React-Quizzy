@@ -4,13 +4,15 @@
 /node_modules
 /.pnp
 .pnp.js
-/src/config/cooking-apiKey.js
 
 # testing
 /coverage
 
 # production
 /build
+
+# config
+/src/config/cooking-apiKey.js
 
 # misc
 .DS_Store
