@@ -5,10 +5,9 @@
 /* eslint-disable no-unused-vars */
 import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import useApi from '../../../hooks/useApi';
-import useApiIngridients from '../../../hooks/useApiIngridients';
+import { useApi, useApiIngridients } from '../../../hooks';
 import { Button, SearchedRecipeCard, IngridientCard, Title, InputField, NoDataFoundMessage } from '../../../components';
-import { apiKey } from '../../../config/cooking-apiKey';
+import { apiKey } from '../../../config';
 import './ingridient-search-style.scss';
 import '../../../sharedStyles.scss';
 

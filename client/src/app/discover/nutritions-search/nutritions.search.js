@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import { Button, SearchedRecipeCard, Title } from '../../../components';
-import { apiKey } from '../../../config/cooking-apiKey';
+import { apiKey } from '../../../config';
 import './nutritions-search-style.scss';
 
 function NutritionsSearch() {

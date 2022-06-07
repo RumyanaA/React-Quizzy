@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import RecipeModal from '../RecipeModal';
-import { apiKey } from '../../config/cooking-apiKey';
+import { apiKey } from '../../config';
 
 function SearchedRecipeCard({ testId, props }) {
   const [currentRecipe, setCurrentRecipe] = useState({});
