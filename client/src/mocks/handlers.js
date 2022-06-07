@@ -1,12 +1,19 @@
 /* eslint-disable import/prefer-default-export */
 import { rest } from 'msw';
-// import { apiKey } from '../config/cooking-apiKey';
 
 export const handlers = [
 
   rest.get('https://api.spoonacular.com/food/ingredients/search', (req, res, ctx) => {
     req.url.searchParams.get('query');
     req.url.searchParams.get('apiKey');
+    if (req.url.searchParams.get('query') === 'invalidIngridientName') {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          results: [],
+        }),
+      );
+    }
     return res(
       ctx.status(200),
       ctx.json({

@@ -8,6 +8,7 @@ import {
   fireEvent,
   render, screen, waitFor,
 } from '@testing-library/react';
+import { rest } from 'msw';
 import { Router } from 'react-router-dom';
 import IngridientSearch from '../ingridient-search';
 import { server } from '../../../../mocks/server';
@@ -18,13 +19,12 @@ beforeAll(() => {
 });
 
 beforeEach(() => {
-  server.resetHandlers();
   history = createBrowserHistory();
 });
 
-// afterEach(() => {
-//   jest.useRealTimers();
-// });
+afterEach(() => {
+  server.resetHandlers();
+});
 
 afterAll(() => {
   server.close();
@@ -54,6 +54,26 @@ describe('Ingridients search tests', () => {
     const inputEllement = screen.getByPlaceholderText(/Search ingridients.../i);
     fireEvent.change(inputEllement, { target: { value: 'banana' } });
     expect(inputEllement.value).toBe('banana');
+  });
+
+  test('should render "no ingridients found" when response from fetch is empty array', async () => {
+    // server.use(
+    //   rest.get('https://api.spoonacular.com/food/ingredients/search', (req, res, ctx) => {
+    //     req.url.searchParams.get('ingridients');
+    //     req.url.searchParams.get('apiKey');
+    //     return res(
+    //       ctx.status(200),
+    //       ctx.json({ results: [] }),
+    //     );
+    //   }),
+    // );
+    render(
+      <MockIngridientSearch />,
+    );
+    const inputEllement = screen.getByPlaceholderText(/Search ingridients.../i);
+    fireEvent.change(inputEllement, { target: { value: 'invalidIngridientName' } });
+    const noDataMessage = await waitFor(() => screen.getByTestId('no-ingridients-found'), { timeout: 1100 });
+    expect(noDataMessage).toBeInTheDocument();
   });
 
   test('should show spinner when changing input and hide spinner when ingridients are fetched', async () => {

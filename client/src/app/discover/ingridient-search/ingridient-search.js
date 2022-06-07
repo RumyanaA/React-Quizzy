@@ -96,7 +96,7 @@ function IngridientSearch() {
                 selectedIngridient={false}
               />
             ))}
-        {hasInputValue && !hasIngridientsResult && !ingridientsLoading ? <NoDataFoundMsg message="No Ingridients Found" /> : null}
+        {hasInputValue && !hasIngridientsResult && !ingridientsLoading ? <NoDataFoundMsg testid="no-ingridients-found" message="No Ingridients Found" /> : null}
       </div>
       <TitleComponents title="My Ingridients" />
       <div className="selected-ingridients-container">

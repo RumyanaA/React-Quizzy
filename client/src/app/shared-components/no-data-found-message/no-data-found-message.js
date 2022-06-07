@@ -1,9 +1,9 @@
 import React from 'react';
 import './no-data-found-message-style.scss';
 
-function NoDataFoundMsg({ message }) {
+function NoDataFoundMsg({ testid, message }) {
   return (
-    <div className="message-container">
+    <div data-testid={testid} className="message-container">
       {message}
     </div>
   );
