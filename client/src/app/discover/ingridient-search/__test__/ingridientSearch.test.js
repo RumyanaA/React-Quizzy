@@ -22,6 +22,10 @@ beforeEach(() => {
   history = createBrowserHistory();
 });
 
+// afterEach(() => {
+//   jest.useRealTimers();
+// });
+
 afterAll(() => {
   server.close();
 });
@@ -52,7 +56,7 @@ describe('Ingridients search tests', () => {
     expect(inputEllement.value).toBe('banana');
   });
 
-  test('should show spinner when changing input', async () => {
+  test('should show spinner when changing input and hide spinner when ingridients are fetched', async () => {
     render(
       <MockIngridientSearch />,
     );
@@ -60,15 +64,6 @@ describe('Ingridients search tests', () => {
     fireEvent.change(inputEllement, { target: { value: 'banana' } });
     const spinnerElement = screen.getByTestId('ingridients-spinner');
     expect(spinnerElement).toBeInTheDocument();
-  });
-
-  test('should not show spinner when ingridients are fetched', async () => {
-    render(
-      <MockIngridientSearch />,
-    );
-    const inputEllement = screen.getByPlaceholderText(/Search ingridients.../i);
-    fireEvent.change(inputEllement, { target: { value: 'apple' } });
-    const spinnerElement = screen.getByTestId('ingridients-spinner');
     await waitFor(() => screen.getByTestId('ingridient-testid-0'), { timeout: 1100 });
     expect(spinnerElement).not.toBeInTheDocument();
   });
@@ -81,7 +76,7 @@ describe('Ingridients search tests', () => {
     expect(fetchedIngridient).toBeInTheDocument();
   });
 
-  test('should display clicked ingridient in selected ingridients container', async () => {
+  test('should display clicked ingridient in selected ingridients container and remove it when "remove"button is clicked', async () => {
     render(
       <MockIngridientSearch />,
     );
@@ -89,40 +84,9 @@ describe('Ingridients search tests', () => {
 
     const selectedIngridient = screen.getByTestId('selectedIngridient-testid-0');
     expect(selectedIngridient).toHaveTextContent(fetchedIngridient.textContent);
-  });
-
-  test('should remove ingridient from selected ingridients when X-button is clicked', async () => {
-    render(
-      <MockIngridientSearch />,
-    );
-    await fetchIngridient();
-    const selectedIngridient = screen.getByTestId('selectedIngridient-testid-0');
-
     const ingridientRemoveElement = screen.getByTestId('div-X-testid-0');
     fireEvent.click(ingridientRemoveElement);
     expect(selectedIngridient).not.toBeInTheDocument();
-  });
-
-  test('should show recipes-spinner while fetching recipes', async () => {
-    render(
-      <MockIngridientSearch />,
-    );
-    await fetchIngridient();
-    const searchRecipesButton = screen.getByRole('button');
-    fireEvent.click(searchRecipesButton);
-    const spinnerElement = screen.getByTestId('recipes-spinner');
-    expect(spinnerElement).toBeInTheDocument();
-  });
-
-  test('should fetch and render recipe after "find recipes" button is clicked', async () => {
-    render(
-      <MockIngridientSearch />,
-    );
-    await fetchIngridient();
-    const searchRecipesButton = screen.getByRole('button');
-    fireEvent.click(searchRecipesButton);
-    const fetchedRecipes = await waitFor(() => screen.getByTestId('recipe-testId-0'), { timeout: 1100 });
-    expect(fetchedRecipes).toBeInTheDocument();
   });
 
   test('should fetch and render 2 recipes after find recipes button is clicked', async () => {
@@ -136,7 +100,7 @@ describe('Ingridients search tests', () => {
     expect(fetchedRecipes.length).toBe(2);
   });
 
-  test('should not show recipes-spinner when fetching recipes has finished', async () => {
+  test('should show spinner while fetching recipes and hide when fetching has finished', async () => {
     render(
       <MockIngridientSearch />,
     );
@@ -144,7 +108,7 @@ describe('Ingridients search tests', () => {
     const searchRecipesButton = screen.getByRole('button');
     fireEvent.click(searchRecipesButton);
     const spinnerElement = screen.getByTestId('recipes-spinner');
-
+    expect(spinnerElement).toBeInTheDocument();
     await waitFor(() => screen.getAllByTestId(/recipe-testId-/i), { timeout: 1100 });
     expect(spinnerElement).not.toBeInTheDocument();
   });
