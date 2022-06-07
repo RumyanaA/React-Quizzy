@@ -125,7 +125,7 @@ function NutritionsSearch() {
       <div className="recipe-cards-container">
         {recipes.length === 0 ? <div className="ingridients-img-container"><img className="ingridients-img" alt="recipes" src={recipesImg} /></div> : null}
 
-        {recipes?.map((recipe, index) => <SearchedRecipeCard key={index} props={recipe} />)}
+        {recipes?.map((recipe, index) => <SearchedRecipeCard testId={`recipe-card-testid-${index}`} key={index} props={recipe} />)}
       </div>
     </>
   );
