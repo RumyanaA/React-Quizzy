@@ -3,7 +3,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import InputField from '../../../components/input/input-component';
 import { apiKey } from '../../../config/cooking-apiKey';
 import SearchedRecipeCard from '../../../components/searchedRecipeCard/searched-recipe-card';
-import TitleComponents from '../../../components/titles-component/titles-component';
+import TitleComponents from '../../../components/layout/titles-component/titles-component';
 import './keyword-search-style.scss';
 import useApi from '../../../hooks/useApi';
 import NoDataFoundMsg from '../../../components/no-data-found-message/no-data-found-message';

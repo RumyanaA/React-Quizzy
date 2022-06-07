@@ -14,7 +14,7 @@ import IngridientCard from '../../../components/ingridient-card/ingridient-card'
 import ingridientsImg from '../../../components/ingridients.jpg';
 import fridgeIngridientsImg from '../../../components/fridge.jpg';
 import recipesImg from '../../../components/recipes.jpg';
-import TitleComponents from '../../../components/titles-component/titles-component';
+import TitleComponents from '../../../components/layout/titles-component/titles-component';
 import InputField from '../../../components/input/input-component';
 import useApiIngridients from '../../../hooks/useApiIngridients';
 import useApi from '../../../hooks/useApi';

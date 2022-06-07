@@ -5,7 +5,7 @@ import Home from './app/home/home';
 import MenuPlanner from './app/menu-planner/menu-planner';
 import Login from './app/login/login';
 
-function AppRoutes() {
+function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
@@ -17,4 +17,4 @@ function AppRoutes() {
   );
 }
 
-export default AppRoutes;
+export default App;

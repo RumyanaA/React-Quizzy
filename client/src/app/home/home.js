@@ -6,7 +6,7 @@ import Header from '../../components/layout/header/header';
 import RecipeCard from '../../components/recipe-cards/recipeCards';
 import Card from '../../components/navigation-card/card';
 import Button from '../../components/button/button-component';
-import TitleComponents from '../../components/titles-component/titles-component';
+import TitleComponents from '../../components/layout/titles-component/titles-component';
 
 function Home() {
   const [randomRecipes, setRandomRecipes] = useState([]);

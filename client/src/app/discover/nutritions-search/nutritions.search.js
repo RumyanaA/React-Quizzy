@@ -3,7 +3,7 @@ import Button from '../../../components/button/button-component';
 import SearchedRecipeCard from '../../../components/searchedRecipeCard/searched-recipe-card';
 import './nutritions-search-style.scss';
 import { apiKey } from '../../../config/cooking-apiKey';
-import TitleComponents from '../../../components/titles-component/titles-component';
+import TitleComponents from '../../../components/layout/titles-component/titles-component';
 import recipesImg from '../../../components/recipes.jpg';
 
 function NutritionsSearch() {
