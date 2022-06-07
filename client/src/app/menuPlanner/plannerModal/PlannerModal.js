@@ -8,7 +8,7 @@ import {
   faCaretUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { RecipeSearchAndSelect } from '../../../components';
-import './planner-modal.scss';
+import './plannerModal.scss';
 
 function PlannerModal({ dateToShow, onClose, menu }) {
   const ref = useRef();

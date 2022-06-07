@@ -1,9 +1,9 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Discover from './app/discover/discover';
-import Home from './app/home/home';
-import MenuPlanner from './app/menu-planner/menu-planner';
-import Login from './app/login/login';
+import Login from './app/login/Login';
+import Home from './app/home/Home';
+import Discover from './app/discover/Discover';
+import MenuPlanner from './app/menuPlanner/MenuPlanner';
 
 function App() {
   return (
