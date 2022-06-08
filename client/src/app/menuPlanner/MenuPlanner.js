@@ -1,14 +1,18 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-restricted-syntax */
 import React, { useState } from 'react';
-import FullCalendar from '@fullcalendar/react'; // must go before plugins
-import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
+
+// calendar lib
+import FullCalendar from '@fullcalendar/react';
+// calendar lib plugins
+import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
-import Header from '../../components/Header';
-import PlannerModal from './planner-modal/planner-modal';
-import './menu-planner-style.scss';
+
+import PlannerModal from './plannerModal/PlannerModal';
+import { Header } from '../../components';
+import './menuPlanner.scss';
 
 const dayjs = require('dayjs');
 

@@ -5,17 +5,11 @@
 /* eslint-disable no-unused-vars */
 import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import { apiKey } from '../../../config/cooking-apiKey';
-import Button from '../../../components/Button';
-import SearchedRecipeCard from '../../../components/SearchedRecipeCard';
-import IngridientCard from '../../../components/IngridientCard';
-import Title from '../../../components/Title';
-import InputField from '../../../components/InputField';
-import useApiIngridients from '../../../hooks/useApiIngridients';
-import useApi from '../../../hooks/useApi';
-import NoDataFoundMsg from '../../../components/NoDataFoundMessage';
-import './ingridient-search-style.scss';
-import '../../../sharedStyles.scss';
+import { useApi, useApiIngridients } from '../../../../hooks';
+import { Button, SearchedRecipeCard, IngridientCard, Title, InputField, NoDataFoundMessage } from '../../../../components';
+import { apiKey } from '../../../../config';
+import './ingridientSearch.scss';
+import '../../../../sharedStyles.scss';
 
 function IngridientSearch() {
   const [selectedIngridients, setSelectedIngridients] = useState([]);
@@ -100,7 +94,7 @@ function IngridientSearch() {
                 selectedIngridient={false}
               />
             ))}
-        {hasInputValue && !hasIngridientsResult && !ingridientsLoading ? <NoDataFoundMsg
+        {hasInputValue && !hasIngridientsResult && !ingridientsLoading ? <NoDataFoundMessage
           testid="no-ingridients-found"
           message="No Ingridients Found"
         /> : null}

@@ -1,12 +1,9 @@
 import { React, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import InputField from '../../../components/InputField';
-import { apiKey } from '../../../config/cooking-apiKey';
-import SearchedRecipeCard from '../../../components/SearchedRecipeCard';
-import Title from '../../../components/Title';
-import './keyword-search-style.scss';
-import useApi from '../../../hooks/useApi';
-import NoDataFoundMsg from '../../../components/NoDataFoundMessage';
+import { useApi } from '../../../../hooks';
+import { InputField, SearchedRecipeCard, Title, NoDataFoundMessage } from '../../../../components';
+import { apiKey } from '../../../../config';
+import './keywordSearch.scss';
 
 function KeywordSearch() {
   const [url, setUrl] = useState(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=`);
@@ -32,7 +29,7 @@ function KeywordSearch() {
       <div className="recipe-cards-container">
         {hasResult
           ? recipes?.map((recipe, index) => <SearchedRecipeCard testId={`searched-recipe-card-${index}`} key={index} props={recipe} />)
-          : <NoDataFoundMsg message="No Recipes Found" />}
+          : <NoDataFoundMessage message="No Recipes Found" />}
       </div>
     </>
   );

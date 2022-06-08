@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import InputField from '../../components/InputField';
-import Button from '../../components/Button';
-import './login-styles.scss';
+import { InputField, Button } from '../../components';
+import './login.scss';
 
 function Login() {
   const [formValues, setFormValues] = useState({

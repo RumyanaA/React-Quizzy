@@ -5,7 +5,7 @@ import {
   render, screen,
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import Discover from './discover';
+import Discover from './Discover';
 
 let history;
 

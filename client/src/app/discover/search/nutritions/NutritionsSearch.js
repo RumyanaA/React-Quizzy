@@ -1,9 +1,7 @@
 import { React, useState } from 'react';
-import Button from '../../../components/Button';
-import SearchedRecipeCard from '../../../components/SearchedRecipeCard';
-import './nutritions-search-style.scss';
-import { apiKey } from '../../../config/cooking-apiKey';
-import Title from '../../../components/Title';
+import { Button, SearchedRecipeCard, Title } from '../../../../components';
+import { apiKey } from '../../../../config';
+import './nutritionsSearch.scss';
 
 function NutritionsSearch() {
   const [nutritions, setNutritions] = useState({
@@ -129,4 +127,5 @@ function NutritionsSearch() {
     </>
   );
 }
+
 export default NutritionsSearch;
