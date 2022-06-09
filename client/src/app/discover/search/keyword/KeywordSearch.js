@@ -1,4 +1,5 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useCallback } from 'react';
+import debounce from 'lodash.debounce';
 import Spinner from 'react-bootstrap/Spinner';
 import { InputField, SearchedRecipeCard, Title, NoDataFoundMessage } from '../../../../components';
 import { fetchRecipesByKeyword, fetchRandomRecipes } from '../../../../service';
@@ -11,18 +12,27 @@ function KeywordSearch() {
 
   const [loading, setLoading] = useState(false);
 
+  const handleChange = useCallback(
+    debounce(
+      ({ target: { value } }) => setKeyword(value),
+      1000,
+    ),
+    [],
+  );
+
   useEffect(() => {
     setLoading(true);
     if (keyword) {
       fetchRecipesByKeyword({ keyword })
         .then((response) => response.json())
-        .then(({ results }) => setRecipes(results));
+        .then(({ results }) => setRecipes(results))
+        .finally(() => setLoading(false));
     } else {
       fetchRandomRecipes()
         .then((response) => response.json())
-        .then(({ recipes: fetchedRecipes }) => setRecipes(fetchedRecipes));
+        .then(({ recipes: fetchedRecipes }) => setRecipes(fetchedRecipes))
+        .finally(() => setLoading(false));
     }
-    setLoading(false);
   }, [keyword]);
 
   return (
@@ -30,18 +40,33 @@ function KeywordSearch() {
       <div className="search-container">
         <InputField
           placeholder="Search recipes by keyword..."
-          onChange={({ target: { value } }) => setKeyword(value)}
+          onChange={handleChange}
         />
       </div>
       <Title title="Found Recipes" />
-      <div className="spinner-div">
-        {loading && <Spinner animation="grow" variant="primary" />}
-      </div>
-      <div className="recipe-cards-container">
-        {recipes.length > 0
-          ? recipes?.map((recipe, index) => <SearchedRecipeCard testId={`searched-recipe-card-${index}`} key={index} props={recipe} />)
-          : <NoDataFoundMessage message="No Recipes Found" />}
-      </div>
+      {
+        loading
+          ? (
+            <div className="spinner-div">
+              <Spinner animation="grow" variant="primary" />
+            </div>
+          )
+          : (
+            <div className="recipe-cards-container">
+              {recipes.length > 0
+                ? recipes?.map(
+                  (recipe, index) => (
+                    <SearchedRecipeCard
+                      testId={`searched-recipe-card-${index}`}
+                      key={index}
+                      props={recipe}
+                    />
+                  ),
+                )
+                : <NoDataFoundMessage message="No Recipes Found" />}
+            </div>
+          )
+      }
     </>
   );
 }
