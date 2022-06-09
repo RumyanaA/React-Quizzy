@@ -8,10 +8,10 @@ import Spinner from 'react-bootstrap/esm/Spinner';
 import { useApi, useApiIngridients } from '../../../../hooks';
 import { Button, SearchedRecipeCard, IngridientCard, Title, InputField, NoDataFoundMessage } from '../../../../components';
 import { apiKey } from '../../../../config';
-import './ingridientSearch.scss';
+import './ingredientSearch.scss';
 import '../../../../sharedStyles.scss';
 
-function IngridientSearch() {
+function IngredientSearch() {
   const [selectedIngridients, setSelectedIngridients] = useState([]);
 
   const [ingridientsUrl, setIngridientsUrl] = useState();
@@ -150,4 +150,4 @@ function IngridientSearch() {
   );
 }
 
-export default IngridientSearch;
+export default IngredientSearch;
