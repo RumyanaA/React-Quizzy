@@ -17,3 +17,11 @@ export const fetchRecipesByKeyword = ({ keyword }) => fetch(
 export const fetchRecipesByNutrition = ({ carbs, protein, calories, fat }) => fetch(
   `https://api.spoonacular.com/recipes/findByNutrients?maxCarbs=${carbs}&maxProtein=${protein}&maxCalories=${calories}&maxFat=${fat}&apiKey=${apiKey}`,
 );
+
+export const fetchIngredients = ({ keyword }) => fetch(
+  `https://api.spoonacular.com/food/ingredients/search?query=${keyword}&apiKey=${apiKey}`,
+);
+
+export const fetchRecipesByIngredients = ({ ingredients }) => fetch(
+  `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&apiKey=${apiKey}`,
+);

@@ -15,7 +15,7 @@ function KeywordSearch() {
   const handleChange = useCallback(
     debounce(
       ({ target: { value } }) => setKeyword(value),
-      1000,
+      5000,
     ),
     [],
   );
