@@ -13,3 +13,7 @@ export const fetchRandomFoodJoke = () => fetch(
 export const fetchRecipesByKeyword = ({ keyword }) => fetch(
   `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&query=${keyword}`,
 );
+
+export const fetchRecipesByNutrition = ({ carbs, protein, calories, fat }) => fetch(
+  `https://api.spoonacular.com/recipes/findByNutrients?maxCarbs=${carbs}&maxProtein=${protein}&maxCalories=${calories}&maxFat=${fat}&apiKey=${apiKey}`,
+);
