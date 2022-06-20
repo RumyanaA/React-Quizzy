@@ -1,8 +1,4 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable react/jsx-closing-tag-location */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-wrap-multilines */
-/* eslint-disable no-unused-vars */
 import { React, useState, useCallback, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import Spinner from 'react-bootstrap/esm/Spinner';
@@ -83,7 +79,6 @@ function IngredientSearch() {
   };
 
   useEffect(() => {
-    console.log(selectedIngredientsName);
     fetchRecipesByIngredients({ ingredients: selectedIngredientsName })
       .then((response) => response.json())
       .then((result) => setRecipes(result))
