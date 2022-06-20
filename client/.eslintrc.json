@@ -21,7 +21,6 @@
     ],
     "rules": {
         "import/no-duplicates": 2,
-        // "react/jsx-max-props-per-line": [2, { "maximum": 1 }],
         "jsx-a11y/label-has-associated-control": 0,
         "jsx-a11y/no-noninteractive-element-interactions": 0,
         "import/named": 0,

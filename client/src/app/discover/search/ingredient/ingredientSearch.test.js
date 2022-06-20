@@ -6,7 +6,7 @@ import {
   render, screen, waitFor,
 } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import IngridientSearch from './IngridientSearch';
+import IngridientSearch from './IngredientSearch';
 import { server } from '../../../../mocks/server';
 
 let history;

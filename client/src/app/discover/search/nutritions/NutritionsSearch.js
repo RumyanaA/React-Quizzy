@@ -1,10 +1,10 @@
 import { React, useState } from 'react';
 import { Button, SearchedRecipeCard, Title } from '../../../../components';
-import { apiKey } from '../../../../config';
+import { fetchRecipesByNutrition } from '../../../../service';
 import './nutritionsSearch.scss';
 
 function NutritionsSearch() {
-  const [nutritions, setNutritions] = useState({
+  const [nutrition, setNutrition] = useState({
     carbs: 55,
     protein: 55,
     calories: 400,
@@ -13,26 +13,20 @@ function NutritionsSearch() {
 
   const {
     carbs, protein, calories, fat,
-  } = nutritions;
+  } = nutrition;
 
   const [recipes, setRecipes] = useState([]);
 
-  const handleChange = (name) => (event) => {
-    setNutritions({ ...nutritions, [name]: event.target.value });
+  const handleChange = (name) => ({ target: { value } }) => {
+    setNutrition({ ...nutrition, [name]: value });
   };
 
-  const fetchRecipes = async (nutritionsUrl) => {
-    await fetch(nutritionsUrl)
+  const fetchRecipes = () => {
+    fetchRecipesByNutrition({ ...nutrition })
       .then((response) => response.json())
-      .then((data) => {
-        setRecipes(data);
-      });
+      .then(setRecipes);
   };
 
-  const searchRecipe = async () => {
-    const nutritionsUrl = `https://api.spoonacular.com/recipes/findByNutrients?maxCarbs=${nutritions.carbs}&maxProtein=${nutritions.protein}&maxCalories=${nutritions.calories}&maxFat=${nutritions.fat}&apiKey=${apiKey}`;
-    await fetchRecipes(nutritionsUrl);
-  };
   return (
     <>
       <div className="sliders-wrapper">
@@ -51,7 +45,7 @@ function NutritionsSearch() {
             name="carbs"
             min="10"
             max="100"
-            defaultValue={nutritions.carbs}
+            value={nutrition.carbs}
             onChange={handleChange('carbs')}
           />
         </div>
@@ -70,7 +64,7 @@ function NutritionsSearch() {
             name="protein"
             min="10"
             max="100"
-            defaultValue={nutritions.protein}
+            value={nutrition.protein}
             onChange={handleChange('protein')}
           />
         </div>
@@ -90,7 +84,7 @@ function NutritionsSearch() {
             name="calories"
             min="50"
             max="800"
-            defaultValue={nutritions.calories}
+            value={nutrition.calories}
             onChange={handleChange('calories')}
           />
         </div>
@@ -109,20 +103,35 @@ function NutritionsSearch() {
             name="fat"
             min="1"
             max="100"
-            defaultValue={nutritions.fat}
+            value={nutrition.fat}
             onChange={handleChange('fat')}
           />
         </div>
       </div>
       <div className="button-container">
         {' '}
-        <Button onClick={searchRecipe} label="Search Recipes" />
+        <Button onClick={fetchRecipes} label="Search Recipes" />
       </div>
       <Title title="Found Recipes" />
       <div className="recipe-cards-container">
-        {recipes.length === 0 ? <div className="ingridients-img-container"><img className="ingridients-img" alt="recipes" src="img/recipes.jpg" /></div> : null}
-
-        {recipes?.map((recipe, index) => <SearchedRecipeCard testId={`recipe-card-testid-${index}`} key={index} props={recipe} />)}
+        {
+          recipes.length === 0
+            ? (
+              <div className="ingridients-img-container">
+                <img className="ingridients-img" alt="recipes" src="img/recipes.jpg" />
+              </div>
+            )
+            : null
+        }
+        {
+          recipes?.map((recipe, index) => (
+            <SearchedRecipeCard
+              testId={`recipe-card-testid-${index}`}
+              key={index}
+              props={recipe}
+            />
+          ))
+        }
       </div>
     </>
   );

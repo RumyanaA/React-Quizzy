@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from 'react';
 import parse from 'html-react-parser';
 import { Header, RecipeCard, NavigationCard, Button, Title } from '../../components';
-import { apiKey } from '../../config';
+import { fetchRandomFoodJoke, fetchRandomRecipes } from '../../service';
+import { menuCards } from './constants';
 import '../../sharedStyles.scss';
 
 function Home() {
@@ -9,59 +10,18 @@ function Home() {
 
   const [foodJoke, setFoodJoke] = useState('');
 
-  const fetchRandomRecipes = async () => {
-    await fetch(
-      `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=4`,
-    )
+  const populateRandomRecipes = () => {
+    fetchRandomRecipes({ number: 4 })
       .then((response) => response.json())
-      .then((data) => {
-        setRandomRecipes(data.recipes);
-      });
+      .then(({ recipes }) => setRandomRecipes(recipes));
   };
 
-  const fetchRandomFoodJoke = async () => {
-    await fetch(
-      `https://api.spoonacular.com/food/jokes/random?apiKey=${apiKey}`,
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setFoodJoke(data.text);
-      });
-  };
   useEffect(() => {
-    // fetchRandomRecipes();
-    fetchRandomFoodJoke();
+    fetchRandomFoodJoke()
+      .then((response) => response.json())
+      .then(({ text }) => setFoodJoke(text));
   }, []);
 
-  const menuCards = [
-    {
-      title: 'Discover',
-      description:
-        'Discover new recipes by selecting ingridients, nutritions or just by typing a keyword!',
-      routerLink: '/discover',
-      testId: 'discover',
-    },
-    {
-      title: 'Plan my menu',
-      description:
-        'Plan your menu for the day, for the week or for the rest of the year!',
-      routerLink: '/menu-planner',
-      testId: 'menu-planner',
-    },
-    {
-      title: 'Create custom recipe',
-      description: 'Create your own  tasty recipes!',
-      routerLink: '/custom-recipe',
-      testId: 'custom-recipe',
-    },
-    {
-      title: 'Favorite recipes',
-      description:
-        'Check out your favorite recipes so you can cook them again!',
-      routerLink: '/favorite-recipes',
-      testId: 'favorite-recipes',
-    },
-  ];
   return (
     <div>
       <Header />
@@ -84,7 +44,7 @@ function Home() {
         <Title title="Daily Recipes" />
         <div className="button-container">
           {' '}
-          <Button onClick={fetchRandomRecipes} label="show recipes" />
+          <Button onClick={populateRandomRecipes} label={`${randomRecipes.length > 0 ? 'update' : 'show'} random recipes`} />
           {' '}
         </div>
 
