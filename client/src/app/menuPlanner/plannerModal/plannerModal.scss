@@ -186,8 +186,15 @@
     top: 80px;
     left: 50px;
 
-    .item{
+    .item {
       margin-left: 4rem;
+    }
+    .recipe {
+      .input-buttons-container {
+        .buttons-container {
+          margin-left: 11rem;
+        }
+      }
     }
   }
 }
@@ -200,8 +207,15 @@
     top: 80px;
     left: 50px;
 
-    .item{
+    .item {
       margin-left: 4rem;
+    }
+    .recipe {
+      .input-buttons-container {
+        .buttons-container {
+          margin-left: 2rem;
+        }
+      }
     }
   }
 }
