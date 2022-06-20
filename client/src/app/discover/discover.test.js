@@ -31,7 +31,7 @@ describe('Discover Page', () => {
     );
     const keywordNavigation = screen.getByTestId('keyword-navigation');
 
-    const ingridientsNavigation = screen.getByTestId('ingridients-navigation');
+    const ingridientsNavigation = screen.getByTestId('ingredients-navigation');
 
     const nutritionsNavigation = screen.getByTestId('nutritions-navigation');
 
@@ -43,7 +43,7 @@ describe('Discover Page', () => {
     render(
       <MockDiscover />,
     );
-    const ingridientsButton = screen.getByTestId('ingridients-navigation');
+    const ingridientsButton = screen.getByTestId('ingredients-navigation');
     expect(ingridientsButton).toHaveClass('nav-button');
     fireEvent.click(ingridientsButton);
     expect(ingridientsButton).toHaveClass('nav-button-red');
@@ -61,7 +61,7 @@ describe('Discover Page', () => {
     render(
       <MockDiscover />,
     );
-    const ingridientsButton = screen.getByTestId('ingridients-navigation');
+    const ingridientsButton = screen.getByTestId('ingredients-navigation');
     fireEvent.click(ingridientsButton);
     const searchRecipesButton = screen.getByRole('button', { name: 'Search recipe' });
     expect(searchRecipesButton).toBeInTheDocument();

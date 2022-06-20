@@ -1,29 +1,68 @@
 import { React, useState } from 'react';
-import IngridientSearch from './search/ingridient/IngridientSearch';
+import IngredientSearch from './search/ingredient/IngredientSearch';
 import KeywordSearch from './search/keyword/KeywordSearch';
 import NutritionsSearch from './search/nutritions/NutritionsSearch';
 import { Header, Button } from '../../components';
+import { tabs } from './constants';
 import '../../sharedStyles.scss';
 import './discover.scss';
 
-function Discover() {
-  const [selectedSearch, setSelectedSearch] = useState('keyword');
+const { keyword, ingredients, nutrition } = tabs;
 
-  const openSelectedSearch = (event) => {
-    setSelectedSearch(event.target.id);
-  };
+function Discover() {
+  const [selectedTab, setSelectedTab] = useState(keyword);
+
   return (
     <div>
       <Header />
       <div className="wrapper">
         <div className="nav-container">
-          <Button testId="keyword-navigation" className={selectedSearch === 'keyword' ? 'nav-button-red' : 'nav-button'} onClick={openSelectedSearch} id="keyword" label="Search by keyword" />
-          <Button testId="ingridients-navigation" className={selectedSearch === 'ingridients' ? 'nav-button-red' : 'nav-button'} onClick={openSelectedSearch} id="ingridients" label="Search by ingridients" />
-          <Button testId="nutritions-navigation" className={selectedSearch === 'nutritions' ? 'nav-button-red' : 'nav-button'} onClick={openSelectedSearch} id="nutritions" label="Search by nutritions" />
+          <Button
+            testId="keyword-navigation"
+            className={
+              selectedTab === keyword
+                ? 'nav-button-red'
+                : 'nav-button'
+            }
+            onClick={() => setSelectedTab(keyword)}
+            label="Search by keyword"
+          />
+          <Button
+            testId="ingredients-navigation"
+            className={
+              selectedTab === ingredients
+                ? 'nav-button-red'
+                : 'nav-button'
+            }
+            onClick={() => setSelectedTab(ingredients)}
+            label="Search by ingredients"
+          />
+          <Button
+            testId="nutritions-navigation"
+            className={
+              selectedTab === nutrition
+                ? 'nav-button-red'
+                : 'nav-button'
+            }
+            onClick={() => setSelectedTab(nutrition)}
+            label="Search by nutritions"
+          />
         </div>
-        {selectedSearch === 'keyword' ? <KeywordSearch /> : null}
-        {selectedSearch === 'ingridients' ? <IngridientSearch /> : null}
-        {selectedSearch === 'nutritions' ? <NutritionsSearch /> : null}
+        {
+          selectedTab === keyword
+            ? <KeywordSearch />
+            : null
+        }
+        {
+          selectedTab === ingredients
+            ? <IngredientSearch />
+            : null
+        }
+        {
+          selectedTab === nutrition
+            ? <NutritionsSearch />
+            : null
+        }
       </div>
     </div>
   );

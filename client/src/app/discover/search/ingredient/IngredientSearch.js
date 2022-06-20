@@ -3,58 +3,73 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable no-unused-vars */
-import { React, useState } from 'react';
+import { React, useState, useCallback, useEffect } from 'react';
+import debounce from 'lodash.debounce';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import { useApi, useApiIngridients } from '../../../../hooks';
 import { Button, SearchedRecipeCard, IngridientCard, Title, InputField, NoDataFoundMessage } from '../../../../components';
-import { apiKey } from '../../../../config';
-import './ingridientSearch.scss';
+import { fetchIngredients, fetchRecipesByIngredients } from '../../../../service';
+import './ingredientSearch.scss';
 import '../../../../sharedStyles.scss';
 
-function IngridientSearch() {
-  const [selectedIngridients, setSelectedIngridients] = useState([]);
+function IngredientSearch() {
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
 
-  const [ingridientsUrl, setIngridientsUrl] = useState();
+  const [ingredients, setIngredients] = useState([]);
 
-  const [url, setUrl] = useState();
+  const [recipes, setRecipes] = useState([]);
 
   const [hasInputValue, setHasInputValue] = useState(false);
 
-  const {
-    ingridients,
-    hasIngridientsResult,
-    ingridientsLoading,
-  } = useApiIngridients({ ingridientsUrl });
+  const [ingredientsLoading, setIngredientsLoading] = useState(false);
 
-  const {
-    recipes,
-    loading,
-  } = useApi({ url });
+  const [recipesLoading, setRecipesLoading] = useState(false);
+
+  const [keyword, setKeyword] = useState('');
+
+  const handleDebounce = useCallback(
+    debounce(
+      (value) => setKeyword(value),
+      1000,
+    ),
+    [],
+  );
 
   const handleChange = (value) => {
-    value.length ? setHasInputValue(true) : setHasInputValue(false);
-    setIngridientsUrl(`https://api.spoonacular.com/food/ingredients/search?query=${value}&apiKey=${apiKey}`);
+    setHasInputValue(!!value);
+    setIngredientsLoading(true);
+    handleDebounce(value);
   };
 
+  useEffect(() => {
+    fetchIngredients({ keyword })
+      .then((response) => response.json())
+      .then(({ results }) => setIngredients(results))
+      .finally(() => setIngredientsLoading(false));
+  }, [keyword]);
+
   const addIngridient = (item) => {
-    setSelectedIngridients([...selectedIngridients, item]);
+    setSelectedIngredients([...selectedIngredients, item]);
   };
 
   const removeIngridient = (item) => {
-    const currentIngridients = selectedIngridients;
+    const currentIngredients = selectedIngredients;
 
-    const indexToRemove = currentIngridients.findIndex(
+    const indexToRemove = currentIngredients.findIndex(
       (ingridient) => ingridient.id === item.id,
     );
-    currentIngridients.splice(indexToRemove, 1);
+    currentIngredients.splice(indexToRemove, 1);
 
-    setSelectedIngridients([...currentIngridients]);
+    setSelectedIngredients([...currentIngredients]);
   };
 
   const searchRecipe = async () => {
-    const ingridientNames = selectedIngridients.map((item) => item.name);
+    setRecipesLoading(true);
+    const ingredientsName = selectedIngredients.map((item) => item.name);
 
-    setUrl(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingridientNames}&apiKey=${apiKey}`);
+    fetchRecipesByIngredients({ ingredients: ingredientsName })
+      .then((response) => response.json())
+      .then((result) => setRecipes(result))
+      .finally(() => setRecipesLoading(false));
   };
   return (
     <>
@@ -77,15 +92,15 @@ function IngridientSearch() {
               alt="ingridients"
               src="img/ingridients.jpg"
             />
-          </div> : ingridientsLoading
+          </div> : ingredientsLoading
             ? <div className="spinner-div">
               <Spinner
                 data-testid="ingridients-spinner"
                 animation="grow"
                 variant="primary"
               />
-            </div> : hasIngridientsResult
-            && ingridients?.map((item, index) => (
+            </div>
+            : ingredients?.map((item, index) => (
               <IngridientCard
                 testId={`ingridient-testid-${index}`}
                 key={index}
@@ -94,14 +109,14 @@ function IngridientSearch() {
                 selectedIngridient={false}
               />
             ))}
-        {hasInputValue && !hasIngridientsResult && !ingridientsLoading ? <NoDataFoundMessage
+        {hasInputValue && !ingredients.length && !ingredientsLoading ? <NoDataFoundMessage
           testid="no-ingridients-found"
           message="No Ingridients Found"
         /> : null}
       </div>
       <Title title="My Ingridients" />
       <div className="selected-ingridients-container">
-        {selectedIngridients.length === 0 ? (
+        {selectedIngredients.length === 0 ? (
           <div className="ingridients-img-container">
             <img
               className="ingridients-img"
@@ -109,7 +124,7 @@ function IngridientSearch() {
               src="img/fridge.jpg"
             />
           </div>
-        ) : selectedIngridients?.map((item, index) => (
+        ) : selectedIngredients?.map((item, index) => (
           <IngridientCard
             testId={`selectedIngridient-testid-${index}`}
             key={index}
@@ -122,14 +137,14 @@ function IngridientSearch() {
       </div>
       <Title title="Found Recipes" />
       <div className="spinner-div">
-        {loading && <Spinner
+        {recipesLoading && <Spinner
           data-testid="recipes-spinner"
           animation="grow"
           variant="primary"
         />}
       </div>
       <div className="recipe-cards-container">
-        {!hasIngridientsResult ? (
+        {!ingredients?.length ? (
           <div className="ingridients-img-container">
             <img
               className="ingridients-img"
@@ -150,4 +165,4 @@ function IngridientSearch() {
   );
 }
 
-export default IngridientSearch;
+export default IngredientSearch;
