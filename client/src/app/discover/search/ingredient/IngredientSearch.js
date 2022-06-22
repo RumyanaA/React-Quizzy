@@ -1,8 +1,4 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable react/jsx-closing-tag-location */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-wrap-multilines */
-/* eslint-disable no-unused-vars */
 import { React, useState, useCallback, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import Spinner from 'react-bootstrap/esm/Spinner';
@@ -24,6 +20,8 @@ import '../../../../sharedStyles.scss';
 function IngredientSearch() {
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
+  const [selectedIngredientsName, setSelectedIngredientsName] = useState([]);
+
   const [ingredients, setIngredients] = useState([]);
 
   const [recipes, setRecipes] = useState([]);
@@ -43,7 +41,12 @@ function IngredientSearch() {
   const [recipesErrorMessage, setRecipesErrorMessage] = useState('');
 
   const handleDebounce = useCallback(
-    debounce((value) => setKeyword(value), 1000),
+    debounce(
+      (value) => (Array.isArray(value)
+        ? setSelectedIngredientsName([...value])
+        : setKeyword(value)),
+      1000,
+    ),
     [],
   );
 
@@ -88,23 +91,25 @@ function IngredientSearch() {
   };
 
   const searchRecipe = async () => {
+    setHasRecipes(true);
     setRecipesLoading(true);
     const ingredientsName = selectedIngredients.map((item) => item.name);
+    handleDebounce(ingredientsName);
+  };
 
-    fetchRecipesByIngredients({ ingredients: ingredientsName })
+  useEffect(() => {
+    fetchRecipesByIngredients({ ingredients: selectedIngredientsName })
       .then((response) => {
         if (response.ok) {
           return response.json();
         }
         throw new Error('Something went wrong');
       })
-      .then((result) => {
-        setRecipes(result);
-        setHasRecipes(true);
-      })
+      .then((result) => setRecipes(result))
       .catch((error) => setRecipesErrorMessage(error.message))
       .finally(() => setRecipesLoading(false));
-  };
+  }, [selectedIngredientsName]);
+
   return (
     <>
       <div className="searchInput-Button-container">
@@ -189,7 +194,7 @@ function IngredientSearch() {
         )}
       </div>
       <div className="recipe-cards-container">
-        { !hasRecipes ? (
+        {!hasRecipes ? (
           <div className="ingridients-img-container">
             <img
               className="ingridients-img"
@@ -206,11 +211,14 @@ function IngredientSearch() {
             />
           ))
         ) : (
-          recipesErrorMessage && <ErrorMessage message={recipesErrorMessage} />
+          recipesErrorMessage && <ErrorMessage message="test" />
         )}
-        {!hasRecipes && !recipes?.length && !recipesLoading && !recipesErrorMessage ? (
+        {hasRecipes
+        && !recipes?.length
+        && !recipesLoading
+        && !recipesErrorMessage ? (
           <ErrorMessage message="No Recipes Found" />
-        ) : null}
+          ) : null}
       </div>
     </>
   );
