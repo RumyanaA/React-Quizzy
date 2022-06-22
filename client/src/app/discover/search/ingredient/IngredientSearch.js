@@ -6,8 +6,18 @@
 import { React, useState, useCallback, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import { Button, SearchedRecipeCard, IngridientCard, Title, InputField, ErrorMessage } from '../../../../components';
-import { fetchIngredients, fetchRecipesByIngredients } from '../../../../service';
+import {
+  Button,
+  SearchedRecipeCard,
+  IngridientCard,
+  Title,
+  InputField,
+  ErrorMessage,
+} from '../../../../components';
+import {
+  fetchIngredients,
+  fetchRecipesByIngredients,
+} from '../../../../service';
 import './ingredientSearch.scss';
 import '../../../../sharedStyles.scss';
 
@@ -18,7 +28,9 @@ function IngredientSearch() {
 
   const [recipes, setRecipes] = useState([]);
 
-  const [hasInputValue, setHasInputValue] = useState(false);
+  const [hasIngredientValue, setHasIngredientValue] = useState(false);
+
+  const [hasRecipes, setHasRecipes] = useState(false);
 
   const [ingredientsLoading, setIngredientsLoading] = useState(false);
 
@@ -26,24 +38,37 @@ function IngredientSearch() {
 
   const [keyword, setKeyword] = useState('');
 
+  const [ingredientErrorMessage, setIngredientErrorMessage] = useState('');
+
+  const [recipesErrorMessage, setRecipesErrorMessage] = useState('');
+
   const handleDebounce = useCallback(
-    debounce(
-      (value) => setKeyword(value),
-      1000,
-    ),
+    debounce((value) => setKeyword(value), 1000),
     [],
   );
 
   const handleChange = (value) => {
-    setHasInputValue(!!value);
+    setHasIngredientValue(!!value);
     setIngredientsLoading(true);
+    if (ingredientErrorMessage) {
+      setIngredientErrorMessage('');
+    }
+    if (recipesErrorMessage) {
+      setRecipesErrorMessage('');
+    }
     handleDebounce(value);
   };
 
   useEffect(() => {
     fetchIngredients({ keyword })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Something went wrong');
+      })
       .then(({ results }) => setIngredients(results))
+      .catch((error) => setIngredientErrorMessage(error.message))
       .finally(() => setIngredientsLoading(false));
   }, [keyword]);
 
@@ -67,8 +92,17 @@ function IngredientSearch() {
     const ingredientsName = selectedIngredients.map((item) => item.name);
 
     fetchRecipesByIngredients({ ingredients: ingredientsName })
-      .then((response) => response.json())
-      .then((result) => setRecipes(result))
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Something went wrong');
+      })
+      .then((result) => {
+        setRecipes(result);
+        setHasRecipes(true);
+      })
+      .catch((error) => setRecipesErrorMessage(error.message))
       .finally(() => setRecipesLoading(false));
   };
   return (
@@ -78,41 +112,48 @@ function IngredientSearch() {
           placeholder="Search ingridients..."
           onChange={(e) => handleChange(e.target.value)}
         />
-        <Button
-          onClick={searchRecipe}
-          label="Search recipe"
-        />
+        <Button onClick={searchRecipe} label="Search recipe" />
       </div>
       <Title title="All Ingridients" />
       <div className="ingridients-container">
-        {!hasInputValue
-          ? <div className="ingridients-img-container">
+        {!hasIngredientValue ? (
+          <div className="ingridients-img-container">
             <img
               className="ingridients-img"
               alt="ingridients"
               src="img/ingridients.jpg"
             />
-          </div> : ingredientsLoading
-            ? <div className="spinner-div">
-              <Spinner
-                data-testid="ingridients-spinner"
-                animation="grow"
-                variant="primary"
-              />
-            </div>
-            : ingredients?.map((item, index) => (
-              <IngridientCard
-                testId={`ingridient-testid-${index}`}
-                key={index}
-                props={item}
-                addIngridient={addIngridient}
-                selectedIngridient={false}
-              />
-            ))}
-        {hasInputValue && !ingredients.length && !ingredientsLoading ? <ErrorMessage
-          testid="no-ingridients-found"
-          message="No Ingridients Found"
-        /> : null}
+          </div>
+        ) : ingredientsLoading ? (
+          <div className="spinner-div">
+            <Spinner
+              data-testid="ingridients-spinner"
+              animation="grow"
+              variant="primary"
+            />
+          </div>
+        ) : ingredientErrorMessage ? (
+          <ErrorMessage message={ingredientErrorMessage} />
+        ) : (
+          ingredients?.map((item, index) => (
+            <IngridientCard
+              testId={`ingridient-testid-${index}`}
+              key={index}
+              props={item}
+              addIngridient={addIngridient}
+              selectedIngridient={false}
+            />
+          ))
+        )}
+        {hasIngredientValue
+        && !ingredients.length
+        && !ingredientsLoading
+        && !ingredientErrorMessage ? (
+          <ErrorMessage
+            testid="no-ingridients-found"
+            message="No Ingridients Found"
+          />
+          ) : null}
       </div>
       <Title title="My Ingridients" />
       <div className="selected-ingridients-container">
@@ -124,27 +165,31 @@ function IngredientSearch() {
               src="img/fridge.jpg"
             />
           </div>
-        ) : selectedIngredients?.map((item, index) => (
-          <IngridientCard
-            testId={`selectedIngridient-testid-${index}`}
-            key={index}
-            props={item}
-            removeIngridient={removeIngridient}
-            selectedIngridient
-            divTestId={`div-X-testid-${index}`}
-          />
-        ))}
+        ) : (
+          selectedIngredients?.map((item, index) => (
+            <IngridientCard
+              testId={`selectedIngridient-testid-${index}`}
+              key={index}
+              props={item}
+              removeIngridient={removeIngridient}
+              selectedIngridient
+              divTestId={`div-X-testid-${index}`}
+            />
+          ))
+        )}
       </div>
       <Title title="Found Recipes" />
       <div className="spinner-div">
-        {recipesLoading && <Spinner
-          data-testid="recipes-spinner"
-          animation="grow"
-          variant="primary"
-        />}
+        {recipesLoading && (
+          <Spinner
+            data-testid="recipes-spinner"
+            animation="grow"
+            variant="primary"
+          />
+        )}
       </div>
       <div className="recipe-cards-container">
-        {!ingredients?.length ? (
+        { !hasRecipes ? (
           <div className="ingridients-img-container">
             <img
               className="ingridients-img"
@@ -152,14 +197,20 @@ function IngredientSearch() {
               src="img/recipes.jpg"
             />
           </div>
-        )
-          : recipes?.map((recipe, index) => (
+        ) : recipes?.length ? (
+          recipes?.map((recipe, index) => (
             <SearchedRecipeCard
               testId={`recipe-testId-${index}`}
               key={index}
               props={recipe}
             />
-          ))}
+          ))
+        ) : (
+          recipesErrorMessage && <ErrorMessage message={recipesErrorMessage} />
+        )}
+        {!hasRecipes && !recipes?.length && !recipesLoading && !recipesErrorMessage ? (
+          <ErrorMessage message="No Recipes Found" />
+        ) : null}
       </div>
     </>
   );

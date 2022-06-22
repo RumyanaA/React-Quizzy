@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-nested-ternary */
 import { React, useState, useEffect, useCallback } from 'react';
 import debounce from 'lodash.debounce';
