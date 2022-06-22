@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-nested-ternary */
 import { React, useCallback, useState } from 'react';
 import debounce from 'lodash.debounce';
 import Spinner from 'react-bootstrap/esm/Spinner';
-import { Button, SearchedRecipeCard, Title } from '../../../../components';
+import { Button, ErrorMessage, SearchedRecipeCard, Title } from '../../../../components';
 import { fetchRecipesByNutrition } from '../../../../service';
 import './nutritionsSearch.scss';
 
@@ -18,6 +19,8 @@ function NutritionsSearch() {
 
   const [recipesLoading, setRecipesLoading] = useState(false);
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleChange = (name) => ({ target: { value } }) => {
     setNutrition({ ...nutrition, [name]: value });
   };
@@ -26,8 +29,14 @@ function NutritionsSearch() {
     debounce(
       (nutritions) => {
         fetchRecipesByNutrition({ ...nutritions })
-          .then((response) => response.json())
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Something went wrong');
+          })
           .then(setRecipes)
+          .catch((error) => setErrorMessage(error.message))
           .finally(setRecipesLoading(false));
       },
       1000,
@@ -146,13 +155,14 @@ function NutritionsSearch() {
                   />
                 </div>
               )
-              : recipes.length === 0 && !recipesLoading
-                ? (
-                  <div className="ingridients-img-container">
-                    <img className="ingridients-img" alt="recipes" src="img/recipes.jpg" />
-                  </div>
-                )
-                : null
+              : errorMessage ? <ErrorMessage message={errorMessage} />
+                : recipes.length === 0 && !recipesLoading && !errorMessage
+                  ? (
+                    <div className="ingridients-img-container">
+                      <img className="ingridients-img" alt="recipes" src="img/recipes.jpg" />
+                    </div>
+                  )
+                  : null
         }
 
       </div>

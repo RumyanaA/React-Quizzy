@@ -211,7 +211,7 @@ function IngredientSearch() {
             />
           ))
         ) : (
-          recipesErrorMessage && <ErrorMessage message="test" />
+          recipesErrorMessage && <ErrorMessage message={recipesErrorMessage} />
         )}
         {hasRecipes
         && !recipes?.length
