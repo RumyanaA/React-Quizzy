@@ -78,7 +78,8 @@ export const handlers = [
           imageType: 'jpg',
           protein: '1g',
           title: 'Yoghurt Honey Madeleines',
-        },]))
+        }]),
+    );
   }),
 
   rest.get('https://api.spoonacular.com/recipes/findByIngredients', (req, res, ctx) => {
