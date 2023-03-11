@@ -8,7 +8,7 @@ import {
   IngridientCard,
   Title,
   InputField,
-  NoDataFoundMessage,
+  ErrorMessage,
 } from '../../../../components';
 import {
   fetchIngredients,
@@ -26,13 +26,19 @@ function IngredientSearch() {
 
   const [recipes, setRecipes] = useState([]);
 
-  const [hasInputValue, setHasInputValue] = useState(false);
+  const [hasIngredientValue, setHasIngredientValue] = useState(false);
+
+  const [hasRecipes, setHasRecipes] = useState(false);
 
   const [ingredientsLoading, setIngredientsLoading] = useState(false);
 
   const [recipesLoading, setRecipesLoading] = useState(false);
 
   const [keyword, setKeyword] = useState('');
+
+  const [ingredientErrorMessage, setIngredientErrorMessage] = useState('');
+
+  const [recipesErrorMessage, setRecipesErrorMessage] = useState('');
 
   const handleDebounce = useCallback(
     debounce(
@@ -45,15 +51,27 @@ function IngredientSearch() {
   );
 
   const handleChange = (value) => {
-    setHasInputValue(!!value);
+    setHasIngredientValue(!!value);
     setIngredientsLoading(true);
+    if (ingredientErrorMessage) {
+      setIngredientErrorMessage('');
+    }
+    if (recipesErrorMessage) {
+      setRecipesErrorMessage('');
+    }
     handleDebounce(value);
   };
 
   useEffect(() => {
     fetchIngredients({ keyword })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Something went wrong');
+      })
       .then(({ results }) => setIngredients(results))
+      .catch((error) => setIngredientErrorMessage(error.message))
       .finally(() => setIngredientsLoading(false));
   }, [keyword]);
 
@@ -73,6 +91,7 @@ function IngredientSearch() {
   };
 
   const searchRecipe = async () => {
+    setHasRecipes(true);
     setRecipesLoading(true);
     const ingredientsName = selectedIngredients.map((item) => item.name);
     handleDebounce(ingredientsName);
@@ -80,10 +99,17 @@ function IngredientSearch() {
 
   useEffect(() => {
     fetchRecipesByIngredients({ ingredients: selectedIngredientsName })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Something went wrong');
+      })
       .then((result) => setRecipes(result))
+      .catch((error) => setRecipesErrorMessage(error.message))
       .finally(() => setRecipesLoading(false));
   }, [selectedIngredientsName]);
+
   return (
     <>
       <div className="searchInput-Button-container">
@@ -95,7 +121,7 @@ function IngredientSearch() {
       </div>
       <Title title="All Ingridients" />
       <div className="ingridients-container">
-        {!hasInputValue ? (
+        {!hasIngredientValue ? (
           <div className="ingridients-img-container">
             <img
               className="ingridients-img"
@@ -111,6 +137,8 @@ function IngredientSearch() {
               variant="primary"
             />
           </div>
+        ) : ingredientErrorMessage ? (
+          <ErrorMessage message={ingredientErrorMessage} />
         ) : (
           ingredients?.map((item, index) => (
             <IngridientCard
@@ -122,12 +150,15 @@ function IngredientSearch() {
             />
           ))
         )}
-        {hasInputValue && !ingredients.length && !ingredientsLoading ? (
-          <NoDataFoundMessage
+        {hasIngredientValue
+        && !ingredients.length
+        && !ingredientsLoading
+        && !ingredientErrorMessage ? (
+          <ErrorMessage
             testid="no-ingridients-found"
             message="No Ingridients Found"
           />
-        ) : null}
+          ) : null}
       </div>
       <Title title="My Ingridients" />
       <div className="selected-ingridients-container">
@@ -163,7 +194,7 @@ function IngredientSearch() {
         )}
       </div>
       <div className="recipe-cards-container">
-        {!ingredients?.length ? (
+        {!hasRecipes ? (
           <div className="ingridients-img-container">
             <img
               className="ingridients-img"
@@ -171,7 +202,7 @@ function IngredientSearch() {
               src="img/recipes.jpg"
             />
           </div>
-        ) : (
+        ) : recipes?.length ? (
           recipes?.map((recipe, index) => (
             <SearchedRecipeCard
               testId={`recipe-testId-${index}`}
@@ -179,7 +210,15 @@ function IngredientSearch() {
               props={recipe}
             />
           ))
+        ) : (
+          recipesErrorMessage && <ErrorMessage message={recipesErrorMessage} />
         )}
+        {hasRecipes
+        && !recipes?.length
+        && !recipesLoading
+        && !recipesErrorMessage ? (
+          <ErrorMessage message="No Recipes Found" />
+          ) : null}
       </div>
     </>
   );
